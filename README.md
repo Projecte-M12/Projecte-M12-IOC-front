@@ -2,12 +2,12 @@
 
 ## Descripció
 
-    Espai per definir la descripció del projecte
+Espai per definir la descripció del projecte
 
 ## Taula de Continguts
 
 
-## Branques (Branch)
+## Branques (Branch)
 
 Sempre treballarem a la nostra branca o a la branca del component en qüestió **mai** sobre la branca _main_ ja que és la principal i ha d'estar el més neta possible.
 D'aquesta manera evitem possibles errors "greus" i que ens efecti la funcionalitat de l'aplicació poguent trencar-la. :boom:
