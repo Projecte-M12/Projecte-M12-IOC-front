@@ -1,13 +1,13 @@
-# Projecte M12 IOC
+# Servei de reserva de cites <NOM_COMERCIAL>
 
-## Descripció
+## :calendar: Descripció del Projecte 
 
 Espai per definir la descripció del projecte
 
-## Taula de Continguts
+## :clipboard: Taula de Continguts
 
 
-## Branques (Branch)
+## :deciduous_tree: Branques (Branch)
 
 Sempre treballarem a la nostra branca o a la branca del component en qüestió **mai** sobre la branca _main_ ja que és la principal i ha d'estar el més neta possible.
 D'aquesta manera evitem possibles errors "greus" i que ens efecti la funcionalitat de l'aplicació poguent trencar-la. :boom:
@@ -19,7 +19,7 @@ Fet això, i tinguent incorporat el codi a la branca principal, podem eliminar l
 Quan la PR s'hagi acceptat tots haurem d'actualitzar el nostre repositori local per tenir el codi al dia i així evitar errors de compatibilitats.
 
 
-## Funcionament dels 'Commits'
+## :bookmark: Funcionament dels 'Commits'
 
 ### Explicació del funcionament dels commits.
 
@@ -73,7 +73,7 @@ Ja que el "push" només funcionarà si el commit està ben fet. Hi ha altres var
 Per actualitzar-nos localment post-PR (sempre que hagi anat tot bé) ho farem amb un "pull" `git pull <remote>`
 
 
-## Altres :speech_balloon:
+## :speech_balloon: Altres
 
 
         
