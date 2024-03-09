@@ -2,7 +2,9 @@ interface Reservation {
   id: string;
   customerId: string;
   companyId: string;
-  date: Date; //Hace referencia tanto a la fecha como a la hora de la reserva
+  date: Date;
+  service: string;
+  time: number; //Minutos
   numberOfGuests?: number;
   status: ReservationStatus;
   createdAt: Date;
