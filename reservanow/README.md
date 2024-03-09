@@ -28,3 +28,48 @@ export default {
 - Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
 - Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
 - Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+
+
+# Proposta d'estructura inicial
+├── /src
+        ├── /adapters
+        │   ├── /api
+        │   │   └── ApiClient.ts
+        │   ├── /components
+        │   ├── /repositories
+        │   │   └── ReservationsRepository.ts
+        │   └── /services
+        │       ├── /hooks
+        │       │   └── UseProviders.tsx
+        │       └── AuthService.ts
+        ├── /domain
+        │   ├── /models
+        │   │   ├── User.ts
+        │   │   └── Reservation.ts
+        │   └── /ports
+        │       ├── IApiClient.ts
+        │       ├── IReservationsRepository.ts
+        │       └── IAuthService.ts
+        ├── /useCases
+        │   ├── RegisterUser.tsx
+        │   ├── RegisterCompany.tsx
+        │   └── MakeReservation.tsx
+        └── /ui
+            ├── /components
+            │   └── /shared
+            │       ├── /Header.tsx
+            │       └── /Footer.tsx
+            └── /pages
+                ├── HomePage.tsx
+                ├── LoginPage.tsx
+                ├── RegisterPage.tsx
+                ├── ReservationPage.tsx
+                └── /dashboard
+                    ├── /customer
+                    │   ├── CustomerDashboardPage.tsx
+                    │   ├── CustomerProfilePage.tsx
+                    │   └── CustomerReservationsPage.tsx
+                    └── /company
+                        ├── CompanyDashboardPage.tsx
+                        ├── CompanyProfilePage.tsx
+                        └── CompanyReservationsPage.tsx
