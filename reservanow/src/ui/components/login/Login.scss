@@ -1,0 +1,48 @@
+$background: rgba(233, 144, 0, 0.259);
+$border-color-card: rgba(233, 144, 0, 0.678);
+$background-color-login: rgba(230, 191, 129, 0.259);
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: $background;
+}
+
+.main__login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 2rem;
+    border-radius: 20px;
+    border: 2px solid $border-color-card;
+    background-color: $background-color-login;
+}
+
+.login__login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.login__logo {
+    max-width: 500px;
+    width: 100%;
+}
+
+.login__title {
+    font-size: 3rem;
+    color: rgb(233, 144, 0);
+    margin-bottom: 3rem;
+    text-shadow: 0.5px 3px 3px rgba(0, 0, 0, 0.363);
+
+}
