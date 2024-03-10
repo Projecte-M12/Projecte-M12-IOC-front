@@ -1,6 +1,7 @@
 import "./Login.scss";
 import logo from "../../../assets/logo/reservanow_logo.svg";
 import { FaUser, FaLock } from "react-icons/fa";
+
 import { useState } from "react";
 
 export const Login = () => {
