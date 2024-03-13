@@ -1,0 +1,119 @@
+@import "../../styles/variables.scss";
+
+$background: rgba(233, 144, 0, 0.11);
+// $accentColor: rgba(255, 157, 0, 0.678);
+$background-color-login: rgba(226, 193, 139, 0.178);
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: $background;
+}
+
+.main__login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 2rem;
+    border-radius: 20px;
+    border: 2px solid $accentColor;
+    background-color: $background-color-login;
+}
+
+.login__login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.login__logo {
+    max-width: 500px;
+    width: 100%;
+}
+
+.login__title {
+    font-size: 3rem;
+    color: $accentColor;
+    margin-bottom: 3rem;
+    // text-shadow: 0.5px 3px 3px rgba(0, 0, 0, 0.363);
+    font-weight: 600;
+}
+
+.login__login-form__input-box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem;
+}
+
+.login__login-form__input {
+    max-width: 100%;
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid $accentColor;
+    font-size: 1.2rem;
+    outline: none;
+    margin-right: 1rem;
+    &:focus {
+        box-shadow: 2px 2px 0px $accentColor;
+    }
+}
+
+.login__login-form__submit-btn {
+    margin: 1rem;
+    align-items: center;
+    background-color: #fff;
+    border: 2px solid $accentColor;
+    box-sizing: border-box;
+    color: $accentColor;
+    cursor: pointer;
+    display: flex;
+    fill: $accentColor;
+    // font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    height: 48px;
+    justify-content: center;
+    // letter-spacing: -.8px;
+    // line-height: 24px;
+    min-width: 140px;
+    // outline: 0;
+    padding: 0 17px;
+    text-align: center;
+    text-decoration: none;
+    transition: all .3s;
+    // user-select: none;
+    // -webkit-user-select: none;
+    // touch-action: manipulation;
+
+
+    &:focus {
+        color: #171e29;
+    }
+
+    &:hover {
+        // border-color: #a56600;
+        color: $whiteColor;
+        background-color: $accentColor;
+        border-radius: 10px;
+        // fill: #171e29;
+    }
+
+    &:active {
+        border-color: #171e29;
+        color: #171e29;
+        fill: #171e29;
+    }
+
+    @media (min-width: 768px) {
+        .button-59 {
+            min-width: 170px;
+        }
+    }
+
+}
