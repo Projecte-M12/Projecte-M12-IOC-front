@@ -1,11 +1,10 @@
-const handleClick = () => {
-    window.location.href = "/login";
-}
-export function Homepage() {
+
+export const Homepage = () => {
+
   return (
     <div>
       <h1>Homepage</h1>
-      <button onClick={handleClick}>Login page</button>
+      <p>Welcome to ReservaNOW</p>
     </div>
   );
-}
+};

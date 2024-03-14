@@ -1,19 +1,38 @@
+import { Navigate } from "react-router-dom";
+
+import { useState } from "react";
+import { useAuth } from "../../../hooks/UseAuth";
+
 import "../Auth.scss";
 import { iconStyles } from "../../../styles/iconStyles";
 import logo from "../../../assets/logo/reservanow_logo.svg";
 import { FaUser, FaLock } from "react-icons/fa";
 
-import { useState } from "react";
-
 export const Login = ({ onLogin }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const auth = useAuth();
+
+  if (auth.isAuthenticated) {
+    if (auth.isCustomer) {
+      return <Navigate to="/customer-dashboard" />;
+    } else {
+      return <Navigate to="/company-dashboard" />;
+    }
+  }
 
   const hadleSubmit = (e) => {
     e.preventDefault();
     onLogin({ username, password });
     setUsername("");
     setPassword("");
+  };
+
+  const isValidName = username.length > 3;
+  const isValidPassword = (password) => {
+    const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+    return passwordRegex.test(password);
   };
 
   return (
@@ -30,11 +49,15 @@ export const Login = ({ onLogin }) => {
             required
             value={username}
           />
-          <img src={FaUser} alt="" />
           <div className="login__login-form__icon">
             <FaUser style={iconStyles} />
           </div>
         </div>
+        {!isValidName && username ? (
+          <div className="login__login-form__error">
+            Username must be larger than 3 characters
+          </div>
+        ) : null}
         <div className="login__login-form__input-box">
           <input
             type="password"
@@ -48,11 +71,19 @@ export const Login = ({ onLogin }) => {
             <FaLock style={iconStyles} />
           </div>
         </div>
-        <div className="login__login-form__remember-forgot">
+        {!isValidPassword(password) && password ? (
+          <div className="login__login-form__error">
+            At least 8 characters, 1 number, 1 uppercase, 1 lowercase
+          </div>
+        ) : null}
+        <div className="login__login-form__remember">
           <label htmlFor="remember">
             <input type="checkbox" name="remember" id="remember" />
-            <a href="#">Forgot password?</a>
           </label>
+          <p>Remember me</p>
+        </div>
+        <div>
+          <a href="#">Forgot password?</a>
         </div>
         <button className="login__login-form__submit-btn" type="submit">
           Login

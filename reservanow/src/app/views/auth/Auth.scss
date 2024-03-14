@@ -12,6 +12,21 @@ body {
     background: $background;
 }
 
+div a {
+    color: $accentColor;
+
+    &:hover {
+        color: $blackColor;
+    }
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 .main__login {
     display: flex;
     flex-direction: column;
@@ -59,15 +74,31 @@ body {
     font-size: 1.2rem;
     outline: none;
     margin-right: 1rem;
+
     &:focus {
         box-shadow: 2px 2px 0px $accentColor;
     }
 }
 
+.login__login-form__remember {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 1rem
+}
+
+.login__login-form__error {
+    max-width: 100%;
+    color: red;
+    font-size: 12px;
+}
+
 .login__login-form__submit-btn {
     margin: 1rem;
     align-items: center;
-    background-color: #fff;
+    background-color: $whiteColor;
     border: 2px solid $accentColor;
     box-sizing: border-box;
     color: $accentColor;
@@ -94,6 +125,8 @@ body {
 
     &:focus {
         color: #171e29;
+        background-color: $accentColor;
+        border-radius: 10px;
     }
 
     &:hover {
@@ -104,11 +137,11 @@ body {
         // fill: #171e29;
     }
 
-    &:active {
-        border-color: #171e29;
-        color: #171e29;
-        fill: #171e29;
-    }
+    // &:active {
+    //     border-color: #171e29;
+    //     color: #171e29;
+    //     fill: #171e29;
+    // }
 
     @media (min-width: 768px) {
         .button-59 {

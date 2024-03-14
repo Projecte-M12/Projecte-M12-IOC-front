@@ -1,4 +1,3 @@
-import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { Homepage } from "./app/views/homepage/Homepage.jsx";
@@ -8,6 +7,11 @@ import { CompanyDashboard } from "./app/views/dashboard/company/CompanyDashboard
 import { CustomerDashboard } from "./app/views/dashboard/customer/CustomerDashboard.jsx";
 import { ProtectedRoutes } from "./app/router/ProtectedRoutes.jsx";
 import { AuthProvider } from "./app/context/AuthProvider.jsx";
+
+import "./App.css";
+import "./app/styles/reset.css";
+import "./app/styles/variables.scss";
+import "./app/styles/styles.css";
 
 const router = createBrowserRouter([
   {
