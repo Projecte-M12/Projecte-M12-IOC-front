@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom';
 
 import { useState } from 'react';
-import { useAuth } from '../../../hooks/useAuthContext';
+import { useAuthContext } from '../../../hooks/useAuthContext';
 
 import '../Auth.scss';
 import { iconStyleDefault } from '../../../styles/iconStyles';
@@ -11,7 +11,7 @@ import { FaUser, FaLock } from 'react-icons/fa';
 // import { constants } from '../../../shared/constants';
 
 export const Login = () => {
-  const auth = useAuth();
+  const auth = useAuthContext();
   if (auth.isAunthenticated) {
     <Navigate to="/customer-dashboard" />;
   }
