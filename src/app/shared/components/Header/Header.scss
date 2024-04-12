@@ -1,0 +1,9 @@
+@import "../../../styles/variables.scss";
+
+.header{
+    display: flex;
+    align-items: center;
+    background-color: $accentColor;
+    min-height: 2rem;
+    margin-bottom: 2rem;
+}
