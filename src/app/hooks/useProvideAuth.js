@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { API_URL } from '../utils/constants';
+import { API_URL, EDPOINT } from '../utils/constants';
+import { formatDataUserFromServer } from '../utils/formatDataUserFromServer';
 
 export const useProvideAuth = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -20,26 +21,26 @@ export const useProvideAuth = () => {
       if (!isAuthenticated) {
         if (data.access_token && data.access_token === tokenLocalStorage) {
           setIsAuthenticated(true);
-            setUser(data.user);
-            setError(
-              'El token de la petición es el mismo que el del localStorage',
-            );
+          setUser(data.user);
+          setError(
+            'El token de la petición es el mismo que el del localStorage',
+          );
           console.log(
             'El token de la petición es el mismo que el del localStorage',
           );
         } else if (data.access_token) {
           setTokenLocalStorage(data.access_token);
           setIsAuthenticated(true);
-            setUser(data.user);
-            setError("L'usuari s'ha autenticat correctament");
+          setUser(data.user);
+          setError("L'usuari s'ha autenticat correctament");
           console.log("L'usuari s'ha autenticat correctament");
 
           // localStorage.setItem('access_token', tokenLocalStorage);
           // localStorage.setItem('user', user);
         } else {
           setIsAuthenticated(false);
-            setUser(null);
-            setError('Les credencials no son correctes');
+          setUser(null);
+          setError('Les credencials no son correctes');
           console.log('Les credencials no son correctes');
           // localStorage.removeItem('access_token');
           // localStorage.removeItem('user');
@@ -75,10 +76,10 @@ export const useProvideAuth = () => {
   // };
 
   // Amb Promisse
-  const signin = ({email, password}) => {
+  const signin = ({ email, password }) => {
     setLoading(true);
 
-    const response = fetch(`${API_URL}/login`, {
+    const response = fetch(`${API_URL + EDPOINT.LOGIN}`, {
       // signal, // TODO: Implementar el signal con un AbortController para cancelar las llamadas si hay nuevas
       method: 'POST',
       headers: {
@@ -138,22 +139,3 @@ export const useProvideAuth = () => {
 
   return { isAuthenticated, user, loading, signin, signout, error };
 };
-
-function formatDataUserFromServer(dataUser) {
-  return {
-    access_token: dataUser.access_token,
-    expires_in: dataUser.expires_in,
-    token_type: dataUser.token_type,
-    user: formatUser(dataUser.user),
-  };
-}
-
-function formatUser(user) {
-  return {
-    id: user.id,
-    email: user.email,
-    name: user.displayName,
-    email_verified_at: user.email_verified_at,
-    updated_at: user.updated_at,
-  };
-}
