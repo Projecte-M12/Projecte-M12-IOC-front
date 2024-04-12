@@ -2,16 +2,16 @@ import { useEffect, useState } from 'react';
 import { constants } from '../shared/constants';
 
 export const useProvideAuth = () => {
-    const [user, setUser] = useState(null);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [user, setUser] = useState(null);
     const [tokenLocalStorage, setTokenLocalStorage] = useState(null);
-    // const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     const handleDataUser = (rawData) => {
         if (rawData) {
             // TODO: Revisar no solo si hay datos (en caso de error los hay) sino los datos que debería haber en caso de respuesta correcta
-            const data = formatDataUser(rawData);
+            const data = formatDataUserFromServer(rawData);
             setTokenLocalStorage(localStorage.getItem('access_token'));
 
             console.log('handleDataUser')
@@ -132,10 +132,10 @@ export const useProvideAuth = () => {
         return unsuscribe();
     }, []);
 
-    return { user, loading, signin, signout };
+    return { isAuthenticated, user, loading, signin, signout };
 };
 
-function formatDataUser(dataUser) {
+function formatDataUserFromServer(dataUser) {
     return {
         access_token: dataUser.access_token,
         expires_in: dataUser.expires_in,

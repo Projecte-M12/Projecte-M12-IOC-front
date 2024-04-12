@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom';
 
 import { useState } from 'react';
-import { useAuth } from '../../../hooks/useAuth';
+import { useAuth } from '../../../hooks/useAuthContext';
 
 import '../Auth.scss';
 import { iconStyleDefault, iconStyleGreen } from '../../../styles/iconStyles';
