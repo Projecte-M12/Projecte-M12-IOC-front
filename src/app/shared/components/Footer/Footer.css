@@ -1,0 +1,110 @@
+/* Import defauts i variables */
+@import url('../../../styles/main_styles.css');
+
+/* Estils generals */
+.footer {
+    background-color: var(--white);
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    height: 9.313rem;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+    z-index: 2;
+}
+
+/* Estils dels paràgrafs generals */
+.footer p {
+    font-family: var(--roboto);
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.188rem;
+    letter-spacing: 0.05em;
+    color: var(--black);
+    opacity: 0.75;
+}
+
+/* Estils dels paràgrafs */
+.paragraphs p {
+    margin: 1.875rem;
+    margin-bottom: 0rem;
+}
+
+.paragraphs__link:hover {
+    opacity: 0.9;
+    cursor: pointer;
+    color: var(--accent-color);
+}
+
+/* Mostrar paràgrfs i las xarxes socials a la mateixa linea */
+.paragraphs,
+.socials {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Estils generals de les xarxes */
+.socials {
+    display: flex;
+    flex-direction: row;
+    margin-top: 2rem;
+    gap: 2rem;
+    margin-right: 2rem;
+}
+
+/* Estil de cada xarxa */
+.social {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/* Estil de les imatges de les xarxes */
+.social img {
+    width: 3rem;
+    height: 3rem;
+}
+
+/* Estils per a pantalles desktop */
+@media (max-width: 767px) {
+    .footer p {
+        font-size: 0.8rem;
+    }
+
+    .socials img {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+}
+
+/* Estils per als mòbils */
+@media (max-width: 480px) {
+    .footer {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .socials {
+        justify-content: center;
+        gap: 2rem;
+        margin-right: 0;
+        padding-bottom: 2rem;
+    }
+
+    .social p {
+        font-size: 0.8rem;
+    }
+
+    .paragraphs p {
+        font-size: 0.8rem;
+        margin-top: 1rem;
+        margin-left: 1.5rem;
+    }
+
+    .paragraphs__link {
+        font-size: 0.8rem;
+    }
+
+}

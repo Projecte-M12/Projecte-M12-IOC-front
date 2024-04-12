@@ -1,0 +1,33 @@
+/* Import defauts i variables */
+@import url('../../../styles/main_styles.css');
+
+/* Estils per al botó primari */
+.primary-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 15px;
+    gap: 15px;
+    background-color: #E99000;
+    outline: 3px #E99000 solid;
+    outline-offset: -3px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: 400ms;
+  }
+  
+  .primary-button .text {
+    color: white;
+    font-weight: 700;
+    font-size: 1em;
+    transition: 400ms;
+  }
+  
+  .primary-button:hover {
+    background-color: transparent;
+  }
+  
+  .primary-button:hover .text {
+    color: #E99000;
+  }

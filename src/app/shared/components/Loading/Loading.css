@@ -1,0 +1,49 @@
+/* Import defaults i variables */
+@import url('../../../styles/main_styles.css');
+
+/* Estil de la pàgina */
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: var(--white);
+    position: fixed;
+    z-index: 4;
+    top: 0;
+    left: 0;
+}
+
+/* Estil de l'icon */
+.icon {
+    width: 5.25rem;
+    height: 5.25rem;
+    object-fit: contain;
+    animation: rotateAndScaleAnimation 2s linear infinite;
+}
+
+/* Animació */
+
+@keyframes rotateAndScaleAnimation {
+    0% {
+        transform: rotate(0deg)
+    }
+
+    50% {
+        transform: rotate(180deg)
+    }
+
+    100% {
+        transform: rotate(360deg)
+    }
+}
+
+/* Media queries ?? */
+
+@media (max-width: 480px) {
+    .icon{
+        height: 4.7rem;
+        width: 4.7rem;
+    }
+}
