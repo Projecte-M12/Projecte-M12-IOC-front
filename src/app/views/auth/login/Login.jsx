@@ -1,12 +1,23 @@
+// Llibreries
 import { Navigate } from 'react-router-dom';
-
 import { useState } from 'react';
 import { useAuth } from '../../../hooks/useAuth';
 
-import '../Auth.scss';
+// Components propis
+import { Input } from '../../../shared/components/Input/Input.jsx';
+import { Button } from '../../../shared/components/Button/Button.jsx';
+import { InvertedButton } from '../../../shared/components/InvertedButton/InvertedButton.jsx';
+
+// Estils CSS
+import '../login/Login.css';
+
+// Imatges i icons
 import { iconStyleDefault } from '../../../styles/iconStyles';
-import logo from '../../../assets/logo/reservanow_logo.svg';
 import { FaUser, FaLock } from 'react-icons/fa';
+import logo from '../../../assets/logo/reservanow_logo.svg';
+import { eyeopen } from '../../../assets/icons/eyeopen.svg';
+import { eyecrossed } from '../../../assets/icons/eyecrossed.svg';
+
 
 // import { constants } from '../../../shared/constants';
 
@@ -18,6 +29,9 @@ export const Login = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    // Oculta o mostra la contrassenya
+    const [showPassword, setShowPassword] = useState(false);
 
     const hadleSubmit = (e) => {
         e.preventDefault();
@@ -37,20 +51,18 @@ export const Login = () => {
     //************************************************************************
 
     return (
-        <main className="main__login">
+        <main className="main__container-login">
             <div className="login__logo-container">
                 <img src={logo} className="login__logo" alt="Logo ReservaNOW" />
             </div>
             <form onSubmit={hadleSubmit} className="login__login-form">
-                <h1 className="login__title">Login</h1>
+                <h1 className="login__title">Hola de nou ;)</h1>
                 <div className="login__login-form__input-box">
-                    <input
-                        type="text"
-                        className="login__login-form__input"
+                    <Input
+                        type="email"
                         placeholder="Email"
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
                         value={email}
+                        onChange={(value) => setEmail(value)}
                     />
                     <div className="login__login-form__icon">
                         <FaUser style={iconStyleDefault} />
@@ -62,14 +74,25 @@ export const Login = () => {
                     </div>
                 ) : null}
                 <div className="login__login-form__input-box">
-                    <input
+                    <Input
                         type="password"
-                        className="login__login-form__input"
                         placeholder="Password"
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={(value) => setPassword(value)}
                         required
                         value={password}
                     />
+                    {/* Per defecte s'oculta la contrassenya */}
+                    <button
+                        type="button"
+                        className='password__toggle'
+                        onClick={() => setShowPassword(!showPassword)}
+                    >
+                        {showPassword ? (
+                            <img src={eyeCrossed} class='password__toggle--icon' alt="hide password" />
+                        ) : (
+                            <img src={eyeOpen} class='password__toggle--icon' alt="show password" />
+                        )}
+                    </button>
                     <div className="login__login-form__icon">
                         <FaLock style={iconStyleDefault} />
                     </div>

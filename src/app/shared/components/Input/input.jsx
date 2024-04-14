@@ -5,11 +5,20 @@ import React from 'react';
 import './Input.css';
 
 // Funció 
-export function Input() {
+export function Input({ label, type, placeholder, className, onChange }) {
+    const handleChange = (event) => {
+        onChange(event.target.value);
+    };
+
     return (
-        <div class="input-group">
-            <label class="label">text? </label>
-            <input autocomplete="off" name="Email" id="Email" class="input" type="email" />
+        <div class='input-group'>
+            <label class='label'>{label}</label>
+            <input
+                placeholder={placeholder}
+                class='input'
+                onChange={handleChange}
+                type={type}
+            />
             <div></div>
         </div>
     );
