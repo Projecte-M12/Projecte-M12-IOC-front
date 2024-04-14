@@ -1,6 +1,6 @@
+import { useState, useContext } from 'react';
 import { Navigate } from 'react-router-dom';
 
-import { useState, useContext } from 'react';
 import { authContext } from '../../../context/authContext';
 
 import '../Auth.scss';
@@ -9,6 +9,7 @@ import logo from '../../../assets/logo/reservanow_logo.svg';
 import { FaUser, FaLock } from 'react-icons/fa';
 
 import { API_BASE_URL, EDPOINT } from '../../../utils/constants';
+import { isValidEmail, isValidPassword } from '../../../utils/validations';
 
 export const Login = () => {
     /**
@@ -39,20 +40,10 @@ export const Login = () => {
 
     const hadleSubmit = (e) => {
         e.preventDefault();
-        // console.log(auth);
-        // auth.signin(email, password);
+        if (isValidEmail && isValidPassword(password)) {
+            // TODO: ENVIAR DATOS A LA API
+        }
     };
-
-    //**********************************************************************
-    // Live validations
-    //**********************************************************************
-    const isValidName = email.length > 3;
-    const isValidPassword = (password) => {
-        const passwordRegex =
-            /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
-        return passwordRegex.test(password);
-    };
-    //************************************************************************
 
     return (
         <main className="main__login">
@@ -74,7 +65,7 @@ export const Login = () => {
                         <FaUser style={iconStyleDefault} />
                     </div>
                 </div>
-                {!isValidName && email ? (
+                {!isValidEmail && email ? (
                     <div className="login__login-form__error">
                         Username must be larger than 3 characters
                     </div>
