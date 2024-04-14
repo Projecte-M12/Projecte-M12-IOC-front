@@ -1,4 +1,4 @@
-export const API_URL = 'http://reservanow-api.cat/api'
+export const API_BASE_URL = 'http://reservanow-api.cat/api'
 
 export const EDPOINT = {
   LOGIN: '/login',
