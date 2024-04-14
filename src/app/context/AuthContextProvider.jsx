@@ -7,7 +7,7 @@ export function AuthContextProvider({ children }) {
      */
     const [user, setUser] = useState(null);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [token, setToken] = useState(null);
 
