@@ -1,7 +1,8 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 
 import { authContext } from '../../../context/authContext';
+import { useAuthContext } from '../../../hooks/useAuthContext';
 
 import '../Auth.scss';
 import { iconStyleDefault } from '../../../styles/iconStyles';
@@ -10,6 +11,7 @@ import { FaUser, FaLock } from 'react-icons/fa';
 
 import { API_BASE_URL, EDPOINT } from '../../../utils/constants';
 import { isValidEmail, isValidPassword } from '../../../utils/validations';
+import { useCheckUser } from '../../../hooks/useCheckUser';
 
 export const Login = () => {
     /**
@@ -21,32 +23,35 @@ export const Login = () => {
     const {
         user,
         isAuthenticated,
-        loading,
         error,
         token,
         updateUser,
-        deleteUser,
         updateIsAuthentocated,
-        updateLoading,
         updateError,
         resetError,
         updateToken,
         resetToken,
-    } = useContext(authContext);
+    } = useAuthContext();
 
-    // if (auth.isAunthenticated) {
-    //   <Navigate to="/customer-dashboard" />;
-    // }
+    const handlePrueba = () => {
+        // if (isAuthenticated) {
+        //     <Navigate to="/customer-dashboard" />;
+        // }
+        updateIsAuthentocated(!isAuthenticated);
+    };
+    // useEffect(() => {
+    //     handlePrueba();
+    // }, []);
 
     const hadleSubmit = (e) => {
         e.preventDefault();
-        if (isValidEmail && isValidPassword(password)) {
-            // TODO: ENVIAR DATOS A LA API
-        }
     };
+    useCheckUser({ email, password, token });
 
     return (
         <main className="main__login">
+            <button onClick={handlePrueba}>Actualizar isAuthenticated</button>
+            {isAuthenticated && <Navigate to="/customer-dashboard" />}
             <div className="login__logo-container">
                 <img src={logo} className="login__logo" alt="Logo ReservaNOW" />
             </div>
