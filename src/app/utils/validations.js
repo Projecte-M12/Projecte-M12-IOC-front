@@ -1,6 +1,6 @@
 export const isValidEmail = (email) => {
     const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return email.test(regex);
+    return regex.test(email);
 };
 export const isValidPassword = (password) => {
     // SOLO TEST
