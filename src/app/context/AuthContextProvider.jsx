@@ -7,7 +7,6 @@ export function AuthContextProvider({ children }) {
      */
     const [user, setUser] = useState(null);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [error, setError] = useState(null);
     const [token, setToken] = useState(null);
 
     /**
@@ -21,10 +20,7 @@ export function AuthContextProvider({ children }) {
     const updateUser = (usuario) => setUser(usuario);
     const deleteUser = () => setUser(null);
 
-    const updateIsAuthentocated = () => setIsAuthenticated((prev) => !prev);
-
-    const updateError = (error) => setError(error);
-    const resetError = () => setError(null);
+    const updateIsAuthenticated = () => setIsAuthenticated((prev) => !prev);
 
     const updateToken = (token) => setToken(token);
     const resetToken = () => setToken(null);
@@ -38,13 +34,10 @@ export function AuthContextProvider({ children }) {
                 context,
                 user,
                 isAuthenticated,
-                error,
                 token,
                 updateUser,
                 deleteUser,
-                updateIsAuthentocated,
-                updateError,
-                resetError,
+                updateIsAuthenticated,
                 updateToken,
                 resetToken,
             }}

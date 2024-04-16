@@ -1,68 +1,62 @@
+/**
+ * React
+ */
 import { useState, useContext, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 
-import { authContext } from '../../../context/authContext';
-import { useAuthContext } from '../../../hooks/useAuthContext';
+/**
+ * Utils
+ */
+import { API_BASE_URL, EDPOINT } from '../../../utils/constants';
+import { isValidEmail, isValidPassword } from '../../../utils/validations';
 
+/**
+ * Hooks
+ */
+import { useAuthContext } from '../../../hooks/useAuthContext';
+import { useCheckUser } from '../../../hooks/useCheckUser';
+import { useLogin } from '../../../hooks/useLogin';
+
+/**
+ * Styles
+ */
 import '../Auth.scss';
 import { iconStyleDefault } from '../../../styles/iconStyles';
 import logo from '../../../assets/logo/reservanow_logo.svg';
 import { FaUser, FaLock } from 'react-icons/fa';
 
-import { API_BASE_URL, EDPOINT } from '../../../utils/constants';
-import { isValidEmail, isValidPassword } from '../../../utils/validations';
-import { useCheckUser } from '../../../hooks/useCheckUser';
-
 export const Login = () => {
     /**
      * States
      */
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const {
+        email,
+        password,
+        loading,
+        handleEmailChange,
+        handlePasswordChange,
+        handleSubmit,
+        handleLogout,
+    } = useLogin();
 
     const {
-        user,
         isAuthenticated,
-        error,
-        token,
-        updateUser,
-        updateIsAuthentocated,
-        updateError,
-        resetError,
-        updateToken,
-        resetToken,
     } = useAuthContext();
-
-    const handlePrueba = () => {
-        // if (isAuthenticated) {
-        //     <Navigate to="/customer-dashboard" />;
-        // }
-        updateIsAuthentocated(!isAuthenticated);
-    };
-    // useEffect(() => {
-    //     handlePrueba();
-    // }, []);
-
-    const hadleSubmit = (e) => {
-        e.preventDefault();
-    };
-    useCheckUser({ email, password, token });
 
     return (
         <main className="main__login">
-            <button onClick={handlePrueba}>Actualizar isAuthenticated</button>
-            {isAuthenticated && <Navigate to="/customer-dashboard" />}
+            {isAuthenticated && <Navigate to="/" />}
             <div className="login__logo-container">
                 <img src={logo} className="login__logo" alt="Logo ReservaNOW" />
             </div>
-            <form onSubmit={hadleSubmit} className="login__login-form">
+            <form className="login__login-form">
                 <h1 className="login__title">Login</h1>
                 <div className="login__login-form__input-box">
                     <input
                         type="text"
                         className="login__login-form__input"
                         placeholder="Email"
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={handleEmailChange}
                         required
                         value={email}
                     />
@@ -80,7 +74,7 @@ export const Login = () => {
                         type="password"
                         className="login__login-form__input"
                         placeholder="Password"
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={handlePasswordChange}
                         required
                         value={password}
                     />
@@ -103,7 +97,12 @@ export const Login = () => {
                 <div>
                     <a href="#">Forgot password?</a>
                 </div>
-                <button className="login__login-form__submit-btn" type="submit">
+                <button
+                    className="login__login-form__submit-btn"
+                    type="submit"
+                    onClick={handleSubmit}
+                    disabled={loading}
+                >
                     Login
                 </button>
                 <div className="login__login-form__signup">
