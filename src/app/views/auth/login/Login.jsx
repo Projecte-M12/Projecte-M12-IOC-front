@@ -1,54 +1,60 @@
-import { Navigate } from 'react-router-dom';
+/**
+ * React
+ */
+import { Link, Navigate } from 'react-router-dom';
 
-import { useState } from 'react';
-import { useAuth } from '../../../hooks/useAuth';
+/**
+ * Utils
+ */
+import { isValidEmail, isValidPassword } from '../../../utils/validations';
 
+/**
+ * Hooks
+ */
+import { useAuthContext } from '../../../hooks/useAuthContext';
+import { useLogin } from '../../../hooks/useLogin';
+import { useCheckUser } from '../../../hooks/useCheckUser';
+
+/**
+ * Styles
+ */
 import '../Auth.scss';
 import { iconStyleDefault } from '../../../styles/iconStyles';
 import logo from '../../../assets/logo/reservanow_logo.svg';
 import { FaUser, FaLock } from 'react-icons/fa';
 
-// import { constants } from '../../../shared/constants';
-
 export const Login = () => {
-    const auth = useAuth();
-    if (auth.isAunthenticated) {
-        <Navigate to="/customer-dashboard" />;
-    }
+    useCheckUser();
+    /**
+     * States
+     */
+    const {
+        email,
+        password,
+        loading,
+        handleEmailChange,
+        handlePasswordChange,
+        handleSubmit,
+    } = useLogin();
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-
-    const hadleSubmit = (e) => {
-        e.preventDefault();
-        // console.log(auth);
-        auth.signin(email, password);
-    };
-
-    //**********************************************************************
-    // Live validations
-    //**********************************************************************
-    const isValidName = email.length > 3;
-    const isValidPassword = (password) => {
-        const passwordRegex =
-            /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
-        return passwordRegex.test(password);
-    };
-    //************************************************************************
+    const { isAuthenticated } = useAuthContext();
 
     return (
         <main className="main__login">
+            {
+                isAuthenticated && <Navigate to="/" />
+            }
             <div className="login__logo-container">
                 <img src={logo} className="login__logo" alt="Logo ReservaNOW" />
             </div>
-            <form onSubmit={hadleSubmit} className="login__login-form">
+            <form className="login__login-form">
                 <h1 className="login__title">Login</h1>
                 <div className="login__login-form__input-box">
                     <input
                         type="text"
                         className="login__login-form__input"
                         placeholder="Email"
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={handleEmailChange}
                         required
                         value={email}
                     />
@@ -56,7 +62,7 @@ export const Login = () => {
                         <FaUser style={iconStyleDefault} />
                     </div>
                 </div>
-                {!isValidName && email ? (
+                {!isValidEmail && email ? (
                     <div className="login__login-form__error">
                         Username must be larger than 3 characters
                     </div>
@@ -66,7 +72,7 @@ export const Login = () => {
                         type="password"
                         className="login__login-form__input"
                         placeholder="Password"
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={handlePasswordChange}
                         required
                         value={password}
                     />
@@ -89,11 +95,16 @@ export const Login = () => {
                 <div>
                     <a href="#">Forgot password?</a>
                 </div>
-                <button className="login__login-form__submit-btn" type="submit">
+                <button
+                    className="login__login-form__submit-btn"
+                    type="submit"
+                    onClick={handleSubmit}
+                    disabled={loading}
+                >
                     Login
                 </button>
                 <div className="login__login-form__signup">
-                    {"Don't have an account?"} <a href="/signup">Signup</a>
+                    {"Don't have an account?"} <Link to="/signup">Signup</Link>
                 </div>
             </form>
         </main>
