@@ -23,8 +23,15 @@ import { iconStyleDefault } from '../../../styles/iconStyles';
 import logo from '../../../assets/logo/reservanow_logo.svg';
 import { FaUser, FaLock } from 'react-icons/fa';
 
+/**
+ * Componente Login
+ */
 export const Login = () => {
+    /**
+     * Custom Hooks
+     */
     useCheckUser();
+
     /**
      * States
      */
@@ -39,11 +46,12 @@ export const Login = () => {
 
     const { isAuthenticated } = useAuthContext();
 
+    /**
+     * Return
+     */
     return (
         <main className="main__login">
-            {
-                isAuthenticated && <Navigate to="/" />
-            }
+            {isAuthenticated && <Navigate to="/" />}
             <div className="login__logo-container">
                 <img src={logo} className="login__logo" alt="Logo ReservaNOW" />
             </div>
