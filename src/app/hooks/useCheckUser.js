@@ -43,7 +43,7 @@ export const useCheckUser = () => {
                         updateToken(data.access_token);
                         console.log(data);
                     }
-                    if(data.error) console.log(data.error);
+                    if(data.error) console.log(`Error: ${data.error}`);
                 }
             } catch (error) {
                 console.log('Error al comprobar el token', error);
