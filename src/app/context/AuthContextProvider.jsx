@@ -1,5 +1,5 @@
 import { authContext } from './authContext';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 
 export function AuthContextProvider({ children }) {
     /**
@@ -10,20 +10,28 @@ export function AuthContextProvider({ children }) {
     const [token, setToken] = useState(null);
 
     /**
-     * Context
-     */
-    const context = useContext(authContext);
-
-    /**
      * Functions
      */
-    const updateUser = (usuario) => setUser(usuario);
+    const updateUser = (usuario) => {
+        localStorage.setItem('user', JSON.stringify(usuario));
+        setUser(usuario);
+    };
+
     const deleteUser = () => setUser(null);
 
     const updateIsAuthenticated = () => setIsAuthenticated((prev) => !prev);
 
-    const updateToken = (token) => setToken(token);
-    const resetToken = () => setToken(null);
+    const updateToken = (token) => {
+        console.log('updateToken');
+        console.log(token);
+        // localStorage.removeItem('access_token');
+        localStorage.setItem('access_token', token);
+        setToken(token);
+    };
+    const resetToken = () => {
+        localStorage.removeItem('access_token');
+        setToken(null);
+    };
 
     /**
      * RETURN
@@ -31,7 +39,7 @@ export function AuthContextProvider({ children }) {
     return (
         <authContext.Provider
             value={{
-                context,
+                // context,
                 user,
                 isAuthenticated,
                 token,

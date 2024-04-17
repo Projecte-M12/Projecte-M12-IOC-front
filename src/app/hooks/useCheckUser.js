@@ -1,6 +1,7 @@
-import { useContext, useEffect } from 'react';
-import { authContext } from '../context/authContext';
+import { useEffect, useState } from 'react';
 import { isValidEmail, isValidPassword } from '../utils/validations';
+import { API_BASE_URL, EDPOINT } from '../utils/constants';
+import { useAuthContext } from './useAuthContext';
 
 /**
  * Custom hook que se ejecutará cuando el usuario inicia sesión y al cargar la aplicación
@@ -8,27 +9,50 @@ import { isValidEmail, isValidPassword } from '../utils/validations';
  * @param {password} param password - The password of the user to login
  * @param {token} param token - The token of the user
  */
-export const useCheckUser = ({ email, password, token }) => {
-    const { updateUser, updateIsAuthentocated, updateToken } =
-        useContext(authContext);
+export const useCheckUser = () => {
+    const [counter, setCounter] = useState(0);
 
-    // Decidir el porvider a utilizar para que se ejecute el useEffect
+    const { updateUser, updateIsAuthenticated, token, updateToken } =
+        useAuthContext();
+
+    const tokenLocalStorage = localStorage.getItem('access_token');
+    // console.log(tokenLocalStorage);
+
+    const optionsFetchToken = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+            Authorization: `Bearer ${tokenLocalStorage}`,
+        },
+    };
+
     useEffect(() => {
-        if (token) {
-            // Si llega un token significa que ya existe un token en el localStorage
-            // TODO: VALIDAR TOKEN EN EL SERVIDOR
+        const checkToken = async () => {
+            setCounter(counter + 1);
+            try {
+                const response = await fetch(
+                    API_BASE_URL + EDPOINT.USER,
+                    optionsFetchToken,
+                );
+                if (response.status === 200) {
+                    const data = await response.json();
+                    if (data.user) {
+                        updateUser(data.user);
+                        updateIsAuthenticated(true);
+                        updateToken(data.access_token);
+                        console.log(data);
+                    }
+                    if(data.error) console.log(data.error);
+                }
+            } catch (error) {
+                console.log('Error al comprobar el token', error);
+            }
+        };
+        checkToken();
 
-            const tokenLocalStorage = localStorage.getItem('access_token');
-        }
-        if (isValidEmail(email) && isValidPassword(password)) {
-            // TODO: ENVIAR DATOS A LA API.
-            // En caso de recibir el token, guardarlo en el localStorage y actualizar el contexto (isAuthenticated, user, token)
-        }
-
-        // Decidir qué hacer al destruirse el componente
-        return;
+        // return;
     }, []);
-
     //Decidir qué devolver
-    return;
+    // return;
 };

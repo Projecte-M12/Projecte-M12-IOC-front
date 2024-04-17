@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { API_BASE_URL, EDPOINT } from '../utils/constants';
 import { useAuthContext } from './useAuthContext';
-export const useLogin = (emailForm, passwordForm) => {
+
+export const useLogin = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+
 
     const { updateUser, updateIsAuthenticated, updateToken, resetToken } =
         useAuthContext();
@@ -30,18 +32,25 @@ export const useLogin = (emailForm, passwordForm) => {
                     'Content-Type': 'application/json',
                     Accept: 'application/json',
                 },
-                body: JSON.stringify({ emailForm, passwordForm }),
-                signal: controller.signal,
+                body: JSON.stringify({ email, password }),
+                // signal: controller.signal,
             };
-            fetch(API_BASE_URL + EDPOINT.LOGIN, optionsFetchCredentials).then(
-                (response) => {
-                    console.log(response);
-                },
+            const response = await fetch(
+                API_BASE_URL + EDPOINT.LOGIN,
+                optionsFetchCredentials,
             );
+            if (!response.ok) throw new Error('Error al iniciar sesión');
 
+            console.log('Haciendo cosas del login...');
+
+            const data = await response.json();
+            console.log(data);
             updateIsAuthenticated(true);
+            updateToken(data.access_token);
+            updateUser(data.user);
         } catch (error) {
             setError(error);
+            console.log(error);
         } finally {
             setLoading(false);
         }

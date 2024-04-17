@@ -1,21 +1,19 @@
 /**
  * React
  */
-import { useState, useContext, useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 
 /**
  * Utils
  */
-import { API_BASE_URL, EDPOINT } from '../../../utils/constants';
 import { isValidEmail, isValidPassword } from '../../../utils/validations';
 
 /**
  * Hooks
  */
 import { useAuthContext } from '../../../hooks/useAuthContext';
-import { useCheckUser } from '../../../hooks/useCheckUser';
 import { useLogin } from '../../../hooks/useLogin';
+import { useCheckUser } from '../../../hooks/useCheckUser';
 
 /**
  * Styles
@@ -26,6 +24,7 @@ import logo from '../../../assets/logo/reservanow_logo.svg';
 import { FaUser, FaLock } from 'react-icons/fa';
 
 export const Login = () => {
+    useCheckUser();
     /**
      * States
      */
@@ -36,16 +35,15 @@ export const Login = () => {
         handleEmailChange,
         handlePasswordChange,
         handleSubmit,
-        handleLogout,
     } = useLogin();
 
-    const {
-        isAuthenticated,
-    } = useAuthContext();
+    const { isAuthenticated } = useAuthContext();
 
     return (
         <main className="main__login">
-            {isAuthenticated && <Navigate to="/" />}
+            {
+                isAuthenticated && <Navigate to="/" />
+            }
             <div className="login__logo-container">
                 <img src={logo} className="login__logo" alt="Logo ReservaNOW" />
             </div>
@@ -106,7 +104,7 @@ export const Login = () => {
                     Login
                 </button>
                 <div className="login__login-form__signup">
-                    {"Don't have an account?"} <a href="/signup">Signup</a>
+                    {"Don't have an account?"} <Link to="/signup">Signup</Link>
                 </div>
             </form>
         </main>
