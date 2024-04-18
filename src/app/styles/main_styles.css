@@ -26,7 +26,7 @@
 
 /* Reset o normalització CSS */
 /* Importació de la llibreria Normalize.css */
-@import url('https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css');
+/*@import url('https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css');*/ 
 
 
 /* Media Queries */
@@ -82,6 +82,8 @@
   --black: #0C0C0C;
   --white: #FAF9F6;
   --roboto: 'Roboto Flex', sans-serif;
+  
+  --accent-color-40: rgba(233, 144, 0, 0.40);
 }
 
 

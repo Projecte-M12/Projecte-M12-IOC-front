@@ -1,48 +1,44 @@
-/* Import per defecte i variables */
-@import url('../../../styles/main_styles.css');
-
 /* Login.css */
-.main__contariner-login {
+.login-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding-bottom: 2rem;
-    border-radius: 20px;
-    background-color: var(--light-grey);
+    background-color: var(--accent-color-40);
 }
 
 .login__logo-container {
-    /* Estils pel contenidor del logotip */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
 }
 
 .login__logo {
-    /* Estils pel logotip */
+    max-width: 500px;
+    width: 100%;
 }
 
-.login__login-form {
-    /* Estils pel formulari d'inici de sessió */
-}
+.login__form {}
 
 .login__title {
-    /* Estils pel títol del formulari */
+    color: var(--black);
+    font-family: var(--roboto);
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
 }
 
-/* Estils pels camps d'entrada */
-.login__login-form__input-box {
-  
-}
+.login__input-box {}
 
-.login__login-form__input {
-    /* Estils pel camp d'entrada */
-}
+.login__icon {}
 
-.login__login-form__icon {
-    /* Estils per a l'icona al costat del camp d'entrada */
-}
-
-.password__toggle {
+.login__password-toggle {
     position: absolute;
-    right: 8px; /* Ajusta aquest valor segons la teva preferència */
+    right: 8px;
+    /* Ajusta aquest valor segons la teva preferència */
     top: 50%;
     transform: translateY(-50%);
     width: 16px;
@@ -54,28 +50,10 @@
     cursor: pointer;
 }
 
-.password__toggle--icon {
-    width: 16px;
-    height: 16px;
-    color: #999; /* Color de l'icona */
-}
+.login__error {}
 
-/* Estils pels missatges d'error */
-.login__login-form__error {
-    /* Estils pel missatge d'error */
-}
+.login__remember {}
 
-/* Estils pel botó d'enviament */
-.login__login-form__submit-btn {
-    /* Estils pel botó d'enviament */
-}
+.login__submit-btn {}
 
-/* Estils per a l'enllaç de "Has oblidat la contrasenya?" */
-.login__login-form__signup a {
-    /* Estils per a l'enllaç "Has oblidat la contrasenya?" */
-}
-
-/* Estils per a l'enllaç de registre */
-.login__login-form__signup {
-    /* Estils per a l'enllaç de registre */
-}
+.login__signup {}

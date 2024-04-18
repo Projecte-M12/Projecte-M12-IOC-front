@@ -2,7 +2,7 @@
 @import url('../../../styles/main_styles.css');
 
 /* Estil per als inputs */
-.input {
+.input-group {
     max-width: 190px;
     height: 40px;
     background-color: var(--white);

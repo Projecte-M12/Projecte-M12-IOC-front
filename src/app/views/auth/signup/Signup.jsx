@@ -3,7 +3,9 @@ import { Navigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useAuth } from '../../../hooks/useAuth';
 
-import '../Auth.scss';
+//import '../Auth.scss';
+
+
 import { iconStyleDefault, iconStyleGreen } from '../../../styles/iconStyles';
 import logo from '../../../assets/logo/reservanow_logo.svg';
 import { FaUser, FaLock } from 'react-icons/fa';

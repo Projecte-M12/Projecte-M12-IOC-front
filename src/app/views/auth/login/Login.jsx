@@ -1,10 +1,10 @@
 // Llibreries
+import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import { useState } from 'react';
 import { useAuth } from '../../../hooks/useAuth';
 
 // Components propis
-import { Input } from '../../../shared/components/Input/Input.jsx';
+import { Input } from '../../../shared/components/Input/input.jsx';
 import { Button } from '../../../shared/components/Button/Button.jsx';
 import { InvertedButton } from '../../../shared/components/InvertedButton/InvertedButton.jsx';
 
@@ -15,8 +15,8 @@ import '../login/Login.css';
 import { iconStyleDefault } from '../../../styles/iconStyles';
 import { FaUser, FaLock } from 'react-icons/fa';
 import logo from '../../../assets/logo/reservanow_logo.svg';
-import { eyeopen } from '../../../assets/icons/eyeopen.svg';
-import { eyecrossed } from '../../../assets/icons/eyecrossed.svg';
+import eyeOpen from '../../../assets/icons/eyeopen.svg';
+import eyeCrossed from '../../../assets/icons/eyecrossed.svg';
 
 
 // import { constants } from '../../../shared/constants';
@@ -33,7 +33,7 @@ export const Login = () => {
     // Oculta o mostra la contrassenya
     const [showPassword, setShowPassword] = useState(false);
 
-    const hadleSubmit = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         // console.log(auth);
         auth.signin(email, password);
@@ -51,74 +51,76 @@ export const Login = () => {
     //************************************************************************
 
     return (
-        <main className="main__container-login">
-            <div className="login__logo-container">
-                <img src={logo} className="login__logo" alt="Logo ReservaNOW" />
-            </div>
-            <form onSubmit={hadleSubmit} className="login__login-form">
-                <h1 className="login__title">Hola de nou ;)</h1>
-                <div className="login__login-form__input-box">
-                    <Input
-                        type="email"
-                        placeholder="Email"
-                        value={email}
-                        onChange={(value) => setEmail(value)}
-                    />
-                    <div className="login__login-form__icon">
-                        <FaUser style={iconStyleDefault} />
-                    </div>
+        <>
+            <main className="login-container">
+                {/* Referir al CSS aquí */}
+                <div className="login__logo-container">
+                    <img src={logo} className="login__logo" alt="Logo ReservaNOW" />
                 </div>
-                {!isValidName && email ? (
-                    <div className="login__login-form__error">
-                        Username must be larger than 3 characters
+                <form onSubmit={handleSubmit} className="login__form">
+                    <h1 className="login__title">Hola de nou ;)</h1>
+                    <div className="login__input-box">
+                        <Input
+                            type="email"
+                            placeholder="Email"
+                            value={email}
+                            onChange={(value) => setEmail(value)}
+                        />
+                        <div className="login__icon">
+                            <FaUser style={iconStyleDefault} />
+                        </div>
                     </div>
-                ) : null}
-                <div className="login__login-form__input-box">
-                    <Input
-                        type="password"
-                        placeholder="Password"
-                        onChange={(value) => setPassword(value)}
-                        required
-                        value={password}
-                    />
-                    {/* Per defecte s'oculta la contrassenya */}
-                    <button
-                        type="button"
-                        className='password__toggle'
-                        onClick={() => setShowPassword(!showPassword)}
-                    >
-                        {showPassword ? (
-                            <img src={eyeCrossed} class='password__toggle--icon' alt="hide password" />
-                        ) : (
-                            <img src={eyeOpen} class='password__toggle--icon' alt="show password" />
-                        )}
+                    {!isValidName && email ? (
+                        <div className="login__error">
+                            L'email ha de tenir més de 3 caràcters
+                        </div>
+                    ) : null}
+                    <div className="login__input-box">
+                        <Input
+                            type={showPassword ? 'text' : 'password'}
+                            placeholder="Password"
+                            onChange={(value) => setPassword(value)}
+                            required
+                            value={password}
+                        />
+                        {/* Per defecte s'oculta la contrasenya */}
+                        <button
+                            type="button"
+                            className='login__password-toggle'
+                            onClick={() => setShowPassword(!showPassword)}
+                        >
+                            {showPassword ? (
+                                <img src={eyeOpen} alt="Oculta contrasenya" />
+                            ) : (
+                                <img src={eyeCrossed} alt="Mostra contrasenya" />
+                            )}
+                        </button>
+                        <div className="login__icon">
+                            <FaLock style={iconStyleDefault} />
+                        </div>
+                    </div>
+                    {!isValidPassword(password) && password ? (
+                        <div className="login__error">
+                            La contrasenya ha de tenir com a mínim 8 caràcters, 1 número, 1 majúscula i 1 minúscula
+                        </div>
+                    ) : null}
+                    <div className="login__remember">
+                        <label htmlFor="remember">
+                            <input type="checkbox" name="remember" id="remember" />
+                        </label>
+                        <p>Recorda'm</p>
+                    </div>
+                    <div>
+                        <a href="#">Has oblidat la contrasenya?</a>
+                    </div>
+                    <button className="login__submit-btn" type="submit">
+                        Login
                     </button>
-                    <div className="login__login-form__icon">
-                        <FaLock style={iconStyleDefault} />
+                    <div className="login__signup">
+                        {"Encara no tens un compte?"} <a href="/signup">Registra't</a>
                     </div>
-                </div>
-                {!isValidPassword(password) && password ? (
-                    <div className="login__login-form__error">
-                        At least 8 characters, 1 number, 1 uppercase, 1
-                        lowercase
-                    </div>
-                ) : null}
-                <div className="login__login-form__remember">
-                    <label htmlFor="remember">
-                        <input type="checkbox" name="remember" id="remember" />
-                    </label>
-                    <p>Remember me</p>
-                </div>
-                <div>
-                    <a href="#">Forgot password?</a>
-                </div>
-                <button className="login__login-form__submit-btn" type="submit">
-                    Login
-                </button>
-                <div className="login__login-form__signup">
-                    {"Don't have an account?"} <a href="/signup">Signup</a>
-                </div>
-            </form>
-        </main>
+                </form>
+            </main>
+        </>
     );
 };

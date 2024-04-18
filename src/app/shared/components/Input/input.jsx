@@ -2,20 +2,19 @@
 import React from 'react';
 
 // Estils 
-import './Input.css';
+import './input.css';
 
 // Funció 
-export function Input({ label, type, placeholder, className, onChange }) {
+export function Input({ label, type, placeholder, onChange }) {
     const handleChange = (event) => {
         onChange(event.target.value);
     };
 
     return (
-        <div class='input-group'>
-            <label class='label'>{label}</label>
+        <div className='input-group'>
+            <label className='label'>{label}</label>
             <input
                 placeholder={placeholder}
-                class='input'
                 onChange={handleChange}
                 type={type}
             />
