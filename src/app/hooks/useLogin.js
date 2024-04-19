@@ -17,7 +17,7 @@ export const useLogin = () => {
     /**
      * Custom hooks
      */
-    const { updateUser, updateIsAuthenticated, updateToken, resetToken } =
+    const { updateUser, resetUser, updateIsAuthenticated, updateToken, resetToken } =
         useAuthContext();
 
     /**
@@ -71,6 +71,9 @@ export const useLogin = () => {
 
     const handleLogout = () => {
         updateIsAuthenticated(false);
+        resetToken();
+        resetUser();
+
     };
 
     /**
