@@ -3,12 +3,13 @@ import { Link, Navigate } from 'react-router-dom';
 import { useAuthContext } from '../../../hooks/useAuthContext';
 
 export function CustomerDashboard() {
+    /**
+     * States
+     */
     const {
-        user,
-        isAuthenticated,
-        token,
         updateUser,
-        updateIsAuthentocated,
+        resetUser,
+        updateIsAuthenticated,
         updateToken,
         resetToken,
     } = useAuthContext();
