@@ -58,10 +58,10 @@ export const Signup = () => {
      * Comprobación usuario logueado y redirección
      */
     if (isAuthenticated) {
-        if (user.is_company) {
-            return <Navigate to="/customer-dashboard" />;
+        if (user && user.is_company) {
+            return <Navigate to="/customer-dashboard" replace/>;
         } else {
-            return <Navigate to="/company-dashboard" />;
+            return <Navigate to="/company-dashboard" replace/>;
         }
     }
 
