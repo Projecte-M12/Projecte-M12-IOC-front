@@ -44,7 +44,15 @@ export const Login = () => {
         handleSubmit,
     } = useLogin();
 
-    const { isAuthenticated } = useAuthContext();
+    const { isAuthenticated, user } = useAuthContext();
+
+    if (isAuthenticated) {
+        if (user.is_company === 0) {
+            return <Navigate to="/customer-dashboard" />;
+        } else {
+            return <Navigate to="/company-dashboard" />;
+        }
+    }
 
     /**
      * Return
