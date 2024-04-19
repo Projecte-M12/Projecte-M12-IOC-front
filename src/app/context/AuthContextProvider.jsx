@@ -17,9 +17,7 @@ export function AuthContextProvider({ children }) {
         setUser(usuario);
     };
 
-    const deleteUser = () => setUser(null);
-
-    const updateIsAuthenticated = () => setIsAuthenticated((prev) => !prev);
+    const updateIsAuthenticated = (estado) => setIsAuthenticated(estado);
 
     const updateToken = (token) => {
         console.log('updateToken');
@@ -28,6 +26,12 @@ export function AuthContextProvider({ children }) {
         localStorage.setItem('access_token', token);
         setToken(token);
     };
+
+    const resetUser = () => {
+        localStorage.removeItem('user');
+        setUser(null);
+    };
+
     const resetToken = () => {
         localStorage.removeItem('access_token');
         setToken(null);
@@ -44,7 +48,7 @@ export function AuthContextProvider({ children }) {
                 isAuthenticated,
                 token,
                 updateUser,
-                deleteUser,
+                resetUser,
                 updateIsAuthenticated,
                 updateToken,
                 resetToken,
