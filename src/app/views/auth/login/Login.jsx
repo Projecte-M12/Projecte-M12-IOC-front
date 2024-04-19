@@ -22,6 +22,7 @@ import '../Auth.scss';
 import { iconStyleDefault } from '../../../styles/iconStyles';
 import logo from '../../../assets/logo/reservanow_logo.svg';
 import { FaUser, FaLock } from 'react-icons/fa';
+import { useEffect } from 'react';
 
 /**
  * Componente Login
@@ -30,7 +31,10 @@ export const Login = () => {
     /**
      * Custom Hooks
      */
-    useCheckUser();
+    const { checkToken } = useCheckUser();
+    useEffect(() => {
+        checkToken();
+    },[]);
 
     /**
      * States
@@ -48,9 +52,9 @@ export const Login = () => {
 
     if (isAuthenticated) {
         if (user.is_company === 0) {
-            return <Navigate to="/customer-dashboard" />;
+            return <Navigate to="/customer-dashboard" replace />;
         } else {
-            return <Navigate to="/company-dashboard" />;
+            return <Navigate to="/company-dashboard" replace />;
         }
     }
 
@@ -120,7 +124,10 @@ export const Login = () => {
                     Login
                 </button>
                 <div className="login__login-form__signup">
-                    {"Don't have an account?"} <Link to="/signup">Signup</Link>
+                    {"Don't have an account?"}{' '}
+                    <Link to="/signup" replace>
+                        Signup
+                    </Link>
                 </div>
             </form>
         </main>

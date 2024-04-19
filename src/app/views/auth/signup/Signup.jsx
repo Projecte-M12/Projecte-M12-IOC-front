@@ -2,7 +2,7 @@
  * React
  */
 import { Link, Navigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 /**
  * Utils
@@ -28,8 +28,10 @@ export const Signup = () => {
     /**
      * Custom Hooks
      */
-    useCheckUser();
-
+    const { checkToken } = useCheckUser();
+    useEffect(() => {
+        checkToken();
+    }, []);
     /**
      * States
      */
@@ -46,7 +48,6 @@ export const Signup = () => {
         handlePasswordChange,
         handleSubmit,
     } = useLogin();
-
 
     /**
      * Funciones
@@ -174,7 +175,10 @@ export const Signup = () => {
                     Signup
                 </button>
                 <div className="login__login-form__signup">
-                    Ja tens un compte? <Link to="/login">Login</Link>
+                    Ja tens un compte?{' '}
+                    <Link to="/login" replace>
+                        Login
+                    </Link>
                 </div>
             </form>
         </main>
