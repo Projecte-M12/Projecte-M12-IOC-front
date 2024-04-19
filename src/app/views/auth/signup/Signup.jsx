@@ -35,11 +35,7 @@ export const Signup = () => {
      */
     const [confirmedPassword, setConfirmedPrePassword] = useState('');
     const [isChecked, setIsChecked] = useState(false);
-
-    /**
-     * Funciones
-     */
-    const handleCheckboxChange = () => setIsChecked(!isChecked);
+    const { isAuthenticated, user } = useAuthContext();
 
     // Hay que crear un useSignup con su propio estado
     const {
@@ -50,8 +46,16 @@ export const Signup = () => {
         handlePasswordChange,
         handleSubmit,
     } = useLogin();
-    const { isAuthenticated, user } = useAuthContext();
 
+
+    /**
+     * Funciones
+     */
+    const handleCheckboxChange = () => setIsChecked(!isChecked);
+
+    /**
+     * Comprobación usuario logueado y redirección
+     */
     if (isAuthenticated) {
         if (user.is_company) {
             return <Navigate to="/customer-dashboard" />;
