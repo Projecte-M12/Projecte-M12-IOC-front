@@ -135,7 +135,9 @@ export const Login = () => {
                         className="login__login-form__submit-btn"
                         type="submit"
                         onClick={handleSubmit}
-                        disabled={loading}
+                        disabled={
+                            !isValidEmail(email) || !isValidPassword(password)
+                        }
                     >
                         Login
                     </button>

@@ -20,9 +20,14 @@ import { useCheckUser } from '../../../hooks/useCheckUser';
  * Styles
  */
 import '../Auth.scss';
-import { iconStyleDefault, iconStyleGreen } from '../../../styles/iconStyles';
+import {
+    iconStyleDefault,
+    iconStyleGreen,
+    iconStyleRed,
+} from '../../../styles/iconStyles';
 import logo from '../../../assets/logo/reservanow_logo.svg';
 import { FaUser, FaLock } from 'react-icons/fa';
+import { useSignup } from '../../../hooks/useSignUp';
 
 export const Signup = () => {
     /**
@@ -35,8 +40,7 @@ export const Signup = () => {
     /**
      * States
      */
-    const [confirmedPassword, setConfirmedPrePassword] = useState('');
-    const [isChecked, setIsChecked] = useState(false);
+    // const [confirmedPassword, setConfirmedPrePassword] = useState('');
     const { isAuthenticated, user } = useAuthContext();
 
     // Hay que crear un useSignup con su propio estado
@@ -44,24 +48,30 @@ export const Signup = () => {
         email,
         password,
         loading,
+        error,
+        isCompany,
+        passwordConfirmation,
         handleEmailChange,
         handlePasswordChange,
+        handlePasswordConfirmationChange,
+        handleNameChange,
+        handleIsCompanyChange,
+        hadleServide,
         handleSubmit,
-    } = useLogin();
+    } = useSignup();
 
     /**
      * Funciones
      */
-    const handleCheckboxChange = () => setIsChecked(!isChecked);
 
     /**
      * Comprobación usuario logueado y redirección
      */
     if (isAuthenticated) {
         if (user && user.is_company) {
-            return <Navigate to="/customer-dashboard" replace/>;
+            return <Navigate to="/customer-dashboard" replace />;
         } else {
-            return <Navigate to="/company-dashboard" replace/>;
+            return <Navigate to="/company-dashboard" replace />;
         }
     }
 
@@ -114,18 +124,19 @@ export const Signup = () => {
                         type="password"
                         className="login__login-form__input"
                         placeholder="Confirma el password"
-                        onChange={(e) =>
-                            setConfirmedPrePassword(e.target.value)
-                        }
+                        value={passwordConfirmation}
+                        onChange={handlePasswordConfirmationChange}
                         required
                         // value={password}
                     />
                     <div className="login__login-form__icon">
                         <FaLock
                             style={
-                                password && password === confirmedPassword
+                                password && password === passwordConfirmation
                                     ? iconStyleGreen
-                                    : iconStyleDefault
+                                    : password
+                                      ? iconStyleRed
+                                      : iconStyleDefault
                             }
                         />
                     </div>
@@ -135,24 +146,27 @@ export const Signup = () => {
                     <input
                         type="checkbox"
                         id="is_company"
-                        checked={isChecked}
-                        onChange={handleCheckboxChange}
+                        value={isCompany}
+                        onChange={handleIsCompanyChange}
                     />
                     <label htmlFor="is_company">Soc una empresa</label>
                 </div>
-                {isChecked && (
+                {isCompany && (
                     <>
                         <div className="login__login-form__input-box">
                             <select
                                 name="servicio"
                                 className="login__login-form__input"
+                                // defaultValue={''}
+                                onChange={hadleServide}
                             >
-                                <option value="" disabled selected>
+                                <option value="" disabled>
                                     Selecciona...
                                 </option>
-                                <option value="">
+                                <option value="1">
                                     Aquí va un map de los servicios
                                 </option>
+                                <option value="2">Aquí va otra cosa</option>
                             </select>
                         </div>
                         <div className="login__login-form__input-box">
@@ -161,6 +175,7 @@ export const Signup = () => {
                                 name="nombreEmpresa"
                                 className="login__login-form__input"
                                 placeholder="Nom de l'empresa"
+                                onChange={handleNameChange}
                             />
                         </div>
                     </>
@@ -168,9 +183,17 @@ export const Signup = () => {
 
                 <button
                     className="login__login-form__submit-btn"
-                    type="submit"
-                    onClick={handleSubmit}
-                    disabled={loading}
+                    // type="submit"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        handleSubmit();
+                    }}
+                    disabled={
+                        !isValidEmail(email) ||
+                        !isValidPassword(password) ||
+                        !passwordConfirmation ||
+                        password !== passwordConfirmation
+                    }
                 >
                     Signup
                 </button>

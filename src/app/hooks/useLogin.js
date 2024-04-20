@@ -46,7 +46,7 @@ export const useLogin = () => {
                     Accept: 'application/json',
                 },
                 body: JSON.stringify({ email, password }),
-                // signal: controller.signal,
+                signal: controller.signal,
             };
 
             const response = await fetch(
