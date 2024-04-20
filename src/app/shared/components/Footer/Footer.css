@@ -59,8 +59,12 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
+
 }
 
+.social svg {
+    margin-bottom: 0.5rem;
+}
 /* Estil de les imatges de les xarxes */
 .social img {
     width: 3rem;
@@ -95,6 +99,7 @@
 
     .social p {
         font-size: 0.8rem;
+        flex-direction: column;
     }
 
     .paragraphs p {
@@ -105,6 +110,10 @@
 
     .paragraphs__link {
         font-size: 0.8rem;
+    }
+
+    .social img {
+        display: none;
     }
 
 }

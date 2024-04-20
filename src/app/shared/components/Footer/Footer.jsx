@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 
 // Estils CSS
 import './Footer.css';
+import { FaFacebook, FaInstagramSquare, FaSnapchat } from 'react-icons/fa';
+import { FaSquareXTwitter } from 'react-icons/fa6';
 
 // Import imatges
 
@@ -38,22 +40,25 @@ export const Footer = () => {
                 <div className="social">
                     <img src={"#"} alt="instagram" />
                     <p>
-                        NOM_XARXA
-                        <br /> ??{' '}
+                       <a><FaInstagramSquare /> Instagram {' '} </a>
                     </p>
                 </div>
                 <div className="social">
-                    <img src={"#"} alt="NOM_XARXA" />
+                    <img src={"#"} alt="facebook" />
                     <p>
-                        NOM_XARXA
-                        <br /> ??{' '}
+                        <a><FaFacebook /> Facebook {' '} </a>
                     </p>
                 </div>
                 <div className="social">
-                    <img src={"#"} alt="NOM_XARXA" />
+                    <img src={"#"} alt="twitter" />
                     <p>
-                        NOM_XARXA
-                        <br /> ??{' '}
+                        <a><FaSquareXTwitter /> Twitter{' '} </a>
+                    </p>
+                </div>
+                <div className="social">
+                    <img src={"#"} alt="snapchat" />
+                    <p>
+                        <a><FaSnapchat /> Snapchat{' '} </a>
                     </p>
                 </div>
             </div>
