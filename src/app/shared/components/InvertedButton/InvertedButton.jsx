@@ -6,13 +6,13 @@ import { Link } from 'react-router-dom';
 import './InvertedButton.css';
 
 // Component del botó primari; pots passar; una url una acció o un text
-export function InvertedButton({ text, url, action, isLink }) {
+export function InvertedButton({ text, url, action, isLink, className = "inverted__primary-button" }) {
     const ButtonComponent = isLink ? Link : 'button';
 
     return (
         <ButtonComponent to={url} onClick={action}>
-            <button class="inverted__primary-button">
-                <p class="inverted-text">{text}</p>
+            <button className={className}>
+                <p className="inverted-text">{text}</p>
             </button>
         </ButtonComponent>
     );

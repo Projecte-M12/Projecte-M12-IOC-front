@@ -4,12 +4,12 @@ import { Navigate } from 'react-router-dom';
 import { useAuth } from '../../../hooks/useAuth';
 
 // Components propis
-import { Input } from '../../../shared/components/Input/input.jsx';
+import { Input } from '../../../shared/components/Input/Input.jsx';
 import { Button } from '../../../shared/components/Button/Button.jsx';
 import { InvertedButton } from '../../../shared/components/InvertedButton/InvertedButton.jsx';
 
 // Estils CSS
-import '../login/Login.css';
+import '../Login/Login.css';
 
 // Imatges i icons
 import { iconStyleDefault } from '../../../styles/iconStyles';
@@ -52,30 +52,30 @@ export const Login = () => {
 
     return (
         <>
-            <main className="login-container">
+            <div className="login__container">
                 {/* Referir al CSS aquí */}
                 <div className="login__logo-container">
                     <img src={logo} className="login__logo" alt="Logo ReservaNOW" />
                 </div>
-                <form onSubmit={handleSubmit} className="login__form">
-                    <h1 className="login__title">Hola de nou ;)</h1>
-                    <div className="login__input-box">
+                <form onSubmit={handleSubmit} className="login__form-container">
+                    <h1 className="login__form-title">Hola de nou ;)</h1>
+                    <div className="login__form--input-box">
                         <Input
                             type="email"
                             placeholder="Email"
                             value={email}
-                            onChange={(value) => setEmail(value)}
+                            // onChange={(value) => setEmail(value)}
                         />
                         <div className="login__icon">
                             <FaUser style={iconStyleDefault} />
                         </div>
                     </div>
                     {!isValidName && email ? (
-                        <div className="login__error">
+                        <div className="login__form-error">
                             L'email ha de tenir més de 3 caràcters
                         </div>
                     ) : null}
-                    <div className="login__input-box">
+                    <div className="login__form--input-box">
                         <Input
                             type={showPassword ? 'text' : 'password'}
                             placeholder="Password"
@@ -100,7 +100,7 @@ export const Login = () => {
                         </div>
                     </div>
                     {!isValidPassword(password) && password ? (
-                        <div className="login__error">
+                        <div className="login__form-error">
                             La contrasenya ha de tenir com a mínim 8 caràcters, 1 número, 1 majúscula i 1 minúscula
                         </div>
                     ) : null}
@@ -116,11 +116,16 @@ export const Login = () => {
                     <button className="login__submit-btn" type="submit">
                         Login
                     </button>
+                    {/* 
+                    <Button 
+                        TODO: Lògica del botó per fer login
+                    />
+                    */}
                     <div className="login__signup">
-                        {"Encara no tens un compte?"} <a href="/signup">Registra't</a>
+                        {"Encara no tens un compte?"} <a href="/Signup" className='text-accent'>Registra't</a>
                     </div>
                 </form>
-            </main>
+            </div>
         </>
     );
 };

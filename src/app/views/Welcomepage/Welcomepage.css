@@ -1,0 +1,97 @@
+/* Estil principal del component */
+.welcomepage__container {
+    width: 100%;
+    max-width: 360px;
+    margin: 0 auto;
+    height: auto;
+    overflow: hidden;
+    
+}
+
+/* Estil imatge del component */
+.welcomepage__container img {
+    width: 222px;
+    height: 308px;
+    margin: 47px auto;
+}
+
+/* Estil del text de l'eslogan */
+.welcomepage__slogan {
+    width: 100%;
+    height: auto;
+    margin-bottom: 47px;
+    font-family: var(--roboto);
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-align: center;
+}
+
+/* Color Negre */
+.welcomepage__slogan-text {
+    color: var(--black);
+}
+
+/* COlor accent */
+.welcomepage__slogan-accent {
+    color: var(--accent-color);
+}
+
+
+/* Media query per a DESKTOP */
+@media only screen and (min-width: 768px) {
+    .welcomepage__container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        height: auto;
+        overflow: hidden;
+        background: var(--white);
+        display: flex;
+        flex-direction: column;
+        /* Col·loca els elements en una columna */
+        align-items: center;
+        /* Centra els elements horitzontalment */
+    }
+
+    .welcomepage__main {
+        /* Afegiu els estils necessaris per a la secció principal a la vista de l'escriptori */
+        margin-top: 20px;
+        /* Espai entre la imatge i el slogan */
+    }
+
+    .welcomepage__slogan {
+        font-family: var(--roboto);
+        font-size: 36px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+        text-align: center;
+        width: auto;
+        height: auto;
+        flex-shrink: 0;
+        margin-bottom: 20px;
+    }
+
+    .welcomepage__buttons {
+        display: flex;
+        flex-direction: column;
+        /* Col·loca els botons en una columna */
+        align-items: center;
+        /* Centra els botons horitzontalment */
+    }
+
+    .welcomepage__button {
+        margin-top: 20px;
+        /* Espai entre els botons */
+    }
+
+    .welcomepage__slogan-text {
+        color: var(--black);
+    }
+
+    .welcomepage__slogan-accent {
+        color: var(--accent-color);
+    }
+}

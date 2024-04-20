@@ -1,0 +1,62 @@
+/* Import d'estils principals */
+@import url('../../../styles/styles2.scss');
+
+/* Login.scss */
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 2rem;
+    background-color: $accent-color-t40;
+}
+
+.login__logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.login__logo {
+    max-width: 500px;
+    width: 100%;
+}
+
+// .login__form {}
+
+.login__title {
+    color: $black; 
+    font-family: $roboto;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+// .login__input-box {}
+
+// .login__icon {}
+
+.login__password-toggle {
+    position: absolute;
+    right: 8px;
+    /* Ajusta aquest valor segons la teva preferència */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+// .login__error {}
+
+// .login__remember {}
+
+// .login__submit-btn {}
+
+// .login__signup {}

@@ -1,32 +1,67 @@
-/*
-  Styles per a l'aplicació ReservaNow
-
-  Aquest arxiu CSS proporciona estils per a tota l'aplicació web,
-  definint variables, estils per a elements HTML com botons, inputs,
-  títols (h1, h2, h3), paràgrafs, text accentuat i mitjans de consulta
-  per a pantalles mòbils.
-
-  Contingut:
-  - Variables CSS per a colors, tipografies i dimensions.
-  - Estils per a botons d'accentuació i d'inputs.
-  - Estils per a títols (h1, h2, h3) i paràgrafs.
-  - Estils per a text accentuat.
-  - Mitjans de consulta per a estils específics en pantalles mòbils.
-
-  S'inclou també una normalització de CSS per assegurar una experiència
-  consistent en tots els navegadors.
-
-  ------------------------------ IMPORTANT --------------------------------
-
-  Falta valorar si els estils pel boto i els inputs dels formularis,
-  es fan a un component a part o es poden quedar aqui
-
-  -------------------------------------------------------------------------
-*/
-
 /* Reset o normalització CSS */
 /* Importació de la llibreria Normalize.css */
-/*@import url('https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css');*/ 
+/*@import url('https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css');*/
+
+
+/* Variables d'estil */
+:root {
+  --accent-color: #E99000;
+  --light-grey: #EEEEEE;
+  --dark-grey: #5D5D5D;
+  --black: #0C0C0C;
+  --white: #FAF9F6;
+  --roboto: 'Roboto Flex', sans-serif;
+
+  --accent-color-40: rgba(233, 144, 0, 0.40);
+
+  /* Color per defecte del backgorund */
+  background-color: var(--white);
+
+  /* Estil per defecte */ 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+}
+
+
+/* Estil per a h1 */
+h1 {
+  font-size: 24px;
+  font-weight: 500;
+}
+
+/* Estil per a h2 */
+h2 {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+/* Estil per a h3 */
+h3 {
+  font-size: 14px;
+  /* Pots ajustar la mida segons el teu disseny */
+  font-weight: 500;
+  /* Opcional: Potser també vols mantenir el mateix pes */
+}
+
+/* Estil per als paràgrafs */
+p {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+text {
+  text-decoration: none;
+}
+
+/* Text d'accent */
+.text-accent {
+  color: var(--accent-color);
+  font-weight: bold;
+}
 
 
 /* Media Queries */
@@ -51,11 +86,6 @@
     height: 65px;
   }
 
-  .input {
-    max-width: 240px;
-    height: 55px;
-  }
-
   h1 {
     font-size: 36px;
   }
@@ -71,49 +101,4 @@
   p {
     font-size: 18px;
   }
-}
-
-
-/* Variables d'estil */
-:root {
-  --accent-color: #E99000;
-  --light-grey: #EEEEEE;
-  --dark-grey: #5D5D5D;
-  --black: #0C0C0C;
-  --white: #FAF9F6;
-  --roboto: 'Roboto Flex', sans-serif;
-  
-  --accent-color-40: rgba(233, 144, 0, 0.40);
-}
-
-
-/* Estil per a h1 */
-h1 {
-  font-size: 24px;
-  font-weight: 500;
-}
-
-/* Estil per a h2 */
-h2 {
-  font-size: 18px;
-  font-weight: 500;
-}
-
-/* Estil per a h3 */
-h3 {
-  font-size: 14px; /* Pots ajustar la mida segons el teu disseny */
-  font-weight: 500; /* Opcional: Potser també vols mantenir el mateix pes */
-}
-
-/* Estil per als paràgrafs */
-p {
-  font-size: 16px;
-  line-height: 1.5;
-  margin-bottom: 20px;
-}
-
-/* Text d'accent */
-.text-accent {
-  color: var(--accent-color);
-  font-weight: bold;
 }

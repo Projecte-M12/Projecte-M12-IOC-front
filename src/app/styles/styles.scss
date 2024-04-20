@@ -1,0 +1,88 @@
+
+
+/* Variables d'estil */
+$accent-color: #E99000;
+$light-grey: #EEEEEE;
+$dark-grey: #5D5D5D;
+$black: #0C0C0C;
+$white: #FAF9F6;
+$roboto: 'Roboto Flex', sans-serif;
+$accent-color-t40: rgba(233, 144, 0, 0.40);
+
+/* Estil per a h1 */
+h1 {
+    font-size: 24px;
+    font-weight: 500;
+}
+
+/* Estil per a h2 */
+h2 {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+/* Estil per a h3 */
+h3 {
+    font-size: 14px;
+    /* Pots ajustar la mida segons el teu disseny */
+    font-weight: 500;
+    /* Opcional: Potser també vols mantenir el mateix pes */
+}
+
+/* Estil per als paràgrafs */
+p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+/* Text d'accent */
+.text-accent {
+    color: $accentColor;
+    font-weight: bold;
+}
+
+/* Media Queries */
+/* TODO: Valorar grid-container en comtpes de medias */
+
+/* Estils per a pantalles mòbils (Android base)*/
+@media only screen and (max-width: 360px) {
+    body {
+        background-color: var(--white);
+    }
+}
+
+/* Estil per a pantalles d'ordinador (Desktop) */
+/* -- Exemple d'ajustos per a pantalles d'ordinador -- */
+@media only screen and (min-width: 768px) {
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .primary-button {
+        width: 220px;
+        height: 65px;
+    }
+
+    .input {
+        max-width: 240px;
+        height: 55px;
+    }
+
+    h1 {
+        font-size: 36px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    h3 {
+        font-size: 18px;
+    }
+
+    p {
+        font-size: 18px;
+    }
+}

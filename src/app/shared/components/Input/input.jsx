@@ -2,7 +2,7 @@
 import React from 'react';
 
 // Estils 
-import './input.css';
+import './Input.css';
 
 // Funció 
 export function Input({ label, type, placeholder, onChange }) {

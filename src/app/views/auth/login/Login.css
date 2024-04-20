@@ -1,12 +1,18 @@
-/* Login.css */
-.login-container {
+/* Estil principal del component */
+.login__container {
+    width: 100%;
+    max-width: 360px;
+    height: auto;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     padding-bottom: 2rem;
     background-color: var(--accent-color-40);
 }
 
+/* Estil pel contenidor del logo */
 .login__logo-container {
     display: flex;
     flex-direction: column;
@@ -15,11 +21,13 @@
     width: 100%;
 }
 
+/* Estil del logo TODO:Revisar dimensions */
 .login__logo {
     max-width: 500px;
     width: 100%;
 }
 
+/* Estil del formulari */
 .login__form {}
 
 .login__title {
@@ -31,18 +39,22 @@
     line-height: normal;
 }
 
-.login__input-box {}
+.login__form--input-box {
+    position: relative;
+}
 
-.login__icon {}
+.login__icon {
 
+}
+
+/* Estil botó showpassword */
 .login__password-toggle {
     position: absolute;
-    right: 8px;
-    /* Ajusta aquest valor segons la teva preferència */
-    top: 50%;
+    right: 15%;
+    top: 23%;
     transform: translateY(-50%);
-    width: 16px;
-    height: 16px;
+    width: 12px;
+    height: 12px;
     padding: 0;
     margin: 0;
     border: none;
