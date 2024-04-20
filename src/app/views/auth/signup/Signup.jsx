@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom';
 
 import { useState } from 'react';
-import { useAuth } from '../../../hooks/useAuth';
+import { useAuthContext } from '../../../hooks/useAuthContext';
 
 //import '../Auth.scss';
 
@@ -15,7 +15,7 @@ export const Signup = () => {
   const [prePassword, setPrePassword] = useState('');
   const [password, setPassword] = useState('');
 
-  const auth = useAuth();
+  const auth = useAuthContext();
 
   if (auth.isAuthenticated) {
     if (auth.isCustomer) {

@@ -1,8 +1,7 @@
 // Llibreris
-import React from 'react';
 import { Link } from 'react-router-dom';
 
-// Estils CSS 
+// Estils CSS
 import './Button.css';
 
 // Component del botó primari; pots passar; una url una acció o un text
@@ -17,4 +16,3 @@ export function Button({ text, url, action, isLink, className = "primary-button"
         </ButtonComponent>
     );
 }
-
