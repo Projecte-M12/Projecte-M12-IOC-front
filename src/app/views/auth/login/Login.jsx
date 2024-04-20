@@ -54,12 +54,13 @@ export const Login = () => {
         <>
             <div className="login__container">
                 {/* Referir al CSS aquí */}
-                <div className="login__logo-container">
+                <div className="logo-container">
                     <img src={logo} className="login__logo" alt="Logo ReservaNOW" />
                 </div>
                 <form onSubmit={handleSubmit} className="login__form-container">
                     <h1 className="login__form-title">Hola de nou ;)</h1>
                     <div className="login__form--input-box">
+                    <h3>Inicia sessió</h3>
                         <Input
                             type="email"
                             placeholder="Email"

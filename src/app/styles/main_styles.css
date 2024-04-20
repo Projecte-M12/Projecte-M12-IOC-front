@@ -18,10 +18,7 @@
   background-color: var(--white);
 
   /* Estil per defecte */ 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  
 
 }
 
