@@ -9,7 +9,13 @@ export const useCheckUser = () => {
     /**
      * States
      */
-    const { updateUser, updateIsAuthenticated, updateToken } = useAuthContext();
+    const {
+        updateUser,
+        resetUser,
+        updateIsAuthenticated,
+        updateToken,
+        resetToken,
+    } = useAuthContext();
 
     /**
      * Variables
@@ -28,26 +34,52 @@ export const useCheckUser = () => {
     /**
      * Effect. Llamada a la API para hacer la comprobación
      */
-    useEffect(() => {
-        const checkToken = async () => {
-            try {
-                const response = await fetch(
-                    API_BASE_URL + EDPOINT.USER,
-                    optionsFetchToken,
-                );
-                if (response.status === 200) {
-                    const data = await response.json();
-                    if (data.user) {
-                        updateUser(data.user);
-                        updateIsAuthenticated(true);
-                        updateToken(data.access_token);
-                    }
-                    if (data.error) console.log(`Error: ${data.error}`);
+    // useEffect(() => {
+    //     const checkToken = async () => {
+    //         try {
+    //             const response = await fetch(
+    //                 API_BASE_URL + EDPOINT.USER,
+    //                 optionsFetchToken,
+    //             );
+    //             if (response.status === 200) {
+    //                 const data = await response.json();
+    //                 if (data.user) {
+    //                     updateUser(data.user);
+    //                     updateIsAuthenticated(true);
+    //                     updateToken(data.access_token);
+    //                 }
+    //                 if (data.error) console.log(`Error: ${data.error}`);
+    //             }
+    //         } catch (error) {
+    //             console.log('Error al comprobar el token', error);
+    //         }
+    //     };
+    //     checkToken();
+    // }, []);
+
+    const checkToken = async () => {
+        try {
+            const response = await fetch(
+                API_BASE_URL + EDPOINT.USER,
+                optionsFetchToken,
+            );
+            if (response.status === 200) {
+                const data = await response.json();
+                if (data.user) {
+                    updateIsAuthenticated(true);
+                    updateUser(data.user);
+                    updateToken(data.access_token);
                 }
-            } catch (error) {
-                console.log('Error al comprobar el token', error);
+                if (data.error) {
+                    updateIsAuthenticated(false);
+                    resetUser();
+                    resetToken();
+                    console.log(`Error: ${data.error}`);
+                }
             }
-        };
-        checkToken();
-    }, []);
+        } catch (error) {
+            console.log('Error al comprobar el token', error);
+        }
+    };
+    return { checkToken };
 };

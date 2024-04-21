@@ -17,7 +17,7 @@ export const useLogin = () => {
     /**
      * Custom hooks
      */
-    const { updateUser, updateIsAuthenticated, updateToken, resetToken } =
+    const { updateUser, resetUser, updateIsAuthenticated, updateToken, resetToken } =
         useAuthContext();
 
     /**
@@ -31,7 +31,8 @@ export const useLogin = () => {
         setPassword(event.target.value);
     };
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (event) => {
+        event.preventDefault();
         try {
             setLoading(true);
             setError(null);
@@ -71,6 +72,9 @@ export const useLogin = () => {
 
     const handleLogout = () => {
         updateIsAuthenticated(false);
+        resetToken();
+        resetUser();
+
     };
 
     /**
