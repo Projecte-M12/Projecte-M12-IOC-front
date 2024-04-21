@@ -1,6 +1,5 @@
-/* Reset o normalització CSS */
-/* Importació de la llibreria Normalize.css */
-/*@import url('https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css');*/
+/* Reset i importació de la llibreria Normalize.css */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css');
 
 
 /* Variables d'estil */
@@ -14,33 +13,32 @@
 
   --accent-color-40: rgba(233, 144, 0, 0.40);
 
+
+  /* Estil per defecte */
+  font-family: var(--roboto);
+  color: var(--black);
   /* Color per defecte del backgorund */
   background-color: var(--white);
-
-  /* Estil per defecte */ 
-  
 
 }
 
 
 /* Estil per a h1 */
 h1 {
-  font-size: 24px;
+  font-size: 28px;
   font-weight: 500;
 }
 
 /* Estil per a h2 */
 h2 {
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 500;
 }
 
 /* Estil per a h3 */
 h3 {
-  font-size: 14px;
-  /* Pots ajustar la mida segons el teu disseny */
+  font-size: 18px;
   font-weight: 500;
-  /* Opcional: Potser també vols mantenir el mateix pes */
 }
 
 /* Estil per als paràgrafs */
@@ -60,18 +58,7 @@ text {
   font-weight: bold;
 }
 
-
-/* Media Queries */
-/* Estils per a pantalles mòbils (Android base)*/
-@media only screen and (max-width: 360px) {
-  body {
-    background-color: var(--white);
-  }
-}
-
-/* Estil per a pantalles d'ordinador (Desktop) */
-
-/* -- Exemple d'ajustos per a pantalles d'ordinador -- */
+/* Estil per a pantalles d'ordinador (Desktop) Per defecte vista mobil (360px) */
 @media only screen and (min-width: 768px) {
   .container {
     max-width: 1200px;

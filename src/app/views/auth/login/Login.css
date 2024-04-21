@@ -5,7 +5,7 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    max-width: 360px;
+    margin: 0 auto;
     height: auto;
     overflow: hidden;
     padding-bottom: 2rem;
@@ -28,7 +28,11 @@
 }
 
 /* Estil del formulari */
-.login__form {}
+.login__form {
+    width: 100%;
+    max-width: 400px;
+    padding: 1rem;
+}
 
 .login__title {
     color: var(--black);
@@ -41,15 +45,21 @@
 
 .login__form--input-box {
     position: relative;
+    margin-bottom: 1rem;
 }
 
-.login__icon {}
+.login__icon {
+    position: absolute;
+    top: 65%;
+    transform: translateY(-50%);
+    left: -35px;
+}
 
 /* Estil botó showpassword */
 .login__password-toggle {
     position: absolute;
-    right: 15%;
-    top: 23%;
+    right: 115px;
+    top: 35%;
     transform: translateY(-50%);
     width: 12px;
     height: 12px;
@@ -60,10 +70,22 @@
     cursor: pointer;
 }
 
-.login__error {}
+.login__error {
+    color: var(--accent-color);
+    font-size: 0.8rem;
+}
 
-.login__remember {}
 
-.login__submit-btn {}
+/* TODO Revisaar aquestes etiquetes
+/* 
+.login__remember {
 
-.login__signup {}
+}
+
+.login__submit-btn {
+
+}
+
+.login__signup {
+
+} */

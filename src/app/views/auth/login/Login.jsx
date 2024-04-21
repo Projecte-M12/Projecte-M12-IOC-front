@@ -1,7 +1,20 @@
-// Llibreries
+/**
+ * React
+ */
 import React, { useState } from 'react';
-import { Navigate } from 'react-router-dom';
-import { useAuth } from '../../../hooks/useAuth';
+import { Link, Navigate } from 'react-router-dom';
+
+/**
+ * Utils
+ */
+import { isValidEmail, isValidPassword } from '../../../utils/validations';
+
+/**
+ * Hooks
+ */
+import { useAuthContext } from '../../../hooks/useAuthContext';
+import { useLogin } from '../../../hooks/useLogin';
+import { useCheckUser } from '../../../hooks/useCheckUser';
 
 // Components propis
 import { Input } from '../../../shared/components/Input/Input.jsx';
@@ -19,40 +32,39 @@ import eyeOpen from '../../../assets/icons/eyeopen.svg';
 import eyeCrossed from '../../../assets/icons/eyecrossed.svg';
 
 
-// import { constants } from '../../../shared/constants';
-
+/**
+ * Componente Login
+ */
 export const Login = () => {
-    const auth = useAuth();
-    if (auth.isAunthenticated) {
-        <Navigate to="/customer-dashboard" />;
-    }
+    /**
+     * Custom Hooks
+     */
+    useCheckUser();
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    /**
+     * States
+     */
+    const {
+        email,
+        password,
+        loading,
+        handleEmailChange,
+        handlePasswordChange,
+        handleSubmit,
+    } = useLogin();
+
+    const { isAuthenticated } = useAuthContext();
 
     // Oculta o mostra la contrassenya
     const [showPassword, setShowPassword] = useState(false);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // console.log(auth);
-        auth.signin(email, password);
-    };
-
-    //**********************************************************************
-    // Live validations
-    //**********************************************************************
-    const isValidName = email.length > 3;
-    const isValidPassword = (password) => {
-        const passwordRegex =
-            /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
-        return passwordRegex.test(password);
-    };
-    //************************************************************************
-
+    /**
+     * Return
+     */
     return (
         <>
-            <div className="login__container">
+            <main className="login__container">
+                {isAuthenticated && <Navigate to="/" />}
                 {/* Referir al CSS aquí */}
                 <div className="logo-container">
                     <img src={logo} className="login__logo" alt="Logo ReservaNOW" />
@@ -60,18 +72,20 @@ export const Login = () => {
                 <form onSubmit={handleSubmit} className="login__form-container">
                     <h1 className="login__form-title">Hola de nou ;)</h1>
                     <div className="login__form--input-box">
-                    <h3>Inicia sessió</h3>
+                        <h3>Inicia sessió</h3>
                         <Input
                             type="email"
-                            placeholder="Email"
+                            placeholder="Correu"
+                            // TODO Falta onChange del email
+                            onChange={(value) => handleEmailChange(value)}
                             value={email}
-                            // onChange={(value) => setEmail(value)}
+                        // onChange={(value) => setEmail(value)}
                         />
                         <div className="login__icon">
                             <FaUser style={iconStyleDefault} />
                         </div>
                     </div>
-                    {!isValidName && email ? (
+                    {!isValidEmail && email ? (
                         <div className="login__form-error">
                             L'email ha de tenir més de 3 caràcters
                         </div>
@@ -80,7 +94,7 @@ export const Login = () => {
                         <Input
                             type={showPassword ? 'text' : 'password'}
                             placeholder="Password"
-                            onChange={(value) => setPassword(value)}
+                            onChange={(value) => handlePasswordChange(value)}
                             required
                             value={password}
                         />
@@ -117,16 +131,18 @@ export const Login = () => {
                     <button className="login__submit-btn" type="submit">
                         Login
                     </button>
-                    {/* 
-                    <Button 
-                        TODO: Lògica del botó per fer login
+                    {/* TODO: Afegir la lògica per al enviament de les credencials */}
+                    <Button
+                        text="Log In"
+                        url={"/Login"}
+                        isLink={true}
+                        className='primary-button'
                     />
-                    */}
                     <div className="login__signup">
                         {"Encara no tens un compte?"} <a href="/Signup" className='text-accent'>Registra't</a>
                     </div>
                 </form>
-            </div>
+            </main>
         </>
     );
 };

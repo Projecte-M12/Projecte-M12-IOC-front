@@ -1,33 +1,34 @@
 /* Estil per als inputs */
-.input-group {
-    max-width: 190px;
-    height: 40px;
-    background-color: var(--white);
-    border-radius: .5rem;
-    padding: 0 1rem;
-    border: 2px solid transparent;
-    font-size: 1rem;
-    transition: border-color .3s cubic-bezier(.25,.01,.25,1) 0s, color .3s cubic-bezier(.25,.01,.25,1) 0s,background .2s cubic-bezier(.25,.01,.25,1) 0s;
-  }
-  
-  .label {
-    display: block;
-    margin-bottom: .3rem;
-    font-family: var(--roboto);
-    font-size: .9rem;
-    font-weight: bold;
-    color: var(--dark-grey);
-    transition: color .3s cubic-bezier(.25,.01,.25,1) 0s;
-  }
-  
-  .input:hover, .input:focus, 
-  .input-group:hover 
-  .input {
-    outline: none;
-    border-color: var(--accent-color);
-  }
-  
-  .input-group:hover .label, 
-  .input:focus {
-    color: var(--dark-grey);
-  }
+.input {
+  max-width: 190px;
+  height: 40px;
+  background-color: var(--light-grey);
+  border-radius: .5rem;
+  padding: 0 1rem;
+  border: 2px solid transparent;
+  font-size: 1rem;
+  transition: border-color .3s cubic-bezier(.25, .01, .25, 1) 0s, color .3s cubic-bezier(.25, .01, .25, 1) 0s, background .2s cubic-bezier(.25, .01, .25, 1) 0s;
+}
+
+.label {
+  display: block;
+  margin-bottom: .3rem;
+  font-family: var(--roboto);
+  font-size: .9rem;
+  font-weight: bold;
+  color: var(--dark-grey);
+  transition: color .3s cubic-bezier(.25, .01, .25, 1) 0s;
+}
+
+.input:hover,
+.input:focus,
+.input-group:hover .input {
+  outline: none;
+  background-color: var(--white);
+  border-color: var(--accent-color);
+}
+
+.input-group:hover .label,
+.input:focus {
+  color: var(--dark-grey);
+}
