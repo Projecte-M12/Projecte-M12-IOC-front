@@ -31,7 +31,8 @@ export const useLogin = () => {
         setPassword(event.target.value);
     };
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (event) => {
+        event.preventDefault();
         try {
             setLoading(true);
             setError(null);
@@ -46,7 +47,7 @@ export const useLogin = () => {
                     Accept: 'application/json',
                 },
                 body: JSON.stringify({ email, password }),
-                signal: controller.signal,
+                // signal: controller.signal,
             };
 
             const response = await fetch(
