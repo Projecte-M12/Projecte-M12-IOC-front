@@ -37,6 +37,7 @@ export const Signup = () => {
     useEffect(() => {
         checkToken();
     }, []);
+
     /**
      * States
      */
@@ -49,6 +50,8 @@ export const Signup = () => {
         password,
         loading,
         error,
+        message,
+        signedUp,
         isCompany,
         passwordConfirmation,
         handleEmailChange,
@@ -63,6 +66,12 @@ export const Signup = () => {
     /**
      * Funciones
      */
+    if (signedUp) {
+        setTimeout(() => {
+            console.log('Registrat');
+            return <Navigate to="/login" />;
+        }, 2000);
+    }
 
     /**
      * Comprobación usuario logueado y redirección
@@ -198,12 +207,11 @@ export const Signup = () => {
                     Signup
                 </button>
                 <div className="login__login-form__signup">
-                    Ja tens un compte?{' '}
-                    <Link to="/login" replace>
-                        Login
-                    </Link>
+                    Ja tens un compte? <Link to="/login">Login</Link>
                 </div>
             </form>
+            {/* TODO: Donar estil al missatge d'error */}
+            {message && <div className="">{message}</div>}
         </main>
     );
 };

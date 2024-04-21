@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { API_BASE_URL, EDPOINT } from '../utils/constants';
 import { useAuthContext } from './useAuthContext';
+import { Navigate } from 'react-router-dom';
 
 /**
  * Custom hook para manejar el inicio de sesión
@@ -18,16 +19,13 @@ export const useSignup = () => {
     const [remember, setRemember] = useState(false);
     const [signedUp, setSignedUp] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState(null);
     const [error, setError] = useState(null);
 
     /**
      * Custom hooks
      */
-    const {
-        updateUser,
-        updateIsAuthenticated,
-        updateToken,
-    } = useAuthContext();
+    const { updateUser, updateIsAuthenticated, updateToken } = useAuthContext();
 
     /**
      * Funciones
@@ -49,7 +47,7 @@ export const useSignup = () => {
     };
 
     const handleIsCompanyChange = (event) => {
-        setIsCompany(prev => !prev);
+        setIsCompany((prev) => !prev);
     };
 
     const hadleServide = (event) => {
@@ -88,18 +86,29 @@ export const useSignup = () => {
                 optionsFetchUserInfo,
             );
 
-            if (!response.ok) throw new Error('Error al registrar el usuario');
+            if (!response.ok) {
+                const responseError = await response.json();
+                console.log(responseError);
+                setError(responseError);
+                setMessage('Error: No ha estat possible fer el registre');
+                throw new Error('Error al registrar el usuario');
+            }
 
             console.log('Haciendo cosas del signup...');
 
             const data = await response.json();
-            console.log('Recibe respuesta del servico')
-            console.log(data)
+            console.log('Recibe respuesta del servico');
+
+            // Mensaje todo correcto y redirección
+            setSignedUp(true);
+            setMessage('Usuari registrat correctament');
+
             // updateIsAuthenticated(true);
             // updateToken(data.access_token);
             // updateUser(data.user);
         } catch (error) {
             setError(error);
+            console.log(error);
         } finally {
             setLoading(false);
         }
@@ -111,10 +120,15 @@ export const useSignup = () => {
     return {
         email,
         password,
+        name,
         passwordConfirmation,
-        loading,
-        error,
         isCompany,
+        services,
+        remember,
+        signedUp,
+        loading,
+        message,
+        error,
         handleEmailChange,
         handlePasswordChange,
         handlePasswordConfirmationChange,
