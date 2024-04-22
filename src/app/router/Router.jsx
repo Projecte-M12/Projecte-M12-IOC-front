@@ -29,11 +29,11 @@ export const Router = createBrowserRouter([
     element: <ProtectedRoutes />,
     children: [
       {
-        path: '/sompany-dashboard',
+        path: '/company-dashboard',
         element: <CompanyDashboard />,
       },
       {
-        path: '/sustomer-dashboard',
+        path: '/customer-dashboard',
         element: <CustomerDashboard />,
       },
     ],
