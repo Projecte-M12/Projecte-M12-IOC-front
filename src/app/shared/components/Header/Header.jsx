@@ -12,7 +12,13 @@ export const Header = () => {
             <div>
                 <p>Header</p>
             </div>
-            <div>
+            <div className="header__links">
+                <Link to={'/'} style={{ color: 'black' }}>
+                    Inici
+                </Link>
+                <Link to={'/homepage'} style={{ color: 'black' }}>
+                    Home
+                </Link>
                 {
                     // Es necessita un color invertit o algo així pel Footer i el Header. Tal com està ara els links son del mateix color que el fons del header
                 }
@@ -20,7 +26,7 @@ export const Header = () => {
                     <p>Link Logout</p>
                 ) : (
                     <Link to={'/login'} style={{ color: 'black' }}>
-                        Link Login
+                        Login
                     </Link>
                 )}
             </div>
