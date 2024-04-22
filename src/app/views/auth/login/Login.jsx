@@ -100,7 +100,7 @@ export const Login = () => {
                             value={email}
                         />
                     </div>
-                    {!isValidEmail && email ? (
+                    {!isValidEmail(email) && email ? (
                         <div className="login__form-error">
                             Format d'email no vàlid
                         </div>
