@@ -53,6 +53,7 @@
     display: flex;
     align-content: center;
     align-items: center;
+    max-width: fit-content;
 }
 
 .login__form-icon {
