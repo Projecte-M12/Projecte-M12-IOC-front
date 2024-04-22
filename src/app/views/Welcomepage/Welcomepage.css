@@ -4,11 +4,15 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 100%;
+    width: 90%;
     margin: 0 auto;
     height: auto;
     overflow: hidden;
 }
+
+.welcomepage__container > a{
+        text-decoration: none;
+    }
 
 /* Estil imatge del component */
 .welcomepage__container img {
@@ -44,7 +48,7 @@
 /* Media query per a DESKTOP */
 @media only screen and (min-width: 768px) {
     .welcomepage__container {
-        width: 100%;
+        width: 90%;
         max-width: 1200px;
         margin: 0 auto;
         height: auto;
@@ -55,6 +59,10 @@
         /* Col·loca els elements en una columna */
         align-items: center;
         /* Centra els elements horitzontalment */
+    }
+
+    .welcomepage__container > a{
+        text-decoration: none;
     }
 
     .welcomepage__main {
