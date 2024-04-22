@@ -90,7 +90,6 @@ export const Login = () => {
                     <h1 className="login__form-title">Hola de nou ;)</h1>
                     <h3>Inicia sessió</h3>
                     <div className="login__form--input-box">
-                        
                         <Input
                             type="email"
                             placeholder="Correu"
@@ -165,7 +164,7 @@ export const Login = () => {
                         disabled={!isValidEmail(email) || !isValidPassword(password)}
                         type="submit"
                     />
-                    <div className="login__login-form__signup">
+                    <div className="redirect_signup">
                         {"Encara no tens un compte?"}{' '}
                         <Link to="/Signup" className='text-accent' replace>
                             Registra't
