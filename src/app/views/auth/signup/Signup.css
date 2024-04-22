@@ -3,13 +3,15 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    /* justify-content: center; */
     width: 100%;
     margin: 0 auto;
     height: auto;
     min-height: 100vh;
     overflow: hidden;
     background-color: var(--accent-color-40);
+    padding: 0 1rem;
+    min-width: fit-content;
 }
 
 /* Estil pel contenidor del logo */
@@ -45,41 +47,52 @@
 }
 
 .signup__form--input-box {
-    position: relative;
+    /* position: relative;
+    margin-bottom: 1rem; */
     margin-bottom: 1rem;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    max-width: fit-content;
 }
 
 .signup__form-icon {
-    position: absolute;
+    /* position: absolute;
     top: 55%;
     transform: translateY(-50%);
-    left: -35px;
+    left: -35px; */
+    margin-right: 1rem;
+    max-width: fit-content;
+    max-height: fit-content;
+    transform: translateY(5%);
 }
 
 /* Estil botó showpassword */
+/* .signup__password-toggle {
+    position: absolute;
+    right: 180px;
+    top: 60%;
+    transform: translateY(-50%);
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+} */
+
+/* Estil botó showpassword */
+.signup__confirm--password-toggle,
 .signup__password-toggle {
-    position: absolute;
+    /* position: absolute;
     right: 180px;
     top: 60%;
     transform: translateY(-50%);
     padding: 0;
-    margin: 0;
+    margin: 0; */
     border: none;
     background: none;
     cursor: pointer;
-}
-
-/* Estil botó showpassword */
-.signup__confirm--password-toggle {
-    position: absolute;
-    right: 180px;
-    top: 60%;
-    transform: translateY(-50%);
-    padding: 0;
-    margin: 0;
-    border: none;
-    background: none;
-    cursor: pointer;
+    transform: translate(-35px, 2px);
 }
 
 .signup__form-error {
@@ -93,5 +106,5 @@
     align-items: center;
     justify-content: start;
     gap: 5px;
-    margin-top: 1rem
+    margin-top: 1rem;
 }

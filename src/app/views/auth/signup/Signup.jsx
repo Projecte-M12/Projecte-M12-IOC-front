@@ -106,6 +106,9 @@ export const Signup = () => {
             <form className="signup__form-container">
                 <h3>Registra't</h3>
                 <div className="signup__form--input-box">
+                    <div className="signup__form-icon">
+                        <FaUser style={iconStyleDefault} />
+                    </div>
                     <Input
                         type="email"
                         placeholder="Correu"
@@ -113,9 +116,6 @@ export const Signup = () => {
                         value={email}
                         required
                     />
-                    <div className="signup__form-icon">
-                        <FaUser style={iconStyleDefault} />
-                    </div>
                 </div>
                 {!isValidEmail && email ? (
                     <div className="signup__form-error">
@@ -123,6 +123,9 @@ export const Signup = () => {
                     </div>
                 ) : null}
                 <div className="signup__form--input-box">
+                    <div className="signup__form-icon">
+                        <FaLock style={iconStyleDefault} />
+                    </div>
                     <Input
                         type={showPassword ? 'text' : 'password'}
                         placeholder="Contrassenya"
@@ -142,9 +145,6 @@ export const Signup = () => {
                             <img src={eyeCrossed} alt="Mostra contrasenya" />
                         )}
                     </button>
-                    <div className="signup__form-icon">
-                        <FaLock style={iconStyleDefault} />
-                    </div>
                 </div>
                 {!isValidPassword(password) && password ? (
                     <div className="signup__form-error">
@@ -152,6 +152,17 @@ export const Signup = () => {
                     </div>
                 ) : null}
                 <div className="signup__form--input-box">
+                    <div className="signup__form-icon">
+                        <FaLock
+                            style={
+                                password && password === passwordConfirmation
+                                    ? iconStyleGreen
+                                    : password
+                                        ? iconStyleRed
+                                        : iconStyleDefault
+                            }
+                        />
+                    </div>
                     <Input
                         type={showConfirmation ? 'text' : 'password'}
                         placeholder="Confirmar contrassenya"
@@ -171,17 +182,6 @@ export const Signup = () => {
                             <img src={eyeCrossed} alt="Mostra contrasenya" />
                         )}
                     </button>
-                    <div className="signup__form-icon">
-                        <FaLock
-                            style={
-                                password && password === passwordConfirmation
-                                    ? iconStyleGreen
-                                    : password
-                                        ? iconStyleRed
-                                        : iconStyleDefault
-                            }
-                        />
-                    </div>
                 </div>
 
                 <div className="signup__form--input-box">
