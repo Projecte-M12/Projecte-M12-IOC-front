@@ -1,27 +1,27 @@
 import { createBrowserRouter } from "react-router-dom";
-import { Homepage } from "../views/Homepage/Homepage";
-import { Login } from "../views/auth/Login/Login";
-import { Signup } from "../views/auth/Signup/Signup";
+import { Homepage } from "../views/homepage/Homepage";
+import { Login } from "../views/auth/login/Login";
+import { Signup } from "../views/auth/signup/Signup";
 import { ProtectedRoutes } from "./ProtectedRoutes";
-import { CompanyDashboard } from "../views/dashboard/Company/CompanyDashboard";
-import { CustomerDashboard } from "../views/dashboard/Customer/CustomerDashboard";
+import { CompanyDashboard } from "../views/dashboard/company/CompanyDashboard";
+import { CustomerDashboard } from "../views/dashboard/customer/CustomerDashboard";
 import { Welcomepage } from "../views/Welcomepage/Welcomepage";
 
 export const Router = createBrowserRouter([
   {
     path: '/',
-    element: <Homepage />,
-  },
-  {
-    path: '/Welcomepage',
     element: <Welcomepage />,
   },
   {
-    path: '/Login',
+    path: '/homepage',
+    element: <Homepage />,
+  },
+  {
+    path: '/login',
     element: <Login />,
   },
   {
-    path: '/Signup',
+    path: '/signup',
     element: <Signup />,
   },
   {
@@ -29,11 +29,11 @@ export const Router = createBrowserRouter([
     element: <ProtectedRoutes />,
     children: [
       {
-        path: '/Company-dashboard',
+        path: '/sompany-dashboard',
         element: <CompanyDashboard />,
       },
       {
-        path: '/Customer-dashboard',
+        path: '/sustomer-dashboard',
         element: <CustomerDashboard />,
       },
     ],
