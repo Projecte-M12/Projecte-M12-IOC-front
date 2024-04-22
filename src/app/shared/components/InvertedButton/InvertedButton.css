@@ -1,34 +1,34 @@
 /* Estils per al botó primari invertit */
 .inverted__primary-button {
-  display: flex; /* Fa que surti una underline */
-  justify-content: center;
-  align-items: center;
-  padding: 10px 15px;
-  gap: 15px;
-  margin: 5px;
-  background-color: transparent;
-  outline: 3px var(--accent-color) solid;
-  outline-offset: -3px;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-  transition: background-color 400ms;
-  /* espai minim */
-  min-width: 310px !important;
-  height: 55px !important;
+    display: flex; /* Fa que surti una underline */
+    justify-content: center;
+    align-items: center;
+    /* padding: 10px 15px; */
+    gap: 15px;
+    margin: 5px;
+    background-color: transparent;
+    outline: 3px var(--accent-color) solid;
+    outline-offset: -3px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 400ms;
+    /* espai minim */
+    min-width: 310px !important;
+    height: 55px !important;
 }
 
 .inverted__primary-button .inverted-text {
-  color: var(--accent-color);
-  font-weight: 700;
-  font-size: 1.2em; /* +120% de l'original */
-  transition: color 400ms;
+    color: var(--accent-color);
+    font-weight: 700;
+    font-size: 1.2em; /* +120% de l'original */
+    transition: color 400ms;
 }
 
 .inverted__primary-button:hover {
-  background-color: var(--accent-color);
+    background-color: var(--accent-color);
 }
 
 .inverted__primary-button:hover .inverted-text {
-  color: var(--white);
+    color: var(--white);
 }

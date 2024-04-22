@@ -3,7 +3,7 @@
     display: flex; /* Fa que surti una underline */
     justify-content: center;
     align-items: center;
-    padding: 10px 15px;
+    /* padding: 10px 15px; */
     gap: 15px;
     margin: 5px;
     background-color: var(--accent-color);

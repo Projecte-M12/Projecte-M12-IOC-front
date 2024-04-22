@@ -4,12 +4,14 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 100%;
+    max-width: 100%;
     margin: 0 auto;
     height: auto;
     min-height: 100vh;
     overflow: hidden;
     background-color: var(--accent-color-40);
+    padding: 0 1rem;
+    min-width: fit-content;
 }
 
 /* Estil pel contenidor del logo */
