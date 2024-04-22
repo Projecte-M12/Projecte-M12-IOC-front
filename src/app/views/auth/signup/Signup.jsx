@@ -73,7 +73,7 @@ export const Signup = () => {
         handlePasswordConfirmationChange,
         handleNameChange,
         handleIsCompanyChange,
-        hadleServide,
+        hadleService,
         handleSubmit,
     } = useSignup();
 
@@ -217,7 +217,7 @@ export const Signup = () => {
                                     name="servicio"
                                     className="login__login-form__input"
                                     // defaultValue={''}
-                                    onChange={hadleServide}
+                                    onChange={hadleService}
                                 >
                                     <option value="" disabled>
                                         Selecciona...
@@ -241,10 +241,7 @@ export const Signup = () => {
                     <Button
                         // type="submit"
                         text="Sign Up"
-                        onClick={(e) => {
-                            e.preventDefault();
-                            handleSubmit();
-                        }}
+                        action={handleSubmit}
                         disabled={
                             !isValidEmail(email) ||
                             !isValidPassword(password) ||
@@ -253,7 +250,7 @@ export const Signup = () => {
                         }
                     />
                     <div className="redirect_login">
-                        Ja tens un compte? <Link to="/Login">Login</Link>
+                        Ja tens un compte? <Link to="/login">Login</Link>
                     </div>
                 </form>
                 {/* TODO: Donar estil al missatge d'error */}

@@ -50,11 +50,12 @@ export const useSignup = () => {
         setIsCompany((prev) => !prev);
     };
 
-    const hadleServide = (event) => {
+    const hadleService = (event) => {
         setServices(event.target.value);
     };
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (event) => {
+        event.preventDefault();
         try {
             setLoading(true);
             setError(null);
@@ -134,7 +135,7 @@ export const useSignup = () => {
         handlePasswordConfirmationChange,
         handleNameChange,
         handleIsCompanyChange,
-        hadleServide,
+        hadleService,
         handleSubmit,
     };
 };
