@@ -1,34 +1,34 @@
 /* Estils per al botó primari */
 .primary-button {
-  display: flex; /* Fa que surti una underline */
-  justify-content: center;
-  align-items: center;
-  padding: 10px 15px;
-  gap: 15px;
-  margin: 5px;
-  background-color: var(--accent-color);
-  outline: 3px var(--accent-color) solid;
-  outline-offset: -3px;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-  transition: 400ms;
-  /* espai minim */
-  min-width: 310px !important;
-  height: 55px !important;
+    display: flex; /* Fa que surti una underline */
+    justify-content: center;
+    align-items: center;
+    padding: 10px 15px;
+    gap: 15px;
+    margin: 5px;
+    background-color: var(--accent-color);
+    outline: 3px var(--accent-color) solid;
+    outline-offset: -3px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: 400ms;
+    /* espai minim */
+    min-width: 310px !important;
+    height: 55px !important;
 }
 
 .primary-button .text {
-  color: var(--white);
-  font-weight: 700;
-  font-size: 1.2em; /* +120% de l'original */
-  transition: 400ms;
+    color: var(--white);
+    font-weight: 700;
+    font-size: 1.2em; /* +120% de l'original */
+    transition: 400ms;
 }
 
 .primary-button:hover {
-  background-color: transparent;
+    background-color: transparent;
 }
 
 .primary-button:hover .text {
-  color: var(--accent-color);
+    color: var(--accent-color);
 }
