@@ -21,6 +21,7 @@ import { useCheckUser } from '../../../hooks/useCheckUser';
  */
 import { Input } from '../../../shared/components/Input/Input.jsx';
 import { Button } from '../../../shared/components/Button/Button.jsx';
+import { Header } from '../../../shared/components/Header/Header';
 
 /*
  * ----- Styles + Images
@@ -70,10 +71,11 @@ export const Login = () => {
     }
 
     /*
-    * ----- Return
-    */
+     * ----- Return
+     */
     return (
         <>
+            <Header />
             {/* {isAuthenticated ? (
                 user.is_company ? (
                     <Navigate to="/company-dashboard" replace />
@@ -84,7 +86,11 @@ export const Login = () => {
             <main className="login__container">
                 {isAuthenticated && <Navigate to="/" />}
                 <div className="login__logo-container">
-                    <img src={logo} className="login__logo" alt="Logo ReservaNOW" />
+                    <img
+                        src={logo}
+                        className="login__logo"
+                        alt="Logo ReservaNOW"
+                    />
                 </div>
                 <form className="login__form-container">
                     <h1 className="login__form-title">Hola de nou ;)</h1>
@@ -119,19 +125,23 @@ export const Login = () => {
                         {/* Per defecte s'oculta la contrasenya */}
                         <button
                             type="button"
-                            className='login__password-toggle'
+                            className="login__password-toggle"
                             onClick={() => setShowPassword(!showPassword)}
                         >
                             {showPassword ? (
                                 <img src={eyeOpen} alt="Oculta contrasenya" />
                             ) : (
-                                <img src={eyeCrossed} alt="Mostra contrasenya" />
+                                <img
+                                    src={eyeCrossed}
+                                    alt="Mostra contrasenya"
+                                />
                             )}
                         </button>
                     </div>
                     {!isValidPassword(password) && password ? (
                         <div className="login__form-error">
-                            La contrasenya ha de tenir com a mínim 8 caràcters, 1 número, 1 majúscula i 1 minúscula
+                            La contrasenya ha de tenir com a mínim 8 caràcters,
+                            1 número, 1 majúscula i 1 minúscula
                         </div>
                     ) : null}
                     <div className="login__remember">
@@ -161,12 +171,14 @@ export const Login = () => {
                     <Button
                         text="Login"
                         action={handleSubmit}
-                        disabled={!isValidEmail(email) || !isValidPassword(password)}
+                        disabled={
+                            !isValidEmail(email) || !isValidPassword(password)
+                        }
                         type="submit"
                     />
                     <div className="redirect_signup">
-                        {"Encara no tens un compte?"}{' '}
-                        <Link to="/Signup" className='text-accent' replace>
+                        {'Encara no tens un compte?'}{' '}
+                        <Link to="/Signup" className="text-accent" replace>
                             Registra't
                         </Link>
                     </div>
