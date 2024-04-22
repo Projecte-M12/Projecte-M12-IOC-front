@@ -19,7 +19,6 @@ import { Button } from '../../../shared/components/Button/Button.jsx';
  * ----- Custom hooks
  */
 import { useAuthContext } from '../../../hooks/useAuthContext';
-import { useLogin } from '../../../hooks/useLogin';
 import { useCheckUser } from '../../../hooks/useCheckUser';
 
 /*
