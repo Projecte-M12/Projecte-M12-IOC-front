@@ -90,15 +90,15 @@ export const Login = () => {
                     <h1 className="login__form-title">Hola de nou ;)</h1>
                     <h3>Inicia sessió</h3>
                     <div className="login__form--input-box">
+                        <div className="login__form-icon">
+                            <FaUser style={iconStyleDefault} />
+                        </div>
                         <Input
                             type="email"
                             placeholder="Correu"
                             onChange={handleEmailChange}
                             value={email}
                         />
-                        <div className="login__form-icon">
-                            <FaUser style={iconStyleDefault} />
-                        </div>
                     </div>
                     {!isValidEmail && email ? (
                         <div className="login__form-error">
@@ -106,6 +106,9 @@ export const Login = () => {
                         </div>
                     ) : null}
                     <div className="login__form--input-box">
+                        <div className="login__form-icon">
+                            <FaLock style={iconStyleDefault} />
+                        </div>
                         <Input
                             type={showPassword ? 'text' : 'password'}
                             placeholder="Password"
@@ -125,9 +128,6 @@ export const Login = () => {
                                 <img src={eyeCrossed} alt="Mostra contrasenya" />
                             )}
                         </button>
-                        <div className="login__form-icon">
-                            <FaLock style={iconStyleDefault} />
-                        </div>
                     </div>
                     {!isValidPassword(password) && password ? (
                         <div className="login__form-error">
