@@ -5,12 +5,12 @@ import { Link } from 'react-router-dom';
 import './Button.css';
 
 // Component del botó primari; pots passar; una url una acció o un text
-export function Button({ text, url, action, isLink }) {
+export function Button({ text, url, action, isLink, className = "primary-button"}) {
     const ButtonComponent = isLink ? Link : 'button';
 
     return (
         <ButtonComponent to={url} onClick={action}>
-            <button className="primary-button">
+            <button className={className}>
                 <p className="text">{text}</p>
             </button>
         </ButtonComponent>

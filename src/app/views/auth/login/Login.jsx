@@ -1,6 +1,7 @@
-/**
- * React
+/*
+ * ----- React
  */
+import React, { useState, useEffect } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 
 /**
@@ -8,36 +9,43 @@ import { Link, Navigate } from 'react-router-dom';
  */
 import { isValidEmail, isValidPassword } from '../../../utils/validations';
 
-/**
- * Hooks
+/*
+ * ----- Hooks
  */
 import { useAuthContext } from '../../../hooks/useAuthContext';
 import { useLogin } from '../../../hooks/useLogin';
 import { useCheckUser } from '../../../hooks/useCheckUser';
 
-/**
- * Styles
+/*
+ * ----- Components propis
  */
-import '../Auth.scss';
+import { Input } from '../../../shared/components/Input/Input.jsx';
+import { Button } from '../../../shared/components/Button/Button.jsx';
+
+/*
+ * ----- Styles + Images
+ */
+import './Login.css';
 import { iconStyleDefault } from '../../../styles/iconStyles';
 import logo from '../../../assets/logo/reservanow_logo.svg';
 import { FaUser, FaLock } from 'react-icons/fa';
-import { useEffect } from 'react';
+import eyeOpen from '../../../assets/icons/eyeopen.svg';
+import eyeCrossed from '../../../assets/icons/eyecrossed.svg';
 
-/**
- * Componente Login
+/*
+ * ----- Component Log In
  */
 export const Login = () => {
-    /**
-     * Custom Hooks
+    /*
+     * ----- Custom Hooks
      */
     const { checkToken } = useCheckUser();
     useEffect(() => {
         checkToken();
     }, []);
 
-    /**
-     * States
+    /*
+     * ------ States
      */
     const {
         email,
@@ -50,6 +58,9 @@ export const Login = () => {
 
     const { isAuthenticated, user } = useAuthContext();
 
+    // Oculta o mostra la contrassenya
+    const [showPassword, setShowPassword] = useState(false);
+
     if (isAuthenticated) {
         if (user && user.is_company) {
             return <Navigate to="/customer-dashboard" replace />;
@@ -58,9 +69,9 @@ export const Login = () => {
         }
     }
 
-    /**
-     * Return
-     */
+    /*
+    * ----- Return
+    */
     return (
         <>
             {/* {isAuthenticated ? (
@@ -70,55 +81,62 @@ export const Login = () => {
                     <Navigate to="/customer-dashboard" replace />
                 )
             ) : null} */}
-            <main className="main__login">
+            <main className="login__container">
                 {isAuthenticated && <Navigate to="/" />}
                 <div className="login__logo-container">
-                    <img
-                        src={logo}
-                        className="login__logo"
-                        alt="Logo ReservaNOW"
-                    />
+                    <img src={logo} className="login__logo" alt="Logo ReservaNOW" />
                 </div>
-                <form className="login__login-form">
-                    <h1 className="login__title">Login</h1>
-                    <div className="login__login-form__input-box">
-                        <input
-                            type="text"
-                            className="login__login-form__input"
-                            placeholder="Email"
+                <form className="login__form-container">
+                    <h1 className="login__form-title">Hola de nou ;)</h1>
+                    <h3>Inicia sessió</h3>
+                    <div className="login__form--input-box">
+                        
+                        <Input
+                            type="email"
+                            placeholder="Correu"
                             onChange={handleEmailChange}
-                            required
                             value={email}
                         />
-                        <div className="login__login-form__icon">
+                        <div className="login__form-icon">
                             <FaUser style={iconStyleDefault} />
                         </div>
                     </div>
                     {!isValidEmail && email ? (
-                        <div className="login__login-form__error">
-                            Username must be larger than 3 characters
+                        <div className="login__form-error">
+                            Format d'email no vàlid
                         </div>
                     ) : null}
-                    <div className="login__login-form__input-box">
-                        <input
-                            type="password"
-                            className="login__login-form__input"
+                    <div className="login__form--input-box">
+                        <Input
+                            type={showPassword ? 'text' : 'password'}
                             placeholder="Password"
                             onChange={handlePasswordChange}
                             required
                             value={password}
                         />
-                        <div className="login__login-form__icon">
+                        {/* Per defecte s'oculta la contrasenya */}
+                        <button
+                            type="button"
+                            className='login__password-toggle'
+                            onClick={() => setShowPassword(!showPassword)}
+                        >
+                            {showPassword ? (
+                                <img src={eyeOpen} alt="Oculta contrasenya" />
+                            ) : (
+                                <img src={eyeCrossed} alt="Mostra contrasenya" />
+                            )}
+                        </button>
+                        <div className="login__form-icon">
                             <FaLock style={iconStyleDefault} />
                         </div>
                     </div>
                     {!isValidPassword(password) && password ? (
-                        <div className="login__login-form__error">
-                            At least 8 characters, 1 number, 1 uppercase, 1
-                            lowercase
+                        <div className="login__form-error">
+                            La contrasenya ha de tenir com a mínim 8 caràcters, 1 número, 1 majúscula i 1 minúscula
                         </div>
                     ) : null}
-                    <div className="login__login-form__remember">
+                    <div className="login__remember">
+                        {/* TODO: Canviar a component ? */}
                         <label htmlFor="remember">
                             <input
                                 type="checkbox"
@@ -131,7 +149,7 @@ export const Login = () => {
                     <div>
                         <a href="#">Forgot password?</a>
                     </div>
-                    <button
+                    {/* <button
                         className="login__login-form__submit-btn"
                         type="submit"
                         onClick={handleSubmit}
@@ -140,11 +158,17 @@ export const Login = () => {
                         }
                     >
                         Login
-                    </button>
+                    </button> */}
+                    <Button
+                        text="Login"
+                        action={handleSubmit}
+                        disabled={!isValidEmail(email) || !isValidPassword(password)}
+                        type="submit"
+                    />
                     <div className="login__login-form__signup">
-                        {"Don't have an account?"}{' '}
-                        <Link to="/signup" replace>
-                            Signup
+                        {"Encara no tens un compte?"}{' '}
+                        <Link to="/Signup" className='text-accent' replace>
+                            Registra't
                         </Link>
                     </div>
                 </form>

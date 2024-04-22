@@ -1,8 +1,4 @@
-/* Import defauts i variables */
-@import url('../../../styles/main_styles.css');
-
 /* Estil per a la barra search */
-
 .group {
     display: flex;
     line-height: 28px;
@@ -11,7 +7,7 @@
     max-width: 190px;
    }
    
-   .input {
+   .search-input {
     width: 100%;
     height: 40px;
     line-height: 28px;
@@ -25,11 +21,11 @@
     transition: border-color .3s cubic-bezier(.25,.01,.25,1) 0s, color .3s cubic-bezier(.25,.01,.25,1) 0s,background .2s cubic-bezier(.25,.01,.25,1) 0s;
    }
    
-   .input::placeholder {
+   .search-input::placeholder {
     color: var(--dark-grey);
    }
    
-   .input:focus, input:hover {
+   .search-input:focus, input:hover {
     outline: none;
     border-color: var(--accent-color); 
    }

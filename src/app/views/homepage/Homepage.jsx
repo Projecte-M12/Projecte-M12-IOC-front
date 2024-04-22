@@ -2,7 +2,7 @@ import { Header } from '../../shared/components/Header/Header';
 import { Footer } from '../../shared/components/Footer/Footer';
 import { Card } from './components/card/Card';
 
-import './Homepage.scss';
+import './Homepage.css';
 
 // import {useGetImage} from "../../hooks/customHooks/useGetImage";
 
