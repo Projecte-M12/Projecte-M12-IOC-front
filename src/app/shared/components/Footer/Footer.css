@@ -87,7 +87,7 @@
 
     .socials {
         justify-content: center;
-        gap: 2rem;
+        /* gap: 2rem; */
         margin-right: 0;
         padding-bottom: 2rem;
     }

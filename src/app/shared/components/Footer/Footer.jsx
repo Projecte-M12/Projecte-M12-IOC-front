@@ -36,25 +36,25 @@ export const Footer = () => {
 
             <div className="socials">
                 <div className="social">
-                    <img src={"#"} alt="instagram" />
-                    <p>
-                        NOM_XARXA
-                        <br /> ??{' '}
-                    </p>
+                    <img
+                        src="https://img.icons8.com/?size=256&id=32323"
+                        alt="Instagram"
+                    />
+                    <p>Instagram</p>
                 </div>
                 <div className="social">
-                    <img src={"#"} alt="NOM_XARXA" />
-                    <p>
-                        NOM_XARXA
-                        <br /> ??{' '}
-                    </p>
+                    <img
+                        src="https://img.icons8.com/?size=256&id=118497"
+                        alt="Facebook"
+                    />
+                    <p>Facebook</p>
                 </div>
                 <div className="social">
-                    <img src={"#"} alt="NOM_XARXA" />
-                    <p>
-                        NOM_XARXA
-                        <br /> ??{' '}
-                    </p>
+                    <img
+                        src="https://img.icons8.com/?size=256&id=13930"
+                        alt="LinkedIn"
+                    />
+                    <p>LinkedIn</p>
                 </div>
             </div>
         </div>
