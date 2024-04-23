@@ -54,6 +54,7 @@ export function CustomerDashboard() {
     };
 
     const handleSelectEvent = (eventInfo) => {
+        //Elimina el evento pasado por parámetro
         const updatedEvents = myEventsList.filter(
             (ev) => ev.id !== eventInfo.id,
         );
