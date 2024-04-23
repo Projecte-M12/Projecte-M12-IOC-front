@@ -3,5 +3,5 @@ import { useAuthContext } from '../hooks/useAuthContext';
 
 export function ProtectedRoutes() {
   const auth = useAuthContext();
-  return auth.isAuthenticated ? <Outlet /> : <Navigate to="/login" replace/>;
+  return auth.isAuthenticated ? <Outlet /> : <Navigate to="/Login" replace/>;
 }

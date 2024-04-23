@@ -1,17 +1,25 @@
 // Llibreris
 import React from 'react';
 
-// Estils 
+// Estils
 import './Input.css';
 
-// Funció 
-export function Input() {
+// Funció
+export function Input({ label, type, placeholder, onChange, value }) {
+    // const handleChange = (event) => {
+    //     onChange(event.target.value);
+    // };
+    /* Lògica de handleChange com a prop en la call del component */
     return (
-        <div class="input-group">
-            <label class="label">text? </label>
-            <input autocomplete="off" name="Email" id="Email" class="input" type="email" />
-            <div></div>
+        <div className="input-group">
+            {label && <label className="label">{label}</label>}
+            <input
+                className="input"
+                placeholder={placeholder}
+                onChange={onChange}
+                type={type}
+                value={value}
+            />
         </div>
     );
 }
-

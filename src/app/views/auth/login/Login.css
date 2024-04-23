@@ -1,0 +1,98 @@
+/* Estil principal del component */
+.login__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+    max-width: 100%;
+    margin: 0 auto;
+    height: auto;
+    min-height: 100vh;
+    overflow: hidden;
+    background-color: var(--accent-color-40);
+    padding: 0 1rem;
+    min-width: fit-content;
+}
+
+/* Estil pel contenidor del logo */
+.login__logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+/* Estil del logo TODO:Revisar dimensions */
+.login__logo {
+    max-width: 500px;
+    width: 100%;
+}
+
+/* Estil del formulari */
+.login__form-container {
+    width: 100%;
+    max-width: 400px;
+    padding: 1rem;
+}
+
+.login__title {
+    color: var(--black);
+    font-family: var(--roboto);
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.login__form--input-box {
+    /* position: relative;
+    margin-bottom: 1rem; */
+    margin-bottom: 1rem;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    max-width: fit-content;
+}
+
+.login__form-icon {
+    /* position: absolute;
+    top: 55%;
+    transform: translateY(-50%);
+    left: -35px; */
+    margin-right: 1rem;
+    max-width: fit-content;
+    max-height: fit-content;
+    transform: translateY(5%);
+}
+
+/* Estil botó showpassword */
+.login__password-toggle {
+    /* position: absolute;
+    right: 180px;
+    top: 60%;
+    transform: translateY(-50%);
+    padding: 0;
+    margin: 0; */
+    border: none;
+    background: none;
+    cursor: pointer;
+    transform: translate(-35px, 2px);
+}
+
+.login__form-error {
+    color: var(--dark-grey);
+    font-size: 0.8rem;
+}
+
+.login__remember {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    gap: 5px;
+    margin-top: 1rem;
+}
+
+/* TODO Revisaar etiquetes*/

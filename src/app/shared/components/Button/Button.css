@@ -1,33 +1,34 @@
-/* Import defauts i variables */
-@import url('../../../styles/main_styles.css');
-
 /* Estils per al botó primari */
 .primary-button {
-    display: flex;
+    display: flex; /* Fa que surti una underline */
     justify-content: center;
     align-items: center;
-    padding: 10px 15px;
+    /* padding: 10px 15px; */
     gap: 15px;
-    background-color: #E99000;
-    outline: 3px #E99000 solid;
+    margin: 5px;
+    background-color: var(--accent-color);
+    outline: 3px var(--accent-color) solid;
     outline-offset: -3px;
     border-radius: 5px;
     border: none;
     cursor: pointer;
     transition: 400ms;
-  }
-  
-  .primary-button .text {
-    color: white;
+    /* espai minim */
+    min-width: 310px !important;
+    height: 55px !important;
+}
+
+.primary-button .text {
+    color: var(--white);
     font-weight: 700;
-    font-size: 1em;
+    font-size: 1.2em; /* +120% de l'original */
     transition: 400ms;
-  }
-  
-  .primary-button:hover {
+}
+
+.primary-button:hover {
     background-color: transparent;
-  }
-  
-  .primary-button:hover .text {
-    color: #E99000;
-  }
+}
+
+.primary-button:hover .text {
+    color: var(--accent-color);
+}
