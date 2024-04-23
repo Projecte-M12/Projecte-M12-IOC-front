@@ -23,7 +23,7 @@ export const Header = () => {
                     // Es necessita un color invertit o algo així pel Footer i el Header. Tal com està ara els links son del mateix color que el fons del header
                 }
                 {isAuthenticated ? (
-                    <p>Link Logout</p>
+                    <a href="/logout">Logout</a>
                 ) : (
                     <Link to={'/login'} style={{ color: 'black' }}>
                         Login
