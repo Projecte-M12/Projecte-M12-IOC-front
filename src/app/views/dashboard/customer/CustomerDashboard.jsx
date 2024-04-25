@@ -6,14 +6,14 @@ import { useAuthContext } from '../../../hooks/useAuthContext';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'moment/locale/es'; // Importa el locale español
-
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
+
 
 import { Header } from '../../../shared/components/Header/Header';
 
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import './Customer.scss';
+import './CustomerDashboard.scss';
 
 // moment.locale("es")
 
