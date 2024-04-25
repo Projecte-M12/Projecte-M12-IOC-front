@@ -64,9 +64,9 @@ export const Login = () => {
 
     if (isAuthenticated) {
         if (user && user.is_company) {
-            return <Navigate to="/customer-dashboard" replace />;
-        } else {
             return <Navigate to="/company-dashboard" replace />;
+        } else {
+            return <Navigate to="/customer-dashboard" replace />;
         }
     }
 
