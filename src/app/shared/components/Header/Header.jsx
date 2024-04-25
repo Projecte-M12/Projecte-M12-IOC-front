@@ -3,9 +3,11 @@ import { useAuthContext } from '../../../hooks/useAuthContext';
 import { Link } from 'react-router-dom';
 
 import './Header.scss';
+import { useLogin } from '../../../hooks/useLogin';
 
 export const Header = () => {
-    const { isAuthenticated } = useAuthContext();
+    const { isAuthenticated, user } = useAuthContext();
+    const { handleLogout } = useLogin();
 
     return (
         <header className="header">
@@ -19,11 +21,20 @@ export const Header = () => {
                 <Link to={'/homepage'} style={{ color: 'black' }}>
                     Home
                 </Link>
-                {
-                    // Es necessita un color invertit o algo així pel Footer i el Header. Tal com està ara els links son del mateix color que el fons del header
-                }
+                {isAuthenticated && user.is_company && (
+                    <Link to={'/company-dashboard'} style={{ color: 'black' }}>
+                        {user.email}
+                    </Link>
+                )}
+                {isAuthenticated && !user.is_company && (
+                    <Link to={'/customer-dashboard'} style={{ color: 'black' }}>
+                        Dashboard
+                    </Link>
+                )}
                 {isAuthenticated ? (
-                    <a href="/logout">Logout</a>
+                    <Link to={'/'} onClick={handleLogout} style={{ color: 'black' }}>
+                        Logout
+                    </Link>
                 ) : (
                     <Link to={'/login'} style={{ color: 'black' }}>
                         Login
