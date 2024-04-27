@@ -3,15 +3,18 @@ import { AuthContextProvider } from './app/context/AuthContextProvider';
 import { Router } from './app/router/Router';
 
 import './app/styles/main_styles.css';
+import { AppointmentsContextProvider } from './app/context/AppointmentsContextProvider';
 
 function App() {
-  return (
-    <>
-      <AuthContextProvider>
-        <RouterProvider router={Router} />
-      </AuthContextProvider>
-    </>
-  );
+    return (
+        <>
+            <AuthContextProvider>
+                <AppointmentsContextProvider>
+                    <RouterProvider router={Router} />
+                </AppointmentsContextProvider>
+            </AuthContextProvider>
+        </>
+    );
 }
 
 export default App;
