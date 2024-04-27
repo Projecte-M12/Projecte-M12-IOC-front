@@ -8,7 +8,6 @@ import moment from 'moment';
 import 'moment/locale/es'; // Importa el locale español
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 
-
 import { Header } from '../../../shared/components/Header/Header';
 
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
@@ -16,6 +15,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import './CustomerDashboard.scss';
 import { useEffect } from 'react';
 import { useCheckUser } from '../../../hooks/useCheckUser';
+import { useAppointmentsContext } from '../../../hooks/useAppointmentsContext';
 
 // moment.locale("es")
 
@@ -31,47 +31,32 @@ export function CustomerDashboard() {
     /**
      * States
      */
-
     const { user, isAuthenticated } = useAuthContext();
     const [myEventsList, setMyEventsList] = useState([]);
     const { checkToken } = useCheckUser();
+    const { allAppointments, updateAllApointments } = useAppointmentsContext();
 
     useEffect(() => {
         checkToken();
     }, []);
 
+    useEffect(() => {
+        const filteredEvents = allAppointments.filter(
+            (appointment) => appointment.userId === user?.id,
+        );
+        setMyEventsList(filteredEvents);
+    }, [allAppointments]);
+
     if (!isAuthenticated) {
         return <Navigate to="/" replace />;
     }
 
-    let events = [];
-
-    const handleSelectSlot = (slotInfo) => {
-        const reserva = {
-            id: 1,
-            start: slotInfo.start,
-            end: slotInfo.end,
-            title: `Reserva en Restaurante XXXX`,
-            empresa: 'XXXX',
-            email: `${user?.email}`,
-            color: '#FF5733',
-            description: 'Reserva para una cena especial en el restaurante',
-            personas: 4,
-        };
-        events = [...myEventsList, reserva];
-        setMyEventsList(events);
-        console.log('Reserva', reserva);
-        console.log('myEventsList', myEventsList);
-    };
-
     const handleSelectEvent = (eventInfo) => {
         //Elimina el evento pasado por parámetro
-        const updatedEvents = myEventsList.filter(
+        const updatedEvents = allAppointments.filter(
             (ev) => ev.id !== eventInfo.id,
         );
-        setMyEventsList(updatedEvents);
-        console.log('eventInfo', eventInfo);
-        console.log(updatedEvents);
+        updateAllApointments(updatedEvents);
     };
 
     return (
@@ -106,12 +91,13 @@ export function CustomerDashboard() {
                             localizer={localizer}
                             events={myEventsList}
                             defaultDate={new Date()}
+                            defaultView="week"
                             // defaultView="month"
                             startAccessor="start"
                             endAccessor="end"
-                            style={{ height: 600 }}
+                            style={{ height: 500 }}
                             selectable={true}
-                            onSelectSlot={handleSelectSlot}
+                            // onSelectSlot={handleSelectSlot}
                             onSelectEvent={handleSelectEvent}
                             slotDuration={60}
                             step={60}
