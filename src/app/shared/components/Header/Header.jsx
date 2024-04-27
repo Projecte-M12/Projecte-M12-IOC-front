@@ -18,25 +18,34 @@ export const Header = () => {
                 <Link to={'/'} style={{ color: 'black' }}>
                     Inici
                 </Link>
-                <Link to={'/homepage'} style={{ color: 'black' }}>
-                    Home
-                </Link>
                 {isAuthenticated && user.is_company && (
                     <Link to={'/company-dashboard'} style={{ color: 'black' }}>
-                        {user.email}
+                        Company dashboard
                     </Link>
                 )}
                 {isAuthenticated && !user.is_company && (
-                    <Link to={'/customer-dashboard'} style={{ color: 'black' }}>
-                        Dashboard
-                    </Link>
+                    <>
+                        <Link to={'/homepage'} style={{ color: 'black' }}>
+                            Serveis
+                        </Link>
+                        <Link
+                            to={'/customer-dashboard'}
+                            style={{ color: 'black' }}
+                        >
+                            User dashboard
+                        </Link>
+                    </>
                 )}
                 {isAuthenticated ? (
-                    <Link to={'/'} onClick={handleLogout} style={{ color: 'black' }}>
+                    <Link
+                        to={'/'}
+                        onClick={handleLogout}
+                        style={{ color: 'black' }}
+                    >
                         Logout
                     </Link>
                 ) : (
-                    <Link to={'/login'} style={{ color: 'black' }}>
+                    <Link to={'/'} style={{ color: 'black' }}>
                         Login
                     </Link>
                 )}
