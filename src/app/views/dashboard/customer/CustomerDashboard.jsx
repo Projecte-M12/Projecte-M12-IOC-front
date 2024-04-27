@@ -14,6 +14,8 @@ import { Header } from '../../../shared/components/Header/Header';
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import './CustomerDashboard.scss';
+import { useEffect } from 'react';
+import { useCheckUser } from '../../../hooks/useCheckUser';
 
 // moment.locale("es")
 
@@ -32,6 +34,15 @@ export function CustomerDashboard() {
 
     const { user, isAuthenticated } = useAuthContext();
     const [myEventsList, setMyEventsList] = useState([]);
+    const { checkToken } = useCheckUser();
+
+    useEffect(() => {
+        checkToken();
+    }, []);
+
+    if (!isAuthenticated) {
+        return <Navigate to="/" replace />;
+    }
 
     let events = [];
 
