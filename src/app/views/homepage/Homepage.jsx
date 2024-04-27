@@ -6,13 +6,27 @@ import { getCompanies } from '../../services/getCompanies';
 import './Homepage.scss';
 import { useState } from 'react';
 import CustomModal from './components/modal/Modal';
+import { Navigate } from 'react-big-calendar';
+import { useAuthContext } from '../../hooks/useAuthContext';
+import { useEffect } from 'react';
+import { useCheckUser } from '../../hooks/useCheckUser';
 
 // import {useGetImage} from "../../hooks/customHooks/useGetImage";
-
 
 export const Homepage = () => {
     const [selectedCompany, setSelectedCompany] = useState(null);
     const companies = getCompanies();
+
+    const { user, isAuthenticated } = useAuthContext();
+    const { checkToken } = useCheckUser();
+
+    useEffect(() => {
+        checkToken();
+    }, []);
+
+    if (!isAuthenticated) {
+        return <Navigate to="/" replace />;
+    }
 
     const openModal = (company) => {
         setSelectedCompany(company);
@@ -21,6 +35,7 @@ export const Homepage = () => {
     const closeModal = () => {
         setSelectedCompany(null);
     };
+
     return (
         <>
             <Header />
