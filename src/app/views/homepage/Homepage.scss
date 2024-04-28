@@ -2,6 +2,7 @@
 
 .homepage__title {
     margin-bottom: 2rem;
+    text-align: center;
 }
 
 .homepage__container {
@@ -17,21 +18,28 @@
             flex-direction: column;
             align-items: center;
             max-width: 200px;
-
-            // .card__image {
-            //     // max-width: 150px;
-            //     max-height: 200px;
-            //     overflow: hidden;
-            //     border-radius: 1rem;
-            //     margin: .5rem;
-
-            //     img {
-            //         width: 200px;
-            //         height: 200px;
-            //         object-fit: cover;
-            //     }
-            // }
         }
     }
 }
 
+.homepage__filter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .homepage__filterTitle {
+        font-weight: bold;
+        margin: .5rem 0
+    }
+
+    .homepage__filterCategories {
+        .homepage__filterCategoriesLabel {
+            .homepage__filterCategoriesInput {
+                margin-right: .2rem;
+                margin-left: 1rem;
+            }
+
+        }
+
+    }
+}

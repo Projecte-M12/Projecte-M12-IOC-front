@@ -2,6 +2,7 @@ import { Header } from '../../shared/components/Header/Header';
 import { Footer } from '../../shared/components/Footer/Footer';
 import { Card } from './components/card/Card';
 import { getCompanies } from '../../services/getCompanies';
+import { getServices } from '../../services/getServices';
 // import Modal from 'react-modal';
 import './Homepage.scss';
 import { useState } from 'react';
@@ -15,7 +16,9 @@ import { useCheckUser } from '../../hooks/useCheckUser';
 
 export const Homepage = () => {
     const [selectedCompany, setSelectedCompany] = useState(null);
+    const [selectedCategories, setSelectedCategories] = useState([]);
     const companies = getCompanies();
+    const services = getServices();
 
     const { user, isAuthenticated } = useAuthContext();
     const { checkToken } = useCheckUser();
@@ -36,15 +39,56 @@ export const Homepage = () => {
         setSelectedCompany(null);
     };
 
+    const toggleCategory = (category) => {
+        if (selectedCategories.includes(category)) {
+            setSelectedCategories(
+                selectedCategories.filter((c) => c !== category),
+            );
+        } else {
+            setSelectedCategories([...selectedCategories, category]);
+        }
+    };
+
+    const filteredCompanies =
+        selectedCategories.length > 0
+            ? companies.filter((company) =>
+                  company.category.some((c) => selectedCategories.includes(c)),
+              )
+            : companies;
+
     return (
         <>
             <Header />
-            <h1>Homepage</h1>
-            <p className="homepage__title">Welcome to ReservaNOW</p>
+            <p className="homepage__title">
+                Aquests son els serveis que pots reservar
+            </p>
+
+            <div className="homepage__filter">
+                <div className="homepage__filterTitle">
+                    Filtrar per categoria
+                </div>
+                <div className="homepage__filterCategories">
+                    {services.map((category) => (
+                        <label
+                            key={category}
+                            className="homepage__filterCategoriesLabel"
+                        >
+                            <input
+                                type="checkbox"
+                                value={category}
+                                checked={selectedCategories.includes(category)}
+                                onChange={() => toggleCategory(category)}
+                                className="homepage__filterCategoriesInput"
+                            />
+                            {category}
+                        </label>
+                    ))}
+                </div>
+            </div>
 
             <div className="homepage__container">
                 <ul>
-                    {companies.map((company) => {
+                    {filteredCompanies.map((company) => {
                         return (
                             <li key={company.companyId} className="card">
                                 <Card company={company} openModal={openModal} />
