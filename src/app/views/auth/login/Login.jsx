@@ -52,6 +52,7 @@ export const Login = () => {
         email,
         password,
         loading,
+        error,
         handleEmailChange,
         handlePasswordChange,
         handleSubmit,
@@ -123,6 +124,7 @@ export const Login = () => {
                             value={password}
                         />
                         {/* Per defecte s'oculta la contrasenya */}
+
                         <button
                             type="button"
                             className="login__password-toggle"
@@ -144,6 +146,11 @@ export const Login = () => {
                             1 número, 1 majúscula i 1 minúscula
                         </div>
                     ) : null}
+
+                    {error && (
+                        <div className="login__error">{error.message}</div>
+                    )}
+
                     <div className="login__remember">
                         {/* TODO: Canviar a component ? */}
                         <label htmlFor="remember">
