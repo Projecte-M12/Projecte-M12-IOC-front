@@ -45,9 +45,14 @@ export const Header = () => {
                         Logout
                     </Link>
                 ) : (
-                    <Link to={'/'} style={{ color: 'black' }}>
-                        Login
-                    </Link>
+                    <>
+                        <Link to={'/login'} style={{ color: 'black' }}>
+                            Login
+                        </Link>
+                        <Link to={'/signup'} style={{ color: 'black' }}>
+                            Signup
+                        </Link>
+                    </>
                 )}
             </div>
         </header>
