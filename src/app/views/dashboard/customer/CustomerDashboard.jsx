@@ -59,6 +59,12 @@ export function CustomerDashboard() {
         updateAllApointments(updatedEvents);
     };
 
+    const minTime = new Date();
+    minTime.setHours(8, 0, 0);
+
+    const maxTime = new Date();
+    maxTime.setHours(18, 0, 0);
+
     return (
         <>
             <Header />
@@ -102,6 +108,8 @@ export function CustomerDashboard() {
                             slotDuration={60}
                             step={60}
                             timeslots={1}
+                            min={minTime}
+                            max={maxTime}
                             culture="es"
                             toolbar={true}
                             formats={{
