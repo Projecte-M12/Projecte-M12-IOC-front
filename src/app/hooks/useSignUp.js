@@ -16,6 +16,7 @@ export const useSignup = () => {
     const [passwordConfirmation, setPasswordConfirmation] = useState('');
     const [isCompany, setIsCompany] = useState(false);
     const [services, setServices] = useState('');
+    const [image_url, setImage_url] = useState('');
     const [remember, setRemember] = useState(false);
     const [signedUp, setSignedUp] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -50,8 +51,12 @@ export const useSignup = () => {
         setIsCompany((prev) => !prev);
     };
 
-    const hadleService = (event) => {
+    const handleServicesChange = (event) => {
         setServices(event.target.value);
+    };
+
+    const handleImageUrlChange = (event) => {
+        setImage_url(event.target.value);
     };
 
     const handleSubmit = async (event) => {
@@ -76,7 +81,8 @@ export const useSignup = () => {
                     password_confirmation: passwordConfirmation,
                     is_company: isCompany,
                     company_name: name,
-                    service_provided: 'servei prova', //services,
+                    service_provided: services,
+                    image_url,
                     remember,
                 }),
                 // signal: controller.signal,
@@ -125,6 +131,7 @@ export const useSignup = () => {
         passwordConfirmation,
         isCompany,
         services,
+        image_url,
         remember,
         signedUp,
         loading,
@@ -135,7 +142,8 @@ export const useSignup = () => {
         handlePasswordConfirmationChange,
         handleNameChange,
         handleIsCompanyChange,
-        hadleService,
+        handleServicesChange,
+        handleImageUrlChange,
         handleSubmit,
     };
 };

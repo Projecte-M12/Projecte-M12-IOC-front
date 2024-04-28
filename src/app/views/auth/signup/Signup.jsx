@@ -21,6 +21,11 @@ import { Button } from '../../../shared/components/Button/Button.jsx';
 import { useAuthContext } from '../../../hooks/useAuthContext';
 import { useCheckUser } from '../../../hooks/useCheckUser';
 
+/**
+ * Serveis
+ */
+import { getServices } from '../../../services/getServices';
+
 /*
  * ----- Styles
  */
@@ -38,16 +43,9 @@ import { useSignup } from '../../../hooks/useSignUp';
 import eyeOpen from '../../../assets/icons/eyeopen.svg';
 import eyeCrossed from '../../../assets/icons/eyecrossed.svg';
 import { Header } from '../../../shared/components/Header/Header.jsx';
+import { getCompanies } from '../../../services/getCompanies.js';
 
 export const Signup = () => {
-    /*
-     * ----- Custom Hooks
-     */
-    const { checkToken } = useCheckUser();
-    useEffect(() => {
-        checkToken();
-    }, []);
-
     /*
      * ----- States
      */
@@ -57,25 +55,49 @@ export const Signup = () => {
     // Oculta o mostra la contrassenya
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmation, setShowConfirmation] = useState(false);
+    const [servicesList, setServicesList] = useState([]);
+    // const [providers, setProviders] = useState([]);
 
     // Hay que crear un useSignup con su propio estado
     const {
         email,
         password,
-        loading,
-        error,
-        message,
-        signedUp,
-        isCompany,
+        name,
         passwordConfirmation,
+        isCompany,
+        services,
+        image_url,
+        remember,
+        signedUp,
+        loading,
+        message,
+        error,
         handleEmailChange,
         handlePasswordChange,
         handlePasswordConfirmationChange,
         handleNameChange,
         handleIsCompanyChange,
-        hadleService,
+        handleServicesChange,
+        handleImageUrlChange,
         handleSubmit,
     } = useSignup();
+
+    /*
+     * ----- Custom Hooks
+     */
+    const { checkToken } = useCheckUser();
+    useEffect(() => {
+        checkToken();
+    }, []);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            // setProviders(await getCompanies());
+            setServicesList(await getServices());
+        };
+        fetchData();
+        console.log('Services', services);
+    }, []);
 
     /*
      * ----- Funciones
@@ -217,23 +239,38 @@ export const Signup = () => {
                                     name="servicio"
                                     className="login__login-form__input"
                                     // defaultValue={''}
-                                    onChange={hadleService}
+                                    onChange={handleServicesChange}
                                 >
-                                    <option value="" disabled>
-                                        Selecciona...
+                                    <option value="" disabled selected>
+                                        Selecciona una categoria...
                                     </option>
-                                    <option value="1">
-                                        Aquí va un map de los servicios
-                                    </option>
-                                    <option value="2">Aquí va otra cosa</option>
+                                    {servicesList &&
+                                        servicesList.map((service, index) => {
+                                            return (
+                                                <option
+                                                    key={index}
+                                                    value={service}
+                                                >
+                                                    {service}
+                                                </option>
+                                            );
+                                        })}
                                 </select>
                             </div>
                             <div className="signup__form--input-box">
                                 <Input
                                     type="text"
                                     name="Empresa"
-                                    placeholder="Empresa"
+                                    placeholder="Nom Empresa"
                                     onChange={handleNameChange}
+                                />
+                            </div>
+                            <div className="signup__form--input-box">
+                                <Input
+                                    type="text"
+                                    name="ImageUrl"
+                                    placeholder="ImageUrl"
+                                    onChange={handleImageUrlChange}
                                 />
                             </div>
                         </>
