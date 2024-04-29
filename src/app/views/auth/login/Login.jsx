@@ -151,16 +151,17 @@ export const Login = () => {
                         <div className="login__error">{error.message}</div>
                     )}
 
-                    <div className="login__remember">
+                    <div className="login__form--input-box">
                         {/* TODO: Canviar a component ? */}
                         <label htmlFor="remember">
                             <input
                                 type="checkbox"
                                 name="remember"
                                 id="remember"
+                                className="login__rememberCheckbox"
                             />
+                            Remember me
                         </label>
-                        <p>Remember me</p>
                     </div>
                     <div>
                         <a href="#">Forgot password?</a>
