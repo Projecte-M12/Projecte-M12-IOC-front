@@ -297,6 +297,14 @@ export const Signup = () => {
                             </div>
                         </>
                     )}
+                    {signedUp && (
+                        <>
+                            <div className="signup__formSuccess">
+                                REGISTRAT CORRECTAMENT
+                            </div>
+                            <Navigate to="/login" replace />{' '}
+                        </>
+                    )}
                     <Button
                         // type="submit"
                         text="Sign Up"
