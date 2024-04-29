@@ -7,11 +7,11 @@ export const Card = ({ company, openModal }) => {
     };
     return (
         <>
-            <p>Company: {company.companyName}</p>
+            <p>Company: {company.company_name}</p>
             <div className="card__image" onClick={handleClick}>
-                <img src={company.srcImages.small} alt="" />
+                <img src={company.image_url} alt="" />
             </div>
-            <p>Category: {company.category}</p>
+            <p>Category: {company.service_provided}</p>
         </>
     );
 };

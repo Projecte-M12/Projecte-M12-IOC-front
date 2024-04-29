@@ -93,8 +93,8 @@ const CustomModal = ({ company, closeModal }) => {
             userId: user?.id,
             start: slotInfo.start,
             end: slotInfo.end,
-            title: `Reserva en ${company.companyName}`,
-            empresa: company.companyName,
+            title: `Reserva en ${company.company_name}`,
+            empresa: company.company_name,
             email: user?.email,
             color: '#66ff99', // Color para las nuevas reservas
             description: '', //Crear estado y campo input para manejar la descripción de la reserva
@@ -139,8 +139,8 @@ const CustomModal = ({ company, closeModal }) => {
                             <button onClick={closeModal}>Close</button>
                         </div>
                     </div>
-                    <p>Nom: {company.companyName}</p>
-                    <p>Categoria: {company.category}</p>
+                    <p>Nom: {company.company_name}</p>
+                    <p>Categoria: {company.service_provided}</p>
 
                     <div className="dashboard__calendar">
                         <Calendar
