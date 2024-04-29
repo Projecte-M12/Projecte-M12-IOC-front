@@ -1,4 +1,4 @@
-import Companies from '../mocks/COMPANY_MOCK_DATA.json';
+// import Companies from '../mocks/COMPANY_MOCK_DATA.json';
 import { API_BASE_URL, EDPOINT } from '../utils/constants';
 
 export const getCompanies = () => {
