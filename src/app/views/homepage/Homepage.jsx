@@ -17,14 +17,26 @@ import { useCheckUser } from '../../hooks/useCheckUser';
 export const Homepage = () => {
     const [selectedCompany, setSelectedCompany] = useState(null);
     const [selectedCategories, setSelectedCategories] = useState([]);
+    const [servicesList, setServicesList] = useState([]);
+    const [companiesList, setCompaniesList] = useState([]);
     const companies = getCompanies();
-    const services = getServices();
 
     const { user, isAuthenticated } = useAuthContext();
     const { checkToken } = useCheckUser();
 
     useEffect(() => {
         checkToken();
+    }, []);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            // setProviders(await getCompanies());
+            setServicesList(await getServices());
+            const comp = await getCompanies();
+            console.log(comp);
+            setCompaniesList(comp);
+        };
+        fetchData();
     }, []);
 
     if (!isAuthenticated) {
@@ -51,10 +63,10 @@ export const Homepage = () => {
 
     const filteredCompanies =
         selectedCategories.length > 0
-            ? companies.filter((company) =>
-                  company.category.some((c) => selectedCategories.includes(c)),
+            ? companiesList.filter((company) =>
+                  selectedCategories.includes(company.service_provided),
               )
-            : companies;
+            : companiesList;
 
     return (
         <>
@@ -68,7 +80,7 @@ export const Homepage = () => {
                     Filtrar per categoria
                 </div>
                 <div className="homepage__filterCategories">
-                    {services.map((category) => (
+                    {servicesList.map((category) => (
                         <label
                             key={category}
                             className="homepage__filterCategoriesLabel"
@@ -90,7 +102,7 @@ export const Homepage = () => {
                 <ul>
                     {filteredCompanies.map((company) => {
                         return (
-                            <li key={company.companyId} className="card">
+                            <li key={company.id} className="card">
                                 <Card company={company} openModal={openModal} />
                             </li>
                         );

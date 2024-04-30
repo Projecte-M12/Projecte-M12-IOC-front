@@ -16,6 +16,7 @@ export const useSignup = () => {
     const [passwordConfirmation, setPasswordConfirmation] = useState('');
     const [isCompany, setIsCompany] = useState(false);
     const [services, setServices] = useState('');
+    const [companyName, setCompanyName] = useState('');
     const [image_url, setImage_url] = useState('');
     const [remember, setRemember] = useState(false);
     const [signedUp, setSignedUp] = useState(false);
@@ -55,6 +56,10 @@ export const useSignup = () => {
         setServices(event.target.value);
     };
 
+    const handleCompanyNameChange = (event) => {
+        setImage_url(event.target.value);
+    };
+
     const handleImageUrlChange = (event) => {
         setImage_url(event.target.value);
     };
@@ -67,24 +72,33 @@ export const useSignup = () => {
 
             // TODO: Falta implementar el signal para evitar sobrecarga de llamadas
             const controller = new AbortController();
-
+            const newUser = isCompany
+                ? {
+                      name,
+                      email,
+                      password,
+                      password_confirmation: passwordConfirmation,
+                      is_company: isCompany,
+                      company_name: name,
+                      service_provided: services,
+                      image_url,
+                      remember,
+                  }
+                : {
+                      name,
+                      email,
+                      password,
+                      password_confirmation: passwordConfirmation,
+                      is_company: isCompany,
+                      remember,
+                  };
             const optionsFetchUserInfo = {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     Accept: 'application/json',
                 },
-                body: JSON.stringify({
-                    name: email,
-                    email,
-                    password,
-                    password_confirmation: passwordConfirmation,
-                    is_company: isCompany,
-                    company_name: name,
-                    service_provided: services,
-                    image_url,
-                    remember,
-                }),
+                body: JSON.stringify(newUser),
                 // signal: controller.signal,
             };
 
@@ -131,6 +145,7 @@ export const useSignup = () => {
         passwordConfirmation,
         isCompany,
         services,
+        companyName,
         image_url,
         remember,
         signedUp,
@@ -143,6 +158,7 @@ export const useSignup = () => {
         handleNameChange,
         handleIsCompanyChange,
         handleServicesChange,
+        handleCompanyNameChange,
         handleImageUrlChange,
         handleSubmit,
     };

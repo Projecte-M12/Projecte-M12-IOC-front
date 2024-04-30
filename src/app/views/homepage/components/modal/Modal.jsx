@@ -30,8 +30,14 @@ const CustomModal = ({ company, closeModal }) => {
     const [error, setError] = useState(null);
 
     const { user, isAuthenticated } = useAuthContext();
-    const { lastId, setLastId, allAppointments, updateAllApointments } =
-        useAppointmentsContext();
+    const {
+        lastId,
+        setLastId,
+        allAppointments,
+        updateAllApointments,
+        createAppointment,
+        deleteAppointment,
+    } = useAppointmentsContext();
     const { checkToken } = useCheckUser();
 
     useEffect(() => {
@@ -76,10 +82,10 @@ const CustomModal = ({ company, closeModal }) => {
     }, [customerAppointments, providerAppointments]);
 
     useEffect(() => {
-        console.log('allAppointments', allAppointments);
-        console.log('providerAppointments', providerAppointments);
-        console.log('customerAppointments', customerAppointments);
-        console.log('visualAppointments', visualAppointments);
+        // console.log('allAppointments', allAppointments);
+        // console.log('providerAppointments', providerAppointments);
+        // console.log('customerAppointments', customerAppointments);
+        // console.log('visualAppointments', visualAppointments);
     }, [providerAppointments, customerAppointments, allAppointments]);
 
     if (!isAuthenticated) {
@@ -87,17 +93,17 @@ const CustomModal = ({ company, closeModal }) => {
     }
 
     const handleSelectSlot = (slotInfo) => {
+        createAppointment(company, user, slotInfo);
         const newAppointment = {
             id: lastId + 1,
             companyId: company.companyId,
             userId: user?.id,
             start: slotInfo.start,
             end: slotInfo.end,
-            title: `Reserva en ${company.companyName}`,
-            empresa: company.companyName,
+            title: `Reserva en ${company.company_name}`,
+            empresa: company.company_name,
             email: user?.email,
             color: '#66ff99', // Color para las nuevas reservas
-            description: '', //Crear estado y campo input para manejar la descripción de la reserva
         };
 
         setLastId(newAppointment.id);
@@ -106,6 +112,7 @@ const CustomModal = ({ company, closeModal }) => {
 
     const handleSelectEvent = (eventInfo) => {
         //Elimina el evento pasado por parámetro
+        deleteAppointment(eventInfo)
         if (eventInfo.userId === user?.id) {
             updateAllApointments(
                 allAppointments.filter(
@@ -139,8 +146,8 @@ const CustomModal = ({ company, closeModal }) => {
                             <button onClick={closeModal}>Close</button>
                         </div>
                     </div>
-                    <p>Nom: {company.companyName}</p>
-                    <p>Categoria: {company.category}</p>
+                    <p>Nom: {company.company_name}</p>
+                    <p>Categoria: {company.service_provided}</p>
 
                     <div className="dashboard__calendar">
                         <Calendar

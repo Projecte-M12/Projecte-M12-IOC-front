@@ -75,6 +75,7 @@ export const Signup = () => {
         passwordConfirmation,
         isCompany,
         services,
+        companyName,
         image_url,
         remember,
         signedUp,
@@ -87,6 +88,7 @@ export const Signup = () => {
         handleNameChange,
         handleIsCompanyChange,
         handleServicesChange,
+        handleCompanyNameChange,
         handleImageUrlChange,
         handleSubmit,
     } = useSignup();
@@ -105,7 +107,6 @@ export const Signup = () => {
             setServicesList(await getServices());
         };
         fetchData();
-        console.log('Services', services);
     }, []);
 
     /*
@@ -147,6 +148,18 @@ export const Signup = () => {
                         <div className="signup__form-icon">
                             <img src={mailLetter} alt="email" />
                             {/* <FaUser style={iconStyleDefault} /> */}
+                        </div>
+                        <Input
+                            type="text"
+                            placeholder="Nom d'usuari"
+                            onChange={handleNameChange}
+                            value={name}
+                            required
+                        />
+                    </div>
+                    <div className="signup__form--input-box">
+                        <div className="signup__form-icon">
+                            <FaUser style={iconStyleDefault} />
                         </div>
                         <Input
                             type="email"
@@ -254,6 +267,7 @@ export const Signup = () => {
                             id="is_company"
                             value={isCompany}
                             onChange={handleIsCompanyChange}
+                            className="signup__empresaCheckbox"
                         />
                         <label htmlFor="is_company">Soc una empresa</label>
                     </div>
@@ -262,11 +276,11 @@ export const Signup = () => {
                             <div className="signup__form--input-box">
                                 <select
                                     name="servicio"
-                                    className="login__login-form__input"
-                                    // defaultValue={''}
+                                    className="signup__select"
+                                    defaultValue={''}
                                     onChange={handleServicesChange}
                                 >
-                                    <option value="" disabled selected>
+                                    <option value="" disabled>
                                         Selecciona una categoria...
                                     </option>
                                     {servicesList &&
@@ -284,26 +298,41 @@ export const Signup = () => {
                             </div>
                             <div className="signup__form--input-box">
                                 <div className="signup__form-icon">
+
                                     <img src={shopIcon} alt="shop icon" style={iconStyleDefault} />
+
+                                    
                                 </div>
                                 <Input
                                     type="text"
-                                    name="Empresa"
                                     placeholder="Nom Empresa"
-                                    onChange={handleNameChange}
+                                    onChange={handleCompanyNameChange}
+                                    value={companyName}
+                                    required
                                 />
                             </div>
                             <div className="signup__form--input-box">
                                 <div className="signup__form-icon">
                                     <img src={profilePicture} alt="profile picture" style={iconStyleDefault} />
+
+                                   
                                 </div>
                                 <Input
                                     type="text"
-                                    name="ImageUrl"
                                     placeholder="ImageUrl"
                                     onChange={handleImageUrlChange}
+                                    value={image_url}
+                                    required
                                 />
                             </div>
+                        </>
+                    )}
+                    {signedUp && (
+                        <>
+                            <div className="signup__formSuccess">
+                                REGISTRAT CORRECTAMENT
+                            </div>
+                            <Navigate to="/login" replace />{' '}
                         </>
                     )}
                     <Button

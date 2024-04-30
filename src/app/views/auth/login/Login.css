@@ -100,4 +100,9 @@
     margin: 1rem 0;
 }
 
+.login__rememberCheckbox {
+    margin-right: 0.2rem;
+    margin-left: 1rem;
+}
+
 /* TODO Revisaar etiquetes*/

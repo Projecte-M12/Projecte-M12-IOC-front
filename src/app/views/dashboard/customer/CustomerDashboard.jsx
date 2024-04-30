@@ -34,7 +34,7 @@ export function CustomerDashboard() {
     const { user, isAuthenticated } = useAuthContext();
     const [myEventsList, setMyEventsList] = useState([]);
     const { checkToken } = useCheckUser();
-    const { allAppointments, updateAllApointments } = useAppointmentsContext();
+    const { allAppointments, updateAllApointments, deleteAppointment } = useAppointmentsContext();
 
     useEffect(() => {
         checkToken();
@@ -44,6 +44,8 @@ export function CustomerDashboard() {
         const filteredEvents = allAppointments.filter(
             (appointment) => appointment.userId === user?.id,
         );
+        console.log(allAppointments)
+        console.log(user.id)
         setMyEventsList(filteredEvents);
     }, [allAppointments]);
 
@@ -52,6 +54,7 @@ export function CustomerDashboard() {
     }
 
     const handleSelectEvent = (eventInfo) => {
+        deleteAppointment(eventInfo);
         //Elimina el evento pasado por parámetro
         const updatedEvents = allAppointments.filter(
             (ev) => ev.id !== eventInfo.id,
