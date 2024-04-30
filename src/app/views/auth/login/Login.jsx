@@ -29,7 +29,12 @@ import { Header } from '../../../shared/components/Header/Header';
 import './Login.css';
 import { iconStyleDefault } from '../../../styles/iconStyles';
 import logo from '../../../assets/logo/reservanow_logo.svg';
-import { FaUser, FaLock } from 'react-icons/fa';
+
+/*
+* ----- Icons
+*/
+import mailLetter from '../../../assets/icons/mail.svg';
+import passwordKey from '../../../assets/icons/keyAccount.svg';
 import eyeOpen from '../../../assets/icons/eyeopen.svg';
 import eyeCrossed from '../../../assets/icons/eyecrossed.svg';
 
@@ -97,8 +102,8 @@ export const Login = () => {
                     <h1 className="login__form-title">Hola de nou ;)</h1>
                     <h3>Inicia sessió</h3>
                     <div className="login__form--input-box">
-                        <div className="login__form-icon">
-                            <FaUser style={iconStyleDefault} />
+                        <div className="signup__form-icon">
+                            <img src={mailLetter} alt="email" />
                         </div>
                         <Input
                             type="email"
@@ -113,8 +118,8 @@ export const Login = () => {
                         </div>
                     ) : null}
                     <div className="login__form--input-box">
-                        <div className="login__form-icon">
-                            <FaLock style={iconStyleDefault} />
+                        <div className="signup__form-icon">
+                            <img src={passwordKey} alt="password" />
                         </div>
                         <Input
                             type={showPassword ? 'text' : 'password'}
