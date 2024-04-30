@@ -35,13 +35,22 @@ import {
     iconStyleGreen,
     iconStyleRed,
 } from '../../../styles/iconStyles';
-
 import logo from '../../../assets/logo/reservanow_logo.svg';
-import { FaUser, FaLock } from 'react-icons/fa';
 import { useSignup } from '../../../hooks/useSignUp';
 
+/*
+* ----- Icons
+*/
 import eyeOpen from '../../../assets/icons/eyeopen.svg';
 import eyeCrossed from '../../../assets/icons/eyecrossed.svg';
+import mailLetter from '../../../assets/icons/mail.svg';
+import shopIcon from '../../../assets/icons/shop.svg';
+import passwordKey from '../../../assets/icons/keyAccount.svg';
+import passwordKeyOK from '../../../assets/icons/keyAccountOK.svg';
+import passwordKeyBad from '../../../assets/icons/keyAccountBad.svg';
+import profilePicture from '../../../assets/icons/picture-jpg.svg';
+
+
 import { Header } from '../../../shared/components/Header/Header.jsx';
 import { getCompanies } from '../../../services/getCompanies.js';
 
@@ -137,7 +146,8 @@ export const Signup = () => {
                     <h3>Registra't</h3>
                     <div className="signup__form--input-box">
                         <div className="signup__form-icon">
-                            <FaUser style={iconStyleDefault} />
+                            <img src={mailLetter} alt="email" />
+                            {/* <FaUser style={iconStyleDefault} /> */}
                         </div>
                         <Input
                             type="text"
@@ -165,8 +175,13 @@ export const Signup = () => {
                         </div>
                     ) : null}
                     <div className="signup__form--input-box">
-                        <div className="signup__form-icon">
+                        {/* <div className="signup__form-icon">
+                            <img src={passwordKey} alt="password" style={iconStyleDefault} />
                             <FaLock style={iconStyleDefault} />
+                        </div> */}
+
+                        <div className="signup__form-icon">
+                            <img src={passwordKey} alt="password" />
                         </div>
                         <Input
                             type={showPassword ? 'text' : 'password'}
@@ -199,16 +214,26 @@ export const Signup = () => {
                     ) : null}
                     <div className="signup__form--input-box">
                         <div className="signup__form-icon">
+                            
+                            {/* ACTUAL --> Canviem svg ;P */}
+                            <img src={password && password === passwordConfirmation ? passwordKeyOK : password ? passwordKeyBad : passwordKey } alt="password" />
+
+
+                            {/* SISTEMA NOU - NO CANVIA DE COLOR */}
+                            {/* <img src={passwordKey} alt="password" style={password && password === passwordConfirmation ? iconStyleGreen : password ? iconStyleRed : iconStyleDefault} /> */}
+
+
+                            {/* SISTEMA ORIOL />
                             <FaLock
                                 style={
                                     password &&
-                                    password === passwordConfirmation
+                                        password === passwordConfirmation
                                         ? iconStyleGreen
                                         : password
-                                          ? iconStyleRed
-                                          : iconStyleDefault
+                                            ? iconStyleRed
+                                            : iconStyleDefault
                                 }
-                            />
+                            /> */}
                         </div>
                         <Input
                             type={showConfirmation ? 'text' : 'password'}
@@ -273,7 +298,10 @@ export const Signup = () => {
                             </div>
                             <div className="signup__form--input-box">
                                 <div className="signup__form-icon">
-                                    <FaUser style={iconStyleDefault} />
+
+                                    <img src={shopIcon} alt="shop icon" style={iconStyleDefault} />
+
+                                    
                                 </div>
                                 <Input
                                     type="text"
@@ -285,7 +313,9 @@ export const Signup = () => {
                             </div>
                             <div className="signup__form--input-box">
                                 <div className="signup__form-icon">
-                                    <FaUser style={iconStyleDefault} />
+                                    <img src={profilePicture} alt="profile picture" style={iconStyleDefault} />
+
+                                   
                                 </div>
                                 <Input
                                     type="text"
@@ -322,7 +352,7 @@ export const Signup = () => {
                 </form>
                 {/* TODO: Donar estil al missatge d'error */}
                 {message && <div className="">{message}</div>}
-            </main>
+            </main >
         </>
     );
 };

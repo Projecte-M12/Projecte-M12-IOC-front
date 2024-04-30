@@ -1,14 +1,28 @@
+// export const iconStyleDefault = {
+//   color: "#E99000",
+//   fontSize: "1.5rem",
+// };
+
+// export const iconStyleGreen = {
+//   color: '#00b907',
+//   fontSize: '1.5rem',
+// };
+
+// export const iconStyleRed = {
+//     color: '#ff0000',
+//     fontSize: '1.5rem',
+// };
+
+// Prova per a "fill" de svg
+
 export const iconStyleDefault = {
-  color: "#E99000",
-  fontSize: "1.5rem",
+  fill: "#E99000",
 };
 
 export const iconStyleGreen = {
-  color: '#00b907',
-  fontSize: '1.5rem',
+  fill: '#00b907',
 };
 
 export const iconStyleRed = {
-    color: '#ff0000',
-    fontSize: '1.5rem',
+  fill: '#ff0000',
 };
