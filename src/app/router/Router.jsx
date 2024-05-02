@@ -6,6 +6,9 @@ import { ProtectedRoutes } from "./ProtectedRoutes";
 import { CompanyDashboard } from "../views/dashboard/company/CompanyDashboard";
 import { CustomerDashboard } from "../views/dashboard/customer/CustomerDashboard";
 import { Welcomepage } from "../views/Welcomepage/Welcomepage";
+import { AvisLegal } from "../views/politiques/AvisLegal";
+import { Privacitat } from "../views/politiques/Privacitat";
+import { Cookies } from "../views/politiques/Cookies";
 
 export const Router = createBrowserRouter([
   {
@@ -19,6 +22,18 @@ export const Router = createBrowserRouter([
   {
     path: '/signup',
     element: <Signup />,
+  },
+  {
+    path: '/politiques/avis-legal',
+    element: <AvisLegal />,
+  },
+  {
+    path: '/politiques/privacitat',
+    element: <Privacitat />,
+  },
+  {
+    path: '/politiques/cookies',
+    element: <Cookies />,
   },
   {
     path: '/',
