@@ -53,7 +53,7 @@ export const Header = () => {
                                 to={'/customer-dashboard'}
                                 style={{ color: 'black' }}
                             >
-                                User dashboard
+                                Dashboard
                             </Link>
                         </>
                     )}
