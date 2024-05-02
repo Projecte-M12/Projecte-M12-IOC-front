@@ -81,13 +81,6 @@ const CustomModal = ({ company, closeModal }) => {
         setVisualAppointments(filteredAppointments);
     }, [customerAppointments, providerAppointments]);
 
-    useEffect(() => {
-        // console.log('allAppointments', allAppointments);
-        // console.log('providerAppointments', providerAppointments);
-        // console.log('customerAppointments', customerAppointments);
-        // console.log('visualAppointments', visualAppointments);
-    }, [providerAppointments, customerAppointments, allAppointments]);
-
     if (!isAuthenticated) {
         return <Navigate to="/" replace />;
     }
@@ -121,7 +114,6 @@ const CustomModal = ({ company, closeModal }) => {
             );
         }
         setError(null);
-        console.log('eventInfo', eventInfo);
     };
 
     const minTime = new Date();

@@ -29,7 +29,6 @@ export function AppointmentsContextProvider({ children }) {
             return Math.max(maxId, currentItem.id);
         }, 0);
         setLastId(highestId);
-        console.log('lastId', highestId);
     }, [newAppointment]);
 
     /**

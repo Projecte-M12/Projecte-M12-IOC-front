@@ -62,7 +62,6 @@ export const useLogin = () => {
             );
 
             if (!response.ok) {
-                // console.log('ERROR en la petició');
                 throw new Error("Nom d'usuari i/o contrassenya incorrectes");
             }
 

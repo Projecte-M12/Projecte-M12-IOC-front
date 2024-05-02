@@ -20,9 +20,6 @@ export function AuthContextProvider({ children }) {
     const updateIsAuthenticated = (estado) => setIsAuthenticated(estado);
 
     const updateToken = (token) => {
-        console.log('updateToken');
-        console.log(token);
-        // localStorage.removeItem('access_token');
         localStorage.setItem('access_token', token);
         setToken(token);
     };

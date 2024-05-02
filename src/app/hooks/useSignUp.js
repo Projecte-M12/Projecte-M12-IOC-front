@@ -115,10 +115,7 @@ export const useSignup = () => {
                 throw new Error('Error al registrar el usuario');
             }
 
-            console.log('Haciendo cosas del signup...');
-
             const data = await response.json();
-            console.log('Recibe respuesta del servico');
 
             // Mensaje todo correcto y redirección
             setSignedUp(true);

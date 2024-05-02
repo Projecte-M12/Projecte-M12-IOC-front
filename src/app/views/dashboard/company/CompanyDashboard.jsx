@@ -50,8 +50,6 @@ export function CompanyDashboard() {
         const filteredEvents = allAppointments.filter(
             (appointment) => appointment.companyId === user?.id,
         );
-        console.log(allAppointments);
-        console.log(user.id);
         setMyEventsList(filteredEvents);
     }, [allAppointments]);
 
