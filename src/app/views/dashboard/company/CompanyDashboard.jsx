@@ -1,27 +1,49 @@
+/*
+ * ----- React
+ */
 import { Link, Navigate } from 'react-router-dom';
 import { useState } from 'react';
 
-import { useAuthContext } from '../../../hooks/useAuthContext';
-
+/*
+ * ----- Calendar
+ */
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'moment/locale/es'; // Importa el locale español
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 
+/*
+ * ----- Components propis
+ */
 import { Header } from '../../../shared/components/Header/Header';
 
-import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
-import 'react-big-calendar/lib/css/react-big-calendar.css';
-import './CompanyDashboard.scss';
+/*
+ * ----- Custom hooks
+ */
+import { useAuthContext } from '../../../hooks/useAuthContext';
 import { useEffect } from 'react';
 import { useCheckUser } from '../../../hooks/useCheckUser';
 import { useAppointmentsContext } from '../../../hooks/useAppointmentsContext';
 
-import Modal from 'react-modal';
+/*
+ * ----- Utils
+ */
 import {
     dateCuteTransform,
     hourAppointmentToDbTime,
 } from '../../../utils/formatDates';
+
+/*
+ * ----- Styles
+ */
+import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+import './CompanyDashboard.scss';
+
+/*
+ * ----- Modal
+ */
+import Modal from 'react-modal';
 
 // moment.locale("es")
 
@@ -33,6 +55,10 @@ moment.locale('es', {
 
 const localizer = momentLocalizer(moment);
 
+/**
+ *
+ * @returns
+ */
 export function CompanyDashboard() {
     /**
      * States

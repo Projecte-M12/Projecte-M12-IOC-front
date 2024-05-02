@@ -12,6 +12,7 @@ import { isValidEmail, isValidPassword } from '../../../utils/validations';
 /*
  * ----- Components propis
  */
+import { Header } from '../../../shared/components/Header/Header.jsx';
 import { Input } from '../../../shared/components/Input/Input.jsx';
 import { Button } from '../../../shared/components/Button/Button.jsx';
 
@@ -20,6 +21,7 @@ import { Button } from '../../../shared/components/Button/Button.jsx';
  */
 import { useAuthContext } from '../../../hooks/useAuthContext';
 import { useCheckUser } from '../../../hooks/useCheckUser';
+import { useSignup } from '../../../hooks/useSignUp';
 
 /**
  * Serveis
@@ -35,12 +37,11 @@ import {
     iconStyleGreen,
     iconStyleRed,
 } from '../../../styles/iconStyles';
-import logo from '../../../assets/logo/reservanow_logo.svg';
-import { useSignup } from '../../../hooks/useSignUp';
 
 /*
- * ----- Icons
- */
+* ----- Icons & Images
+*/
+import logo from '../../../assets/logo/reservanow_logo.svg';
 import eyeOpen from '../../../assets/icons/eyeopen.svg';
 import eyeCrossed from '../../../assets/icons/eyecrossed.svg';
 import mailLetter from '../../../assets/icons/mail.svg';
@@ -50,27 +51,20 @@ import passwordKey from '../../../assets/icons/keyAccount.svg';
 import passwordKeyOK from '../../../assets/icons/keyAccountOK.svg';
 import passwordKeyBad from '../../../assets/icons/keyAccountBad.svg';
 import profilePicture from '../../../assets/icons/picture-jpg.svg';
-
-import { Header } from '../../../shared/components/Header/Header.jsx';
-import { getCompanies } from '../../../services/getCompanies.js';
 // import { FaUser } from 'react-icons/fa';
 
+/*
+ * ----- Component Signup
+ */
 export const Signup = () => {
     /*
      * ----- States
      */
-    // const [confirmedPassword, setConfirmedPrePassword] = useState('');
     const { isAuthenticated, user } = useAuthContext();
-
-    // Oculta o mostra la contrassenya
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [servicesList, setServicesList] = useState([]);
     const [navigateToLogin, setNavigateToLogin] = useState(false);
-
-    // const [providers, setProviders] = useState([]);
-
-    // Hay que crear un useSignup con su propio estado
     const {
         email,
         password,
@@ -134,6 +128,9 @@ export const Signup = () => {
         }
     }
 
+    /*
+     * ----- Return
+     */
     return (
         <>
             <Header />

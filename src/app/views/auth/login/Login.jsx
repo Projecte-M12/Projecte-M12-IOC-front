@@ -31,8 +31,8 @@ import { iconStyleDefault } from '../../../styles/iconStyles';
 import logo from '../../../assets/logo/reservanow_logo.svg';
 
 /*
-* ----- Icons
-*/
+ * ----- Icons
+ */
 import mailLetter from '../../../assets/icons/mail.svg';
 import passwordKey from '../../../assets/icons/keyAccount.svg';
 import eyeOpen from '../../../assets/icons/eyeopen.svg';
@@ -128,7 +128,6 @@ export const Login = () => {
                             required
                             value={password}
                         />
-                        {/* Per defecte s'oculta la contrasenya */}
 
                         <button
                             type="button"
@@ -171,16 +170,7 @@ export const Login = () => {
                     <div>
                         <a href="#">Forgot password?</a>
                     </div>
-                    {/* <button
-                        className="login__login-form__submit-btn"
-                        type="submit"
-                        onClick={handleSubmit}
-                        disabled={
-                            !isValidEmail(email) || !isValidPassword(password)
-                        }
-                    >
-                        Login
-                    </button> */}
+
                     <Button
                         text="Login"
                         action={handleSubmit}
