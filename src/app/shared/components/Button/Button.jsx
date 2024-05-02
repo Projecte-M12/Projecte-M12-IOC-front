@@ -11,6 +11,7 @@ export function Button({
     action,
     isLink,
     className = 'primary-button',
+    disabled = false,
 }) {
     const ButtonComponent = isLink ? Link : 'button';
 
@@ -22,7 +23,7 @@ export function Button({
         );
     } else {
         return (
-            <button className={className} onClick={action}>
+            <button className={className} onClick={action} disabled={disabled}>
                 <p className="text">{text}</p>
             </button>
         );
