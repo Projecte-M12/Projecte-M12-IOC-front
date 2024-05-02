@@ -18,6 +18,10 @@ import { useCheckUser } from '../../../hooks/useCheckUser';
 import { useAppointmentsContext } from '../../../hooks/useAppointmentsContext';
 
 import Modal from 'react-modal';
+import {
+    dateCuteTransform,
+    hourAppointmentToDbTime,
+} from '../../../utils/formatDates';
 
 // moment.locale("es")
 
@@ -152,16 +156,25 @@ export function CompanyDashboard() {
                     {/* Contenido del modal con los detalles del evento */}
                     {selectedEvent && (
                         <>
-                            <h2>Detalles de la reserva</h2>
-                            <p>Título: {selectedEvent.title}</p>
-                            <p>Fecha de inicio: {selectedEvent.start.toLocaleString()}</p>
-                            <p>Fecha de fin: {selectedEvent.end.toLocaleString()}</p>
-                            <p>Usuari: {selectedEvent.userName}</p>
+                            <h2>Detalls de la reserva</h2>
+                            <p>Descripció: {selectedEvent.title}</p>
+                            <p>
+                                Data: {dateCuteTransform(selectedEvent.start)}
+                            </p>
+                            <p>
+                                Hora inici:{' '}
+                                {hourAppointmentToDbTime(selectedEvent.start)}
+                            </p>
+                            <p>
+                                Hora fi:{' '}
+                                {hourAppointmentToDbTime(selectedEvent.end)}
+                            </p>
                             {/* Otros detalles del evento */}
                             <button onClick={handleDeleteEvent}>
-                                Eliminar evento
+                                Eliminar reserva
                             </button>
-                            <button onClick={closeModal}>Cerrar</button>
+                            &nbsp;
+                            <button onClick={closeModal}>Tancar</button>
                         </>
                     )}
                 </Modal>
