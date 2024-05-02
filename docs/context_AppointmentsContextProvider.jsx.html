@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: context/AppointmentsContextProvider.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: context/AppointmentsContextProvider.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useEffect } from 'react';
+import { appointmentsContext } from './appointmentsContext';
+import { useState } from 'react';
+import { getAllAppointments } from '../services/getAppointments';
+import {
+    dateAppointmentToDbDate,
+    hourAppointmentToDbTime,
+} from '../utils/formatDates';
+import { API_BASE_URL, EDPOINT } from '../utils/constants';
+
+export function AppointmentsContextProvider({ children }) {
+    /**
+     * States
+     */
+    const [allAppointments, setAllAppointments] = useState([]);
+    const [newAppointment, setNewAppointment] = useState(null);
+    // const [customerAppointments, setCustomerAppointments] = useState([]);
+    // const [providerAppointments, setProviderAppointments] = useState([]);
+    const [lastId, setLastId] = useState(0);
+
+    useEffect(() => {
+        // TODO: Llamada a la API para obtener las reservas de todos los clientes y proveedores.
+        getAllAppointments().then((appointments) => {
+            setAllAppointments(appointments);
+        });
+
+        // TODO: Obtener el último id de las reservas en la BD y asignarlo a lastId.
+        const highestId = allAppointments.reduce((maxId, currentItem) => {
+            return Math.max(maxId, currentItem.id);
+        }, 0);
+        setLastId(highestId);
+    }, [newAppointment]);
+
+    /**
+     * Functions
+     */
+    const updateAllApointments = (appointments) => {
+        setAllAppointments(appointments);
+        // TODO: Llamada a la API para actualizar las reservas
+    };
+
+    const createAppointment = async (company, user, slotInfo) => {
+        const newApp = {
+            user_id: user.id,
+            provider_id: company.id,
+            service_id: company.service_provided,
+            appointment_date: dateAppointmentToDbDate(slotInfo.start),
+            start_time: hourAppointmentToDbTime(slotInfo.start),
+            end_time: hourAppointmentToDbTime(slotInfo.end),
+            modification_type: 'some type',
+        };
+
+        const optionsFetchNewAppointment = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            },
+            body: JSON.stringify(newApp),
+        };
+        try {
+            const createNewAppointment = await fetch(
+                API_BASE_URL + EDPOINT.APPOINTMENTS,
+                optionsFetchNewAppointment,
+            );
+            createNewAppointment.json().then((data) => {
+                setNewAppointment(data);
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const deleteAppointment = async (eventInfo) => {
+        const optionsFetchNewAppointment = {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            },
+        };
+        try {
+            const deleteOldAppointment = await fetch(
+                `${API_BASE_URL + EDPOINT.APPOINTMENTS}/${eventInfo.id}`,
+                optionsFetchNewAppointment,
+            );
+            deleteOldAppointment.json().then((data) => {
+                console.log(data);
+                setNewAppointment(null);
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    /**
+     * RETURN
+     */
+    return (
+        &lt;appointmentsContext.Provider
+            value={{
+                lastId,
+                setLastId,
+                allAppointments,
+                updateAllApointments,
+                createAppointment,
+                deleteAppointment,
+            }}
+        >
+            {children}
+        &lt;/appointmentsContext.Provider>
+    );
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#API_BASE_URL">API_BASE_URL</a></li><li><a href="global.html#EDPOINT">EDPOINT</a></li><li><a href="global.html#dateAppointmentToDbDate">dateAppointmentToDbDate</a></li><li><a href="global.html#dateCuteTransform">dateCuteTransform</a></li><li><a href="global.html#hourAppointmentToDbTime">hourAppointmentToDbTime</a></li><li><a href="global.html#isValidEmail">isValidEmail</a></li><li><a href="global.html#isValidPassword">isValidPassword</a></li><li><a href="global.html#useAppointmentsContext">useAppointmentsContext</a></li><li><a href="global.html#useAuthContext">useAuthContext</a></li><li><a href="global.html#useCheckUser">useCheckUser</a></li><li><a href="global.html#useLogin">useLogin</a></li><li><a href="global.html#useSignup">useSignup</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Fri May 03 2024 00:56:20 GMT+0200 (hora de verano de Europa central)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
