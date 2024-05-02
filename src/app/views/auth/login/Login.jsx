@@ -69,7 +69,7 @@ export const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
 
     if (isAuthenticated) {
-        if (user && user.is_company) {
+        if (user && user.company_name) {
             return <Navigate to="/company-dashboard" replace />;
         } else {
             return <Navigate to="/customer-dashboard" replace />;
