@@ -66,6 +66,8 @@ export const Signup = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [servicesList, setServicesList] = useState([]);
+    const [navigateToLogin, setNavigateToLogin] = useState(false);
+
     // const [providers, setProviders] = useState([]);
 
     // Hay que crear un useSignup con su propio estado
@@ -110,24 +112,25 @@ export const Signup = () => {
         fetchData();
     }, []);
 
-    /*
-     * ----- Funciones
-     */
-    if (signedUp) {
-        setTimeout(() => {
-            console.log('Registrat');
-            return <Navigate to="/login" />;
-        }, 2000);
-    }
+    useEffect(() => {
+        let timeoutId;
+        if (signedUp) {
+            timeoutId = setTimeout(() => {
+                setNavigateToLogin(true);
+            }, 3000);
+        }
+
+        return () => clearTimeout(timeoutId);
+    }, [signedUp]);
 
     /*
      * ----- Comprobación usuario logueado y redirección
      */
     if (isAuthenticated) {
-        if (user && user.is_company) {
-            return <Navigate to="/customer-dashboard" replace />;
-        } else {
+        if (user && user.company_name) {
             return <Navigate to="/company-dashboard" replace />;
+        } else {
+            return <Navigate to="/customer-dashboard" replace />;
         }
     }
 
@@ -340,13 +343,12 @@ export const Signup = () => {
                         </>
                     )}
                     {signedUp && (
-                        <>
-                            <div className="signup__formSuccess">
-                                REGISTRAT CORRECTAMENT
-                            </div>
-                            <Navigate to="/login" replace />{' '}
-                        </>
+                        <div className="signup__formSuccess">
+                            REGISTRAT CORRECTAMENT
+                        </div>
                     )}
+                    {navigateToLogin && <Navigate to="/login" replace />}
+
                     <Button
                         // type="submit"
                         text="Sign Up"
