@@ -26,16 +26,23 @@ export const Header = () => {
                     ☰
                 </button>
                 <nav className={`menu ${menuOpen ? 'open' : ''}`}>
-                    <Link to={'/'} style={{ color: 'black' }}>
-                        Inici
-                    </Link>
-                    {isAuthenticated && user?.company_name && (
-                        <Link
-                            to={'/company-dashboard'}
-                            style={{ color: 'black' }}
-                        >
-                            Company dashboard
+                    {!isAuthenticated && (
+                        <Link to={'/'} style={{ color: 'black' }}>
+                            Inici
                         </Link>
+                    )}
+                    {isAuthenticated && user?.company_name && (
+                        <>
+                            {/* <Link to={'/perfil'} style={{ color: 'black' }}>
+                                Perfil
+                            </Link> */}
+                            <Link
+                                to={'/company-dashboard'}
+                                style={{ color: 'black' }}
+                            >
+                                Dashboard
+                            </Link>
+                        </>
                     )}
                     {isAuthenticated && !user?.company_name && (
                         <>
