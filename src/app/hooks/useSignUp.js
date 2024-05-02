@@ -16,6 +16,8 @@ export const useSignup = () => {
     const [passwordConfirmation, setPasswordConfirmation] = useState('');
     const [isCompany, setIsCompany] = useState(false);
     const [services, setServices] = useState('');
+    const [companyName, setCompanyName] = useState('');
+    const [image_url, setImage_url] = useState('');
     const [remember, setRemember] = useState(false);
     const [signedUp, setSignedUp] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -46,12 +48,20 @@ export const useSignup = () => {
         setName(event.target.value);
     };
 
-    const handleIsCompanyChange = (event) => {
+    const handleIsCompanyChange = () => {
         setIsCompany((prev) => !prev);
     };
 
-    const hadleService = (event) => {
+    const handleServicesChange = (event) => {
         setServices(event.target.value);
+    };
+
+    const handleCompanyNameChange = (event) => {
+        setCompanyName(event.target.value);
+    };
+
+    const handleImageUrlChange = (event) => {
+        setImage_url(event.target.value);
     };
 
     const handleSubmit = async (event) => {
@@ -62,23 +72,33 @@ export const useSignup = () => {
 
             // TODO: Falta implementar el signal para evitar sobrecarga de llamadas
             const controller = new AbortController();
-
+            const newUser = isCompany
+                ? {
+                      name,
+                      email,
+                      password,
+                      password_confirmation: passwordConfirmation,
+                      is_provider: isCompany,
+                      company_name: name,
+                      service_provided: services,
+                      image_url: image_url,
+                      remember,
+                  }
+                : {
+                      name,
+                      email,
+                      password,
+                      password_confirmation: passwordConfirmation,
+                      is_provider: isCompany,
+                      remember,
+                  };
             const optionsFetchUserInfo = {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     Accept: 'application/json',
                 },
-                body: JSON.stringify({
-                    name: email,
-                    email,
-                    password,
-                    password_confirmation: passwordConfirmation,
-                    is_company: isCompany,
-                    company_name: name,
-                    service_provided: 'servei prova', //services,
-                    remember,
-                }),
+                body: JSON.stringify(newUser),
                 // signal: controller.signal,
             };
 
@@ -95,10 +115,7 @@ export const useSignup = () => {
                 throw new Error('Error al registrar el usuario');
             }
 
-            console.log('Haciendo cosas del signup...');
-
             const data = await response.json();
-            console.log('Recibe respuesta del servico');
 
             // Mensaje todo correcto y redirección
             setSignedUp(true);
@@ -125,6 +142,8 @@ export const useSignup = () => {
         passwordConfirmation,
         isCompany,
         services,
+        companyName,
+        image_url,
         remember,
         signedUp,
         loading,
@@ -135,7 +154,9 @@ export const useSignup = () => {
         handlePasswordConfirmationChange,
         handleNameChange,
         handleIsCompanyChange,
-        hadleService,
+        handleServicesChange,
+        handleCompanyNameChange,
+        handleImageUrlChange,
         handleSubmit,
     };
 };

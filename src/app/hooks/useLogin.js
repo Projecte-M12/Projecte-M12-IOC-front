@@ -12,13 +12,18 @@ export const useLogin = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState('');
 
     /**
      * Custom hooks
      */
-    const { updateUser, resetUser, updateIsAuthenticated, updateToken, resetToken } =
-        useAuthContext();
+    const {
+        updateUser,
+        resetUser,
+        updateIsAuthenticated,
+        updateToken,
+        resetToken,
+    } = useAuthContext();
 
     /**
      * Funciones
@@ -30,6 +35,7 @@ export const useLogin = () => {
     const handlePasswordChange = (event) => {
         setPassword(event.target.value);
     };
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -55,9 +61,9 @@ export const useLogin = () => {
                 optionsFetchCredentials,
             );
 
-            if (!response.ok) throw new Error('Error al iniciar sesión');
-
-            console.log('Haciendo cosas del login...');
+            if (!response.ok) {
+                throw new Error("Nom d'usuari i/o contrassenya incorrectes");
+            }
 
             const data = await response.json();
             updateIsAuthenticated(true);
@@ -74,7 +80,6 @@ export const useLogin = () => {
         updateIsAuthenticated(false);
         resetToken();
         resetUser();
-
     };
 
     /**

@@ -1,27 +1,14 @@
-.card {
-    ul {
-        display: flex;
-        gap: 1rem;
-        flex-wrap: wrap;
-        justify-content: space-around;
+.card__image {
+    // max-width: 150px;
+    max-height: 200px;
+    overflow: hidden;
+    border-radius: 1rem;
+    margin: .5rem;
 
-        li {
-            display: flex;
-            flex-direction: column;
-
-            .card__image {
-                max-width: 150px;
-                max-height: 150px;
-                overflow: hidden;
-                border-radius: 1rem;
-                margin: .5rem;
-
-                img {
-                    width: 150px;
-                    height: 150px;
-                    object-fit: cover;
-                }
-            }
-        }
+    img {
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+        cursor: pointer;
     }
 }

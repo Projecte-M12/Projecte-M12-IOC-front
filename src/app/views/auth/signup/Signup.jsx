@@ -21,6 +21,11 @@ import { Button } from '../../../shared/components/Button/Button.jsx';
 import { useAuthContext } from '../../../hooks/useAuthContext';
 import { useCheckUser } from '../../../hooks/useCheckUser';
 
+/**
+ * Serveis
+ */
+import { getServices } from '../../../services/getServices';
+
 /*
  * ----- Styles
  */
@@ -30,24 +35,27 @@ import {
     iconStyleGreen,
     iconStyleRed,
 } from '../../../styles/iconStyles';
-
 import logo from '../../../assets/logo/reservanow_logo.svg';
-import { FaUser, FaLock } from 'react-icons/fa';
 import { useSignup } from '../../../hooks/useSignUp';
 
+/*
+ * ----- Icons
+ */
 import eyeOpen from '../../../assets/icons/eyeopen.svg';
 import eyeCrossed from '../../../assets/icons/eyecrossed.svg';
+import mailLetter from '../../../assets/icons/mail.svg';
+import shopIcon from '../../../assets/icons/shop.svg';
+import profile from '../../../assets/icons/profile.svg';
+import passwordKey from '../../../assets/icons/keyAccount.svg';
+import passwordKeyOK from '../../../assets/icons/keyAccountOK.svg';
+import passwordKeyBad from '../../../assets/icons/keyAccountBad.svg';
+import profilePicture from '../../../assets/icons/picture-jpg.svg';
+
 import { Header } from '../../../shared/components/Header/Header.jsx';
+import { getCompanies } from '../../../services/getCompanies.js';
+// import { FaUser } from 'react-icons/fa';
 
 export const Signup = () => {
-    /*
-     * ----- Custom Hooks
-     */
-    const { checkToken } = useCheckUser();
-    useEffect(() => {
-        checkToken();
-    }, []);
-
     /*
      * ----- States
      */
@@ -57,44 +65,72 @@ export const Signup = () => {
     // Oculta o mostra la contrassenya
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmation, setShowConfirmation] = useState(false);
+    const [servicesList, setServicesList] = useState([]);
+    const [navigateToLogin, setNavigateToLogin] = useState(false);
+
+    // const [providers, setProviders] = useState([]);
 
     // Hay que crear un useSignup con su propio estado
     const {
         email,
         password,
-        loading,
-        error,
-        message,
-        signedUp,
-        isCompany,
+        name,
         passwordConfirmation,
+        isCompany,
+        services,
+        companyName,
+        image_url,
+        remember,
+        signedUp,
+        loading,
+        message,
+        error,
         handleEmailChange,
         handlePasswordChange,
         handlePasswordConfirmationChange,
         handleNameChange,
         handleIsCompanyChange,
-        hadleService,
+        handleServicesChange,
+        handleCompanyNameChange,
+        handleImageUrlChange,
         handleSubmit,
     } = useSignup();
 
     /*
-     * ----- Funciones
+     * ----- Custom Hooks
      */
-    if (signedUp) {
-        setTimeout(() => {
-            console.log('Registrat');
-            return <Navigate to="/login" />;
-        }, 2000);
-    }
+    const { checkToken } = useCheckUser();
+    useEffect(() => {
+        checkToken();
+    }, []);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            // setProviders(await getCompanies());
+            setServicesList(await getServices());
+        };
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        let timeoutId;
+        if (signedUp) {
+            timeoutId = setTimeout(() => {
+                setNavigateToLogin(true);
+            }, 3000);
+        }
+
+        return () => clearTimeout(timeoutId);
+    }, [signedUp]);
 
     /*
      * ----- Comprobación usuario logueado y redirección
      */
     if (isAuthenticated) {
-        if (user && user.is_company) {
-            return <Navigate to="/customer-dashboard" replace />;
-        } else {
+        if (user && user.company_name) {
             return <Navigate to="/company-dashboard" replace />;
+        } else {
+            return <Navigate to="/customer-dashboard" replace />;
         }
     }
 
@@ -114,7 +150,21 @@ export const Signup = () => {
                     <h3>Registra't</h3>
                     <div className="signup__form--input-box">
                         <div className="signup__form-icon">
-                            <FaUser style={iconStyleDefault} />
+                            <img src={profile} alt="usuari" />
+                            {/* <FaUser style={iconStyleDefault} /> */}
+                        </div>
+                        <Input
+                            type="text"
+                            placeholder="Nom d'usuari"
+                            onChange={handleNameChange}
+                            value={name}
+                            required
+                        />
+                    </div>
+                    <div className="signup__form--input-box">
+                        <div className="signup__form-icon">
+                            <img src={mailLetter} alt="email" />
+                            {/* <FaUser style={iconStyleDefault} /> */}
                         </div>
                         <Input
                             type="email"
@@ -130,8 +180,13 @@ export const Signup = () => {
                         </div>
                     ) : null}
                     <div className="signup__form--input-box">
-                        <div className="signup__form-icon">
+                        {/* <div className="signup__form-icon">
+                            <img src={passwordKey} alt="password" style={iconStyleDefault} />
                             <FaLock style={iconStyleDefault} />
+                        </div> */}
+
+                        <div className="signup__form-icon">
+                            <img src={passwordKey} alt="password" />
                         </div>
                         <Input
                             type={showPassword ? 'text' : 'password'}
@@ -164,16 +219,33 @@ export const Signup = () => {
                     ) : null}
                     <div className="signup__form--input-box">
                         <div className="signup__form-icon">
+                            {/* ACTUAL --> Canviem svg ;P */}
+                            <img
+                                src={
+                                    password &&
+                                    password === passwordConfirmation
+                                        ? passwordKeyOK
+                                        : password
+                                          ? passwordKeyBad
+                                          : passwordKey
+                                }
+                                alt="password"
+                            />
+
+                            {/* SISTEMA NOU - NO CANVIA DE COLOR */}
+                            {/* <img src={passwordKey} alt="password" style={password && password === passwordConfirmation ? iconStyleGreen : password ? iconStyleRed : iconStyleDefault} /> */}
+
+                            {/* SISTEMA ORIOL />
                             <FaLock
                                 style={
                                     password &&
-                                    password === passwordConfirmation
+                                        password === passwordConfirmation
                                         ? iconStyleGreen
                                         : password
-                                          ? iconStyleRed
-                                          : iconStyleDefault
+                                            ? iconStyleRed
+                                            : iconStyleDefault
                                 }
-                            />
+                            /> */}
                         </div>
                         <Input
                             type={showConfirmation ? 'text' : 'password'}
@@ -207,6 +279,7 @@ export const Signup = () => {
                             id="is_company"
                             value={isCompany}
                             onChange={handleIsCompanyChange}
+                            className="signup__empresaCheckbox"
                         />
                         <label htmlFor="is_company">Soc una empresa</label>
                     </div>
@@ -215,29 +288,67 @@ export const Signup = () => {
                             <div className="signup__form--input-box">
                                 <select
                                     name="servicio"
-                                    className="login__login-form__input"
-                                    // defaultValue={''}
-                                    onChange={hadleService}
+                                    className="signup__select"
+                                    defaultValue={''}
+                                    onChange={handleServicesChange}
                                 >
                                     <option value="" disabled>
-                                        Selecciona...
+                                        Selecciona una categoria...
                                     </option>
-                                    <option value="1">
-                                        Aquí va un map de los servicios
-                                    </option>
-                                    <option value="2">Aquí va otra cosa</option>
+                                    {servicesList &&
+                                        servicesList.map((service, index) => {
+                                            return (
+                                                <option
+                                                    key={index}
+                                                    value={service}
+                                                >
+                                                    {service}
+                                                </option>
+                                            );
+                                        })}
                                 </select>
                             </div>
                             <div className="signup__form--input-box">
+                                <div className="signup__form-icon">
+                                    <img
+                                        src={shopIcon}
+                                        alt="shop icon"
+                                        style={iconStyleDefault}
+                                    />
+                                </div>
                                 <Input
                                     type="text"
-                                    name="Empresa"
-                                    placeholder="Empresa"
-                                    onChange={handleNameChange}
+                                    placeholder="Nom Empresa"
+                                    onChange={handleCompanyNameChange}
+                                    value={companyName}
+                                    required
+                                />
+                            </div>
+                            <div className="signup__form--input-box">
+                                <div className="signup__form-icon">
+                                    <img
+                                        src={profilePicture}
+                                        alt="profile picture"
+                                        style={iconStyleDefault}
+                                    />
+                                </div>
+                                <Input
+                                    type="text"
+                                    placeholder="ImageUrl"
+                                    onChange={handleImageUrlChange}
+                                    value={image_url}
+                                    required
                                 />
                             </div>
                         </>
                     )}
+                    {signedUp && (
+                        <div className="signup__formSuccess">
+                            REGISTRAT CORRECTAMENT
+                        </div>
+                    )}
+                    {navigateToLogin && <Navigate to="/login" replace />}
+
                     <Button
                         // type="submit"
                         text="Sign Up"

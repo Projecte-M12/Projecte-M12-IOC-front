@@ -1,5 +1,45 @@
-@import "../../styles/variables.scss";
+// @import "../../styles/variables.scss";
 
-.homepage__title{
+.homepage__title {
     margin-bottom: 2rem;
+    text-align: center;
+}
+
+.homepage__container {
+
+    ul {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 2rem;
+        padding: 0 2rem;
+
+        .card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 200px;
+        }
+    }
+}
+
+.homepage__filter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .homepage__filterTitle {
+        font-weight: bold;
+        margin: .5rem 0
+    }
+
+    .homepage__filterCategories {
+        .homepage__filterCategoriesLabel {
+            .homepage__filterCategoriesInput {
+                margin-right: .2rem;
+                margin-left: 1rem;
+            }
+
+        }
+
+    }
 }

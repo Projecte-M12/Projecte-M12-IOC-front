@@ -5,13 +5,13 @@ import { Router } from './app/router/Router';
 import './app/styles/main_styles.css';
 
 function App() {
-  return (
-    <>
-      <AuthContextProvider>
-        <RouterProvider router={Router} />
-      </AuthContextProvider>
-    </>
-  );
+    return (
+        <>
+            <AuthContextProvider>
+                <RouterProvider router={Router} />
+            </AuthContextProvider>
+        </>
+    );
 }
 
 export default App;

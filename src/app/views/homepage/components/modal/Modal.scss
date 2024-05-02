@@ -1,0 +1,52 @@
+.modal__global {
+    position: absolute;
+    inset: 40px;
+    // top: 40px;
+    // right: 40px;
+    // bottom: 40px;
+    // left: 40px;
+    border: 1px solid rgb(204, 204, 204);
+    background: rgb(255, 255, 255);
+    overflow: auto;
+    border-radius: 4px;
+    outline: none;
+    padding: 20px;
+    background-color: #E99000;
+
+    .modal__content {
+        background-color: #fff;
+        padding: 1rem 2rem;
+
+        .modal__top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .modal__title {}
+
+            .modal_close {}
+        }
+    }
+}
+
+.modal__appointmentDatail {
+    padding: 0 .5rem;
+    border: 1px solid #E99000;
+    margin-bottom: 1rem;
+
+    .modal__appointmentDatail__header {
+        padding: 0 .5rem;
+        background-color: #E99000;
+    }
+}
+
+.modal__info {
+    margin-bottom: 1rem;
+    color: #888;
+}
+
+.modal__error {
+    background-color: #c74747;
+    color: white;
+    text-align: center;
+}

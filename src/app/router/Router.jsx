@@ -13,10 +13,6 @@ export const Router = createBrowserRouter([
     element: <Welcomepage />,
   },
   {
-    path: '/homepage',
-    element: <Homepage />,
-  },
-  {
     path: '/login',
     element: <Login />,
   },
@@ -28,6 +24,10 @@ export const Router = createBrowserRouter([
     path: '/',
     element: <ProtectedRoutes />,
     children: [
+      {
+        path: '/homepage',
+        element: <Homepage />,
+      },
       {
         path: '/company-dashboard',
         element: <CompanyDashboard />,
