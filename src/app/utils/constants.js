@@ -8,6 +8,7 @@ export const EDPOINT = {
   LOGIN: '/login',
   SIGNUP: '/signup',
   USER: '/user',
+  PROVIDER: '/provider',
   PROVIDERS: '/providers',
   SERVICES: '/services',
   APPOINTMENTS: '/appointments',
