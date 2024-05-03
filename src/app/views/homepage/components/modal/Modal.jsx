@@ -109,8 +109,8 @@ const CustomModal = ({ company, closeModal }) => {
 
     const handleSelectEvent = (eventInfo) => {
         //Elimina el evento pasado por parámetro
-        deleteAppointment(eventInfo);
         if (eventInfo.userId === user?.id) {
+            deleteAppointment(eventInfo);
             updateAllApointments(
                 allAppointments.filter(
                     (appointment) => appointment.id !== eventInfo.id,
