@@ -27,7 +27,6 @@ export const getAllAppointments = async () => {
             const company = companiesData.find(
                 (c) => c.id === appointment.provider_id,
             );
-            console.log(appointment);
             return {
                 start: new Date(
                     appointment.appointment_date + 'T' + appointment.start_time,

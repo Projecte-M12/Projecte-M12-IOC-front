@@ -73,9 +73,6 @@ const CustomModal = ({ company, closeModal }) => {
             ...customerAppointments,
             ...providerAppointments,
         ];
-        console.log('customerAppointments', customerAppointments);
-        console.log('providerAppointments', providerAppointments);
-        console.log('mergedAppointments', mergedAppointments);
 
         const filteredAppointments = Array.from(
             new Set(mergedAppointments.map((item) => item.id)),
@@ -83,7 +80,6 @@ const CustomModal = ({ company, closeModal }) => {
             return mergedAppointments.find((item) => item.id === id);
         });
 
-        console.log('filteredAppointments', filteredAppointments);
         setVisualAppointments(filteredAppointments);
     }, [customerAppointments, providerAppointments]);
 

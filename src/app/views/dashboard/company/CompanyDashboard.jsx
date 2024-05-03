@@ -88,7 +88,6 @@ export function CompanyDashboard() {
     }
 
     const handleSelectEvent = (eventInfo) => {
-        console.log(eventInfo)
         setSelectedEvent(eventInfo);
         setModalIsOpen(true);
     };
