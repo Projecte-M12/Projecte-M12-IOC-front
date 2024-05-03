@@ -37,6 +37,7 @@ import mailLetter from '../../../assets/icons/mail.svg';
 import passwordKey from '../../../assets/icons/keyAccount.svg';
 import eyeOpen from '../../../assets/icons/eyeopen.svg';
 import eyeCrossed from '../../../assets/icons/eyecrossed.svg';
+import { Footer } from '../../../shared/components/Footer/Footer.jsx';
 
 /*
  * ----- Component Log In
@@ -100,7 +101,7 @@ export const Login = () => {
                 </div>
                 <form className="login__form-container">
                     <h1 className="login__form-title">Hola de nou ;)</h1>
-                    <h3>Inicia sessió</h3>
+                    <h2>Inicia sessió</h2>
                     <div className="login__form--input-box">
                         <div className="signup__form-icon">
                             <img src={mailLetter} alt="email" />
@@ -171,6 +172,7 @@ export const Login = () => {
                         <a href="#">Forgot password?</a>
                     </div>
 
+                    {/*Botó personalitzat que envia les dades per validar l'inici de sessió */}
                     <Button
                         text="Login"
                         action={handleSubmit}
@@ -187,6 +189,9 @@ export const Login = () => {
                     </div>
                 </form>
             </main>
+
+            {/* Contingut del Footer */}
+            <Footer />
         </>
     );
 };

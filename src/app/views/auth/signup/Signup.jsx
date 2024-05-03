@@ -15,6 +15,8 @@ import { isValidEmail, isValidPassword } from '../../../utils/validations';
 import { Header } from '../../../shared/components/Header/Header.jsx';
 import { Input } from '../../../shared/components/Input/Input.jsx';
 import { Button } from '../../../shared/components/Button/Button.jsx';
+import { Header } from '../../../shared/components/Header/Header.jsx';
+import { Footer } from '../../../shared/components/Footer/Footer.jsx';
 
 /*
  * ----- Custom hooks
@@ -27,6 +29,7 @@ import { useSignup } from '../../../hooks/useSignUp';
  * Serveis
  */
 import { getServices } from '../../../services/getServices';
+import { getCompanies } from '../../../services/getCompanies.js';
 
 /*
  * ----- Styles
@@ -51,11 +54,12 @@ import passwordKey from '../../../assets/icons/keyAccount.svg';
 import passwordKeyOK from '../../../assets/icons/keyAccountOK.svg';
 import passwordKeyBad from '../../../assets/icons/keyAccountBad.svg';
 import profilePicture from '../../../assets/icons/picture-jpg.svg';
-// import { FaUser } from 'react-icons/fa';
+import profileIcon from '../../../assets/icons/user.svg';
 
 /*
  * ----- Component Signup
  */
+
 export const Signup = () => {
     /*
      * ----- States
@@ -144,11 +148,10 @@ export const Signup = () => {
                 </div>
                 <h1 className="singup__form-tittle">Welcome!</h1>
                 <form className="signup__form-container">
-                    <h3>Registra't</h3>
+                    <h2>Registra't</h2>
                     <div className="signup__form--input-box">
                         <div className="signup__form-icon">
-                            <img src={profile} alt="usuari" />
-                            {/* <FaUser style={iconStyleDefault} /> */}
+                            <img src={profileIcon} alt="profile" />
                         </div>
                         <Input
                             type="text"
@@ -161,7 +164,6 @@ export const Signup = () => {
                     <div className="signup__form--input-box">
                         <div className="signup__form-icon">
                             <img src={mailLetter} alt="email" />
-                            {/* <FaUser style={iconStyleDefault} /> */}
                         </div>
                         <Input
                             type="email"
@@ -216,18 +218,9 @@ export const Signup = () => {
                     ) : null}
                     <div className="signup__form--input-box">
                         <div className="signup__form-icon">
+
                             {/* ACTUAL --> Canviem svg ;P */}
-                            <img
-                                src={
-                                    password &&
-                                    password === passwordConfirmation
-                                        ? passwordKeyOK
-                                        : password
-                                          ? passwordKeyBad
-                                          : passwordKey
-                                }
-                                alt="password"
-                            />
+                            <img src={password && password === passwordConfirmation ? passwordKeyOK : password ? passwordKeyBad : passwordKey} alt="password" />
 
                             {/* SISTEMA NOU - NO CANVIA DE COLOR */}
                             {/* <img src={passwordKey} alt="password" style={password && password === passwordConfirmation ? iconStyleGreen : password ? iconStyleRed : iconStyleDefault} /> */}
@@ -307,11 +300,7 @@ export const Signup = () => {
                             </div>
                             <div className="signup__form--input-box">
                                 <div className="signup__form-icon">
-                                    <img
-                                        src={shopIcon}
-                                        alt="shop icon"
-                                        style={iconStyleDefault}
-                                    />
+                                    <img src={shopIcon} alt="shop icon" style={iconStyleDefault} />
                                 </div>
                                 <Input
                                     type="text"
@@ -323,11 +312,7 @@ export const Signup = () => {
                             </div>
                             <div className="signup__form--input-box">
                                 <div className="signup__form-icon">
-                                    <img
-                                        src={profilePicture}
-                                        alt="profile picture"
-                                        style={iconStyleDefault}
-                                    />
+                                    <img src={profilePicture} alt="profile picture" style={iconStyleDefault} />
                                 </div>
                                 <Input
                                     type="text"
@@ -363,7 +348,10 @@ export const Signup = () => {
                 </form>
                 {/* TODO: Donar estil al missatge d'error */}
                 {message && <div className="">{message}</div>}
-            </main>
+            </main >
+
+            {/* Contingut del Footer */}
+            <Footer />
         </>
     );
 };
