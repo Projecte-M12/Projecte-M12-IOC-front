@@ -16,6 +16,7 @@ import { Header } from '../../../shared/components/Header/Header.jsx';
 import { Input } from '../../../shared/components/Input/Input.jsx';
 import { Button } from '../../../shared/components/Button/Button.jsx';
 import { Footer } from '../../../shared/components/Footer/Footer.jsx';
+import { CheckAnimation } from '../../../shared/components/CheckAnimation/CheckAnimation.jsx';
 
 /*
  * ----- Custom hooks
@@ -24,7 +25,7 @@ import { useAuthContext } from '../../../hooks/useAuthContext';
 import { useCheckUser } from '../../../hooks/useCheckUser';
 import { useSignup } from '../../../hooks/useSignUp';
 
-/**
+/*
  * Serveis
  */
 import { getServices } from '../../../services/getServices';
@@ -146,205 +147,196 @@ export const Signup = () => {
                     />
                 </div>
                 <h1 className="singup__form-tittle">Welcome!</h1>
-                <form className="signup__form-container">
-                    <h2>Registra't</h2>
-                    <div className="signup__form--input-box">
-                        <div className="signup__form-icon">
-                            <img src={profileIcon} alt="profile" />
+
+                {/* Condicional del formulari.
+                * Mostra el formulari de registra i sino està registrat "signedUp=false" llavors
+                * mostra l'animació de registre correctament
+                */}
+                {signedUp ? (
+                    <>
+                        <CheckAnimation />
+                        <div className="signup__formSuccess">
+                            REGISTRAT CORRECTAMENT
                         </div>
-                        <Input
-                            type="text"
-                            placeholder="Nom d'usuari"
-                            onChange={handleNameChange}
-                            value={name}
-                            required
-                        />
-                    </div>
-                    <div className="signup__form--input-box">
-                        <div className="signup__form-icon">
-                            <img src={mailLetter} alt="email" />
+                        {navigateToLogin && <Navigate to="/login" replace />}
+                    </>
+                ) : (
+                    <form className="signup__form-container">
+                        <h2>Registra't</h2>
+                        <div className="signup__form--input-box">
+                            <div className="signup__form-icon">
+                                <img src={profileIcon} alt="profile" />
+                            </div>
+                            <Input
+                                type="text"
+                                placeholder="Nom d'usuari"
+                                onChange={handleNameChange}
+                                value={name}
+                                required
+                            />
                         </div>
-                        <Input
-                            type="email"
-                            placeholder="Correu"
-                            onChange={handleEmailChange}
-                            value={email}
-                            required
-                        />
-                    </div>
-                    {!isValidEmail && email ? (
-                        <div className="signup__form-error">
-                            {"L'email no és correcte"}
+                        <div className="signup__form--input-box">
+                            <div className="signup__form-icon">
+                                <img src={mailLetter} alt="email" />
+                            </div>
+                            <Input
+                                type="email"
+                                placeholder="Correu"
+                                onChange={handleEmailChange}
+                                value={email}
+                                required
+                            />
                         </div>
-                    ) : null}
-                    <div className="signup__form--input-box">
-                        {/* <div className="signup__form-icon">
+                        {!isValidEmail && email ? (
+                            <div className="signup__form-error">
+                                {"L'email no és correcte"}
+                            </div>
+                        ) : null}
+                        <div className="signup__form--input-box">
+                            {/* <div className="signup__form-icon">
                             <img src={passwordKey} alt="password" style={iconStyleDefault} />
                             <FaLock style={iconStyleDefault} />
                         </div> */}
 
-                        <div className="signup__form-icon">
-                            <img src={passwordKey} alt="password" />
+                            <div className="signup__form-icon">
+                                <img src={passwordKey} alt="password" />
+                            </div>
+                            <Input
+                                type={showPassword ? 'text' : 'password'}
+                                placeholder="Contrassenya"
+                                onChange={handlePasswordChange}
+                                required
+                                value={password}
+                            />
+                            {/* Per defecte s'oculta la contrasenya */}
+                            <button
+                                type="button"
+                                className="signup__password-toggle"
+                                onClick={() => setShowPassword(!showPassword)}
+                            >
+                                {showPassword ? (
+                                    <img src={eyeOpen} alt="Oculta contrasenya" />
+                                ) : (
+                                    <img
+                                        src={eyeCrossed}
+                                        alt="Mostra contrasenya"
+                                    />
+                                )}
+                            </button>
                         </div>
-                        <Input
-                            type={showPassword ? 'text' : 'password'}
-                            placeholder="Contrassenya"
-                            onChange={handlePasswordChange}
-                            required
-                            value={password}
-                        />
-                        {/* Per defecte s'oculta la contrasenya */}
-                        <button
-                            type="button"
-                            className="signup__password-toggle"
-                            onClick={() => setShowPassword(!showPassword)}
-                        >
-                            {showPassword ? (
-                                <img src={eyeOpen} alt="Oculta contrasenya" />
-                            ) : (
-                                <img
-                                    src={eyeCrossed}
-                                    alt="Mostra contrasenya"
-                                />
-                            )}
-                        </button>
-                    </div>
-                    {!isValidPassword(password) && password ? (
-                        <div className="signup__form-error">
-                            La contrasenya ha de tenir com a mínim 8 caràcters,
-                            1 número, 1 majúscula i 1 minúscula
-                        </div>
-                    ) : null}
-                    <div className="signup__form--input-box">
-                        <div className="signup__form-icon">
-
-                            {/* ACTUAL --> Canviem svg ;P */}
-                            <img src={password && password === passwordConfirmation ? passwordKeyOK : password ? passwordKeyBad : passwordKey} alt="password" />
-
-                            {/* SISTEMA NOU - NO CANVIA DE COLOR */}
-                            {/* <img src={passwordKey} alt="password" style={password && password === passwordConfirmation ? iconStyleGreen : password ? iconStyleRed : iconStyleDefault} /> */}
-
-                            {/* SISTEMA ORIOL />
-                            <FaLock
-                                style={
-                                    password &&
-                                        password === passwordConfirmation
-                                        ? iconStyleGreen
-                                        : password
-                                            ? iconStyleRed
-                                            : iconStyleDefault
+                        {!isValidPassword(password) && password ? (
+                            <div className="signup__form-error">
+                                La contrasenya ha de tenir com a mínim 8 caràcters,
+                                1 número, 1 majúscula i 1 minúscula
+                            </div>
+                        ) : null}
+                        <div className="signup__form--input-box">
+                            <div className="signup__form-icon">
+                                <img src={password && password === passwordConfirmation ? passwordKeyOK : password ? passwordKeyBad : passwordKey} alt="password" />
+                            </div>
+                            <Input
+                                type={showConfirmation ? 'text' : 'password'}
+                                placeholder="Confirmar contrassenya"
+                                onChange={handlePasswordConfirmationChange}
+                                required
+                                value={passwordConfirmation}
+                            />
+                            {/* Per defecte s'oculta la contrasenya */}
+                            <button
+                                type="button"
+                                className="signup__confirm--password-toggle"
+                                onClick={() =>
+                                    setShowConfirmation(!showConfirmation)
                                 }
-                            /> */}
+                            >
+                                {showConfirmation ? (
+                                    <img src={eyeOpen} alt="Oculta contrasenya" />
+                                ) : (
+                                    <img
+                                        src={eyeCrossed}
+                                        alt="Mostra contrasenya"
+                                    />
+                                )}
+                            </button>
                         </div>
-                        <Input
-                            type={showConfirmation ? 'text' : 'password'}
-                            placeholder="Confirmar contrassenya"
-                            onChange={handlePasswordConfirmationChange}
-                            required
-                            value={passwordConfirmation}
-                        />
-                        {/* Per defecte s'oculta la contrasenya */}
-                        <button
-                            type="button"
-                            className="signup__confirm--password-toggle"
-                            onClick={() =>
-                                setShowConfirmation(!showConfirmation)
+                        <div className="signup__form--input-box">
+                            <input
+                                type="checkbox"
+                                id="is_company"
+                                value={isCompany}
+                                onChange={handleIsCompanyChange}
+                                className="signup__empresaCheckbox"
+                            />
+                            <label htmlFor="is_company">Soc una empresa</label>
+                        </div>
+                        {isCompany && (
+                            <>
+                                <div className="signup__form--input-box">
+                                    <select
+                                        name="servicio"
+                                        className="signup__select"
+                                        defaultValue={''}
+                                        onChange={handleServicesChange}
+                                    >
+                                        <option value="" disabled>
+                                            Selecciona una categoria...
+                                        </option>
+                                        {servicesList &&
+                                            servicesList.map((service, index) => {
+                                                return (
+                                                    <option
+                                                        key={index}
+                                                        value={service}
+                                                    >
+                                                        {service}
+                                                    </option>
+                                                );
+                                            })}
+                                    </select>
+                                </div>
+                                <div className="signup__form--input-box">
+                                    <div className="signup__form-icon">
+                                        <img src={shopIcon} alt="shop icon" style={iconStyleDefault} />
+                                    </div>
+                                    <Input
+                                        type="text"
+                                        placeholder="Nom Empresa"
+                                        onChange={handleCompanyNameChange}
+                                        value={companyName}
+                                        required
+                                    />
+                                </div>
+                                <div className="signup__form--input-box">
+                                    <div className="signup__form-icon">
+                                        <img src={profilePicture} alt="profile picture" style={iconStyleDefault} />
+                                    </div>
+                                    <Input
+                                        type="text"
+                                        placeholder="ImageUrl"
+                                        onChange={handleImageUrlChange}
+                                        value={image_url}
+                                        required
+                                    />
+                                </div>
+                            </>
+                        )}
+
+                        <Button
+                            // type="submit"
+                            text="Sign Up"
+                            action={handleSubmit}
+                            disabled={
+                                !isValidEmail(email) ||
+                                !isValidPassword(password) ||
+                                !passwordConfirmation ||
+                                password !== passwordConfirmation
                             }
-                        >
-                            {showConfirmation ? (
-                                <img src={eyeOpen} alt="Oculta contrasenya" />
-                            ) : (
-                                <img
-                                    src={eyeCrossed}
-                                    alt="Mostra contrasenya"
-                                />
-                            )}
-                        </button>
-                    </div>
-
-                    <div className="signup__form--input-box">
-                        <input
-                            type="checkbox"
-                            id="is_company"
-                            value={isCompany}
-                            onChange={handleIsCompanyChange}
-                            className="signup__empresaCheckbox"
                         />
-                        <label htmlFor="is_company">Soc una empresa</label>
-                    </div>
-                    {isCompany && (
-                        <>
-                            <div className="signup__form--input-box">
-                                <select
-                                    name="servicio"
-                                    className="signup__select"
-                                    defaultValue={''}
-                                    onChange={handleServicesChange}
-                                >
-                                    <option value="" disabled>
-                                        Selecciona una categoria...
-                                    </option>
-                                    {servicesList &&
-                                        servicesList.map((service, index) => {
-                                            return (
-                                                <option
-                                                    key={index}
-                                                    value={service}
-                                                >
-                                                    {service}
-                                                </option>
-                                            );
-                                        })}
-                                </select>
-                            </div>
-                            <div className="signup__form--input-box">
-                                <div className="signup__form-icon">
-                                    <img src={shopIcon} alt="shop icon" style={iconStyleDefault} />
-                                </div>
-                                <Input
-                                    type="text"
-                                    placeholder="Nom Empresa"
-                                    onChange={handleCompanyNameChange}
-                                    value={companyName}
-                                    required
-                                />
-                            </div>
-                            <div className="signup__form--input-box">
-                                <div className="signup__form-icon">
-                                    <img src={profilePicture} alt="profile picture" style={iconStyleDefault} />
-                                </div>
-                                <Input
-                                    type="text"
-                                    placeholder="ImageUrl"
-                                    onChange={handleImageUrlChange}
-                                    value={image_url}
-                                    required
-                                />
-                            </div>
-                        </>
-                    )}
-                    {signedUp && (
-                        <div className="signup__formSuccess">
-                            REGISTRAT CORRECTAMENT
+                        <div className="redirect_login">
+                            Ja tens un compte? <Link to="/login">Login</Link>
                         </div>
-                    )}
-                    {navigateToLogin && <Navigate to="/login" replace />}
-
-                    <Button
-                        // type="submit"
-                        text="Sign Up"
-                        action={handleSubmit}
-                        disabled={
-                            !isValidEmail(email) ||
-                            !isValidPassword(password) ||
-                            !passwordConfirmation ||
-                            password !== passwordConfirmation
-                        }
-                    />
-                    <div className="redirect_login">
-                        Ja tens un compte? <Link to="/login">Login</Link>
-                    </div>
-                </form>
+                    </form>
+                )}
                 {/* TODO: Donar estil al missatge d'error */}
                 {message && <div className="">{message}</div>}
             </main >
