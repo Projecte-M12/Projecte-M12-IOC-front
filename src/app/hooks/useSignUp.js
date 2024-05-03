@@ -48,7 +48,7 @@ export const useSignup = () => {
         setName(event.target.value);
     };
 
-    const handleIsCompanyChange = (event) => {
+    const handleIsCompanyChange = () => {
         setIsCompany((prev) => !prev);
     };
 
@@ -57,7 +57,7 @@ export const useSignup = () => {
     };
 
     const handleCompanyNameChange = (event) => {
-        setImage_url(event.target.value);
+        setCompanyName(event.target.value);
     };
 
     const handleImageUrlChange = (event) => {
@@ -78,10 +78,10 @@ export const useSignup = () => {
                       email,
                       password,
                       password_confirmation: passwordConfirmation,
-                      is_company: isCompany,
+                      is_provider: isCompany,
                       company_name: name,
                       service_provided: services,
-                      image_url,
+                      image_url: image_url,
                       remember,
                   }
                 : {
@@ -89,7 +89,7 @@ export const useSignup = () => {
                       email,
                       password,
                       password_confirmation: passwordConfirmation,
-                      is_company: isCompany,
+                      is_provider: isCompany,
                       remember,
                   };
             const optionsFetchUserInfo = {
@@ -115,10 +115,7 @@ export const useSignup = () => {
                 throw new Error('Error al registrar el usuario');
             }
 
-            console.log('Haciendo cosas del signup...');
-
             const data = await response.json();
-            console.log('Recibe respuesta del servico');
 
             // Mensaje todo correcto y redirección
             setSignedUp(true);

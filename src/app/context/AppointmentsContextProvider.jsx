@@ -29,7 +29,6 @@ export function AppointmentsContextProvider({ children }) {
             return Math.max(maxId, currentItem.id);
         }, 0);
         setLastId(highestId);
-        console.log('lastId', highestId);
     }, [newAppointment]);
 
     /**
@@ -44,7 +43,7 @@ export function AppointmentsContextProvider({ children }) {
         const newApp = {
             user_id: user.id,
             provider_id: company.id,
-            service_id: 1,
+            service_id: company.service_provided,
             appointment_date: dateAppointmentToDbDate(slotInfo.start),
             start_time: hourAppointmentToDbTime(slotInfo.start),
             end_time: hourAppointmentToDbTime(slotInfo.end),

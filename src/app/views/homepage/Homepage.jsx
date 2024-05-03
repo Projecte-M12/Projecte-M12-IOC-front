@@ -33,7 +33,6 @@ export const Homepage = () => {
             // setProviders(await getCompanies());
             setServicesList(await getServices());
             const comp = await getCompanies();
-            console.log(comp);
             setCompaniesList(comp);
         };
         fetchData();

@@ -34,7 +34,8 @@ export function CustomerDashboard() {
     const { user, isAuthenticated } = useAuthContext();
     const [myEventsList, setMyEventsList] = useState([]);
     const { checkToken } = useCheckUser();
-    const { allAppointments, updateAllApointments, deleteAppointment } = useAppointmentsContext();
+    const { allAppointments, updateAllApointments, deleteAppointment } =
+        useAppointmentsContext();
 
     useEffect(() => {
         checkToken();
@@ -44,8 +45,6 @@ export function CustomerDashboard() {
         const filteredEvents = allAppointments.filter(
             (appointment) => appointment.userId === user?.id,
         );
-        console.log(allAppointments)
-        console.log(user.id)
         setMyEventsList(filteredEvents);
     }, [allAppointments]);
 
@@ -75,7 +74,7 @@ export function CustomerDashboard() {
                 <h1>Customer Dashboard</h1>
                 <div className="dashboard__mainSection">
                     <div className="dashboard__benvinguda">
-                        <div>Benvingut {user.name}</div>
+                        <div>Benvingut {user?.name}</div>
                     </div>
                     {myEventsList.length > 0 && (
                         <>

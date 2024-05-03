@@ -31,8 +31,8 @@ import { iconStyleDefault } from '../../../styles/iconStyles';
 import logo from '../../../assets/logo/reservanow_logo.svg';
 
 /*
-* ----- Icons
-*/
+ * ----- Icons
+ */
 import mailLetter from '../../../assets/icons/mail.svg';
 import passwordKey from '../../../assets/icons/keyAccount.svg';
 import eyeOpen from '../../../assets/icons/eyeopen.svg';
@@ -70,7 +70,7 @@ export const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
 
     if (isAuthenticated) {
-        if (user && user.is_company) {
+        if (user && user.company_name) {
             return <Navigate to="/company-dashboard" replace />;
         } else {
             return <Navigate to="/customer-dashboard" replace />;
@@ -129,7 +129,6 @@ export const Login = () => {
                             required
                             value={password}
                         />
-                        {/* Per defecte s'oculta la contrasenya */}
 
                         <button
                             type="button"
@@ -172,6 +171,7 @@ export const Login = () => {
                     <div>
                         <a href="#">Forgot password?</a>
                     </div>
+
                     {/*Botó personalitzat que envia les dades per validar l'inici de sessió */}
                     <Button
                         text="Login"

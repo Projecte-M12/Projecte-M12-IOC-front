@@ -13,7 +13,6 @@ export const getCompanies = () => {
 
     const companies = fetch(API_BASE_URL + EDPOINT.PROVIDERS, options)
         .then((response) => response.json())
-        // .then((data) => console.log(data));
 
     return companies;
 };

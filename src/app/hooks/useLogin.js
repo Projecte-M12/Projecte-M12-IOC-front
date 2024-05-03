@@ -62,11 +62,8 @@ export const useLogin = () => {
             );
 
             if (!response.ok) {
-                console.log('ERROR en la petición');
                 throw new Error("Nom d'usuari i/o contrassenya incorrectes");
             }
-
-            console.log('Haciendo cosas del login...');
 
             const data = await response.json();
             updateIsAuthenticated(true);

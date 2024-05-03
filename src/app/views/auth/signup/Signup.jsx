@@ -12,19 +12,24 @@ import { isValidEmail, isValidPassword } from '../../../utils/validations';
 /*
  * ----- Components propis
  */
+import { Header } from '../../../shared/components/Header/Header.jsx';
 import { Input } from '../../../shared/components/Input/Input.jsx';
 import { Button } from '../../../shared/components/Button/Button.jsx';
+import { Header } from '../../../shared/components/Header/Header.jsx';
+import { Footer } from '../../../shared/components/Footer/Footer.jsx';
 
 /*
  * ----- Custom hooks
  */
 import { useAuthContext } from '../../../hooks/useAuthContext';
 import { useCheckUser } from '../../../hooks/useCheckUser';
+import { useSignup } from '../../../hooks/useSignUp';
 
 /**
  * Serveis
  */
 import { getServices } from '../../../services/getServices';
+import { getCompanies } from '../../../services/getCompanies.js';
 
 /*
  * ----- Styles
@@ -35,41 +40,35 @@ import {
     iconStyleGreen,
     iconStyleRed,
 } from '../../../styles/iconStyles';
-import logo from '../../../assets/logo/reservanow_logo.svg';
-import { useSignup } from '../../../hooks/useSignUp';
 
 /*
-* ----- Icons
+* ----- Icons & Images
 */
+import logo from '../../../assets/logo/reservanow_logo.svg';
 import eyeOpen from '../../../assets/icons/eyeopen.svg';
 import eyeCrossed from '../../../assets/icons/eyecrossed.svg';
 import mailLetter from '../../../assets/icons/mail.svg';
 import shopIcon from '../../../assets/icons/shop.svg';
+import profile from '../../../assets/icons/profile.svg';
 import passwordKey from '../../../assets/icons/keyAccount.svg';
 import passwordKeyOK from '../../../assets/icons/keyAccountOK.svg';
 import passwordKeyBad from '../../../assets/icons/keyAccountBad.svg';
 import profilePicture from '../../../assets/icons/picture-jpg.svg';
 import profileIcon from '../../../assets/icons/user.svg';
 
-
-import { Header } from '../../../shared/components/Header/Header.jsx';
-import { getCompanies } from '../../../services/getCompanies.js';
-import { Footer } from '../../../shared/components/Footer/Footer.jsx';
+/*
+ * ----- Component Signup
+ */
 
 export const Signup = () => {
     /*
      * ----- States
      */
-    // const [confirmedPassword, setConfirmedPrePassword] = useState('');
     const { isAuthenticated, user } = useAuthContext();
-
-    // Oculta o mostra la contrassenya
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [servicesList, setServicesList] = useState([]);
-    // const [providers, setProviders] = useState([]);
-
-    // Hay que crear un useSignup con su propio estado
+    const [navigateToLogin, setNavigateToLogin] = useState(false);
     const {
         email,
         password,
@@ -111,27 +110,31 @@ export const Signup = () => {
         fetchData();
     }, []);
 
-    /*
-     * ----- Funciones
-     */
-    if (signedUp) {
-        setTimeout(() => {
-            console.log('Registrat');
-            return <Navigate to="/login" />;
-        }, 2000);
-    }
+    useEffect(() => {
+        let timeoutId;
+        if (signedUp) {
+            timeoutId = setTimeout(() => {
+                setNavigateToLogin(true);
+            }, 3000);
+        }
+
+        return () => clearTimeout(timeoutId);
+    }, [signedUp]);
 
     /*
      * ----- Comprobación usuario logueado y redirección
      */
     if (isAuthenticated) {
-        if (user && user.is_company) {
-            return <Navigate to="/customer-dashboard" replace />;
-        } else {
+        if (user && user.company_name) {
             return <Navigate to="/company-dashboard" replace />;
+        } else {
+            return <Navigate to="/customer-dashboard" replace />;
         }
     }
 
+    /*
+     * ----- Return
+     */
     return (
         <>
             <Header />
@@ -161,7 +164,6 @@ export const Signup = () => {
                     <div className="signup__form--input-box">
                         <div className="signup__form-icon">
                             <img src={mailLetter} alt="email" />
-
                         </div>
                         <Input
                             type="email"
@@ -220,10 +222,8 @@ export const Signup = () => {
                             {/* ACTUAL --> Canviem svg ;P */}
                             <img src={password && password === passwordConfirmation ? passwordKeyOK : password ? passwordKeyBad : passwordKey} alt="password" />
 
-
                             {/* SISTEMA NOU - NO CANVIA DE COLOR */}
                             {/* <img src={passwordKey} alt="password" style={password && password === passwordConfirmation ? iconStyleGreen : password ? iconStyleRed : iconStyleDefault} /> */}
-
 
                             {/* SISTEMA ORIOL />
                             <FaLock
@@ -300,10 +300,7 @@ export const Signup = () => {
                             </div>
                             <div className="signup__form--input-box">
                                 <div className="signup__form-icon">
-
                                     <img src={shopIcon} alt="shop icon" style={iconStyleDefault} />
-
-
                                 </div>
                                 <Input
                                     type="text"
@@ -316,8 +313,6 @@ export const Signup = () => {
                             <div className="signup__form--input-box">
                                 <div className="signup__form-icon">
                                     <img src={profilePicture} alt="profile picture" style={iconStyleDefault} />
-
-
                                 </div>
                                 <Input
                                     type="text"
@@ -330,13 +325,12 @@ export const Signup = () => {
                         </>
                     )}
                     {signedUp && (
-                        <>
-                            <div className="signup__formSuccess">
-                                REGISTRAT CORRECTAMENT
-                            </div>
-                            <Navigate to="/login" replace />{' '}
-                        </>
+                        <div className="signup__formSuccess">
+                            REGISTRAT CORRECTAMENT
+                        </div>
                     )}
+                    {navigateToLogin && <Navigate to="/login" replace />}
+
                     <Button
                         // type="submit"
                         text="Sign Up"
