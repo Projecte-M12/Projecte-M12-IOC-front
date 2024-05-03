@@ -15,7 +15,6 @@ import { isValidEmail, isValidPassword } from '../../../utils/validations';
 import { Header } from '../../../shared/components/Header/Header.jsx';
 import { Input } from '../../../shared/components/Input/Input.jsx';
 import { Button } from '../../../shared/components/Button/Button.jsx';
-import { Header } from '../../../shared/components/Header/Header.jsx';
 import { Footer } from '../../../shared/components/Footer/Footer.jsx';
 
 /*
