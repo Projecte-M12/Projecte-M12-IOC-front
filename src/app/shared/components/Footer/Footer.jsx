@@ -17,18 +17,18 @@ export const Footer = () => {
                 </p>
                 <p>
                     <span className="paragraphs__link">
-                        <Link to="/avis-legal">Avís Legal</Link>
+                        <Link to="/politiques/avis-legal">Avís Legal</Link>
                     </span>{' '}
                     |{' '}
                     <span className="paragraphs__link">
-                        <Link to="/politica-de-privacitat">
-                            Política de privacitat
+                        <Link to="/politiques/privacitat">
+                            Política de privacitat{' '}
                         </Link>
                     </span>{' '}
                     |{' '}
                     <span className="paragraphs__link">
-                        <Link to="/politica-de-cookies">
-                            Política de cookies
+                        <Link to="/politiques/cookies">
+                            Política de cookies{' '}
                         </Link>
                     </span>
                 </p>

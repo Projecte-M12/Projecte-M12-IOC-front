@@ -47,7 +47,7 @@ export function AppointmentsContextProvider({ children }) {
             appointment_date: dateAppointmentToDbDate(slotInfo.start),
             start_time: hourAppointmentToDbTime(slotInfo.start),
             end_time: hourAppointmentToDbTime(slotInfo.end),
-            modification_type: 'some type',
+            modification_type: user?.name,
         };
 
         const optionsFetchNewAppointment = {

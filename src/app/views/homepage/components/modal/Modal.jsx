@@ -97,9 +97,12 @@ const CustomModal = ({ company, closeModal }) => {
             empresa: company.company_name,
             email: user?.email,
             color: '#66ff99', // Color para las nuevas reservas
+            modification_type: user?.name,
         };
 
         setLastId(newAppointment.id);
+        console.log(newAppointment);
+        console.log(allAppointments)
         updateAllApointments([...allAppointments, newAppointment]);
     };
 

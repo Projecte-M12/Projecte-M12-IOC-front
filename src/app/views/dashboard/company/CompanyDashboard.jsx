@@ -88,6 +88,7 @@ export function CompanyDashboard() {
     }
 
     const handleSelectEvent = (eventInfo) => {
+        console.log(eventInfo)
         setSelectedEvent(eventInfo);
         setModalIsOpen(true);
     };
@@ -195,6 +196,7 @@ export function CompanyDashboard() {
                                 Hora fi:{' '}
                                 {hourAppointmentToDbTime(selectedEvent.end)}
                             </p>
+                            <p>Usuari: {selectedEvent.client}</p>
                             {/* Otros detalles del evento */}
                             <button onClick={handleDeleteEvent}>
                                 Eliminar reserva

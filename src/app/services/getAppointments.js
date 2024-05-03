@@ -27,6 +27,7 @@ export const getAllAppointments = async () => {
             const company = companiesData.find(
                 (c) => c.id === appointment.provider_id,
             );
+            console.log(appointment);
             return {
                 start: new Date(
                     appointment.appointment_date + 'T' + appointment.start_time,
@@ -39,6 +40,7 @@ export const getAllAppointments = async () => {
                 userId: appointment.user_id,
                 title: `Reserva en ${company.company_name}`,
                 empresa: company.company_name,
+                client: appointment.modification_type,
             };
         });
 
