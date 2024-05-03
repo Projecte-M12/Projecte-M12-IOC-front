@@ -19,7 +19,7 @@ export const Header = () => {
     return (
         <header className="header">
             <div>
-                <p>Header</p>
+                <p></p>
             </div>
             <div className="header__links">
                 <button className="menu-icon" onClick={toggleMenu}>
