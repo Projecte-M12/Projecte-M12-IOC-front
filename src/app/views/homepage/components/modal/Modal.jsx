@@ -35,7 +35,7 @@ const localizer = momentLocalizer(moment);
  * @param {Function} props.closeModal Función para cerrar el modal.
  * @returns {JSX.Element} El componente del modal personalizado.
  */
-export const CustomModal = ({ company, closeModal }) => {
+const CustomModal = ({ company, closeModal }) => {
     // const [myEvent, setMyEvent] = useState([]);
     const [newAppointments, setNewAppointments] = useState([]);
     const [customerAppointments, setCustomerAppointments] = useState([]);
@@ -278,3 +278,5 @@ export const CustomModal = ({ company, closeModal }) => {
         </Modal>
     );
 };
+
+export default CustomModal;
