@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: views/auth/login/Login.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: views/auth/login/Login.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * React
+ */
+import React, { useState, useEffect } from 'react';
+import { Link, Navigate } from 'react-router-dom';
+
+/**
+ * Utils
+ */
+import { isValidEmail, isValidPassword } from '../../../utils/validations';
+
+/**
+ *  Hooks
+ */
+import { useAuthContext } from '../../../hooks/useAuthContext';
+import { useLogin } from '../../../hooks/useLogin';
+import { useCheckUser } from '../../../hooks/useCheckUser';
+
+/**
+ * Components propis
+ */
+import { Input } from '../../../shared/components/Input/Input.jsx';
+import { Button } from '../../../shared/components/Button/Button.jsx';
+import { Header } from '../../../shared/components/Header/Header';
+import { Footer } from '../../../shared/components/Footer/Footer.jsx';
+
+/**
+ * Styles
+ */
+import './Login.css';
+
+/**
+ * Imatges i Icons
+ */
+import logo from '../../../assets/logo/reservanow_logo.svg';
+import mailLetter from '../../../assets/icons/mail.svg';
+import passwordKey from '../../../assets/icons/keyAccount.svg';
+import eyeOpen from '../../../assets/icons/eyeopen.svg';
+import eyeCrossed from '../../../assets/icons/eyecrossed.svg';
+
+/**
+ * Component de log in per autenticar els usuaris.
+ * Redirigeix a la pàgina de dashboard corresponent si l'usuari ja està autenticat.
+ * @returns {JSX.Element} El component de log in.
+ */
+export const Login = () => {
+    /**
+     * Custom Hooks
+     */
+    const { checkToken } = useCheckUser();
+    useEffect(() => {
+        checkToken();
+    }, []);
+
+    /**
+     * Estats
+     */
+    const {
+        email,
+        password,
+        loading,
+        error,
+        handleEmailChange,
+        handlePasswordChange,
+        handleSubmit,
+    } = useLogin();
+
+    const { isAuthenticated, user } = useAuthContext();
+
+    // Oculta o mostra la contrassenya
+    const [showPassword, setShowPassword] = useState(false);
+
+    if (isAuthenticated) {
+        if (user &amp;&amp; user.company_name) {
+            return &lt;Navigate to="/company-dashboard" replace />;
+        } else {
+            return &lt;Navigate to="/customer-dashboard" replace />;
+        }
+    }
+
+    /**
+     *  Rentorna el render del component Login
+     */
+    return (
+        &lt;>
+            &lt;Header />
+            &lt;main className="login__container">
+                {isAuthenticated &amp;&amp; &lt;Navigate to="/" />}
+                &lt;div className="login__logo-container">
+                    &lt;img
+                        src={logo}
+                        className="login__logo"
+                        alt="Logo ReservaNOW"
+                    />
+                &lt;/div>
+                &lt;form className="login__form-container">
+                    &lt;h1 className="login__form-title">Hola de nou ;)&lt;/h1>
+                    &lt;h2>Inicia sessió&lt;/h2>
+                    &lt;div className="login__form--input-box">
+                        &lt;div className="signup__form-icon">
+                            &lt;img src={mailLetter} alt="email" />
+                        &lt;/div>
+                        &lt;Input
+                            type="email"
+                            placeholder="Correu"
+                            onChange={handleEmailChange}
+                            value={email}
+                        />
+                    &lt;/div>
+                    {!isValidEmail(email) &amp;&amp; email ? (
+                        &lt;div className="login__form-error">
+                            Format d'email no vàlid
+                        &lt;/div>
+                    ) : null}
+                    &lt;div className="login__form--input-box">
+                        &lt;div className="signup__form-icon">
+                            &lt;img src={passwordKey} alt="password" />
+                        &lt;/div>
+                        &lt;Input
+                            type={showPassword ? 'text' : 'password'}
+                            placeholder="Password"
+                            onChange={handlePasswordChange}
+                            required
+                            value={password}
+                        />
+
+                        &lt;button
+                            type="button"
+                            className="login__password-toggle"
+                            onClick={() => setShowPassword(!showPassword)}
+                        >
+                            {showPassword ? (
+                                &lt;img src={eyeOpen} alt="Oculta contrasenya" />
+                            ) : (
+                                &lt;img
+                                    src={eyeCrossed}
+                                    alt="Mostra contrasenya"
+                                />
+                            )}
+                        &lt;/button>
+                    &lt;/div>
+                    {!isValidPassword(password) &amp;&amp; password ? (
+                        &lt;div className="login__form-error">
+                            La contrasenya ha de tenir com a mínim 8 caràcters,
+                            1 número, 1 majúscula i 1 minúscula
+                        &lt;/div>
+                    ) : null}
+
+                    {error &amp;&amp; (
+                        &lt;div className="login__error">{error.message}&lt;/div>
+                    )}
+
+                    &lt;div className="login__form--input-box">
+                        {/* TODO: Canviar a component ? */}
+                        &lt;label htmlFor="remember">
+                            &lt;input
+                                type="checkbox"
+                                name="remember"
+                                id="remember"
+                                className="login__rememberCheckbox"
+                            />
+                            Remember me
+                        &lt;/label>
+                    &lt;/div>
+                    &lt;div>
+                        &lt;a href="#">Forgot password?&lt;/a>
+                    &lt;/div>
+
+                    {/* Botó personalitzat que envia les dades per validar l'inici de sessió */}
+                    &lt;Button
+                        text="Login"
+                        action={handleSubmit}
+                        disabled={
+                            !isValidEmail(email) || !isValidPassword(password)
+                        }
+                        type="submit"
+                    />
+                    &lt;div className="redirect_signup">
+                        {'Encara no tens un compte?'}{' '}
+                        &lt;Link to="/Signup" className="text-accent" replace>
+                            Registra't
+                        &lt;/Link>
+                    &lt;/div>
+                &lt;/form>
+            &lt;/main>
+
+            {/* Contingut del Footer */}
+            &lt;Footer />
+        &lt;/>
+    );
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#API_BASE_URL">API_BASE_URL</a></li><li><a href="global.html#AppointmentsContextProvider">AppointmentsContextProvider</a></li><li><a href="global.html#AuthContextProvider">AuthContextProvider</a></li><li><a href="global.html#AvisLegal">AvisLegal</a></li><li><a href="global.html#Button">Button</a></li><li><a href="global.html#Card">Card</a></li><li><a href="global.html#CheckAnimation">CheckAnimation</a></li><li><a href="global.html#CompanyDashboard">CompanyDashboard</a></li><li><a href="global.html#Cookies">Cookies</a></li><li><a href="global.html#CustomModal">CustomModal</a></li><li><a href="global.html#CustomerDashboard">CustomerDashboard</a></li><li><a href="global.html#EDPOINT">EDPOINT</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#Header">Header</a></li><li><a href="global.html#Homepage">Homepage</a></li><li><a href="global.html#Input">Input</a></li><li><a href="global.html#InvertedButton">InvertedButton</a></li><li><a href="global.html#Loading">Loading</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#Privacitat">Privacitat</a></li><li><a href="global.html#ProtectedRoutes">ProtectedRoutes</a></li><li><a href="global.html#Router">Router</a></li><li><a href="global.html#SearchInput">SearchInput</a></li><li><a href="global.html#Signup">Signup</a></li><li><a href="global.html#Welcomepage">Welcomepage</a></li><li><a href="global.html#appointmentsContext">appointmentsContext</a></li><li><a href="global.html#authContext">authContext</a></li><li><a href="global.html#dateAppointmentToDbDate">dateAppointmentToDbDate</a></li><li><a href="global.html#dateCuteTransform">dateCuteTransform</a></li><li><a href="global.html#getAllAppointments">getAllAppointments</a></li><li><a href="global.html#getCompanies">getCompanies</a></li><li><a href="global.html#getServices">getServices</a></li><li><a href="global.html#hourAppointmentToDbTime">hourAppointmentToDbTime</a></li><li><a href="global.html#isValidEmail">isValidEmail</a></li><li><a href="global.html#isValidPassword">isValidPassword</a></li><li><a href="global.html#useAppointmentsContext">useAppointmentsContext</a></li><li><a href="global.html#useAuthContext">useAuthContext</a></li><li><a href="global.html#useCheckUser">useCheckUser</a></li><li><a href="global.html#useLogin">useLogin</a></li><li><a href="global.html#useSignup">useSignup</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Sat May 04 2024 09:08:05 GMT+0200 (Hora d’estiu del Centre d’Europa)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

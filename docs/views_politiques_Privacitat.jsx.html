@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: context/AuthContextProvider.jsx</title>
+    <title>JSDoc: Source: views/politiques/Privacitat.jsx</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: context/AuthContextProvider.jsx</h1>
+    <h1 class="page-title">Source: views/politiques/Privacitat.jsx</h1>
 
     
 
@@ -26,78 +26,59 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/** 
- *  React
+            <pre class="prettyprint source linenums"><code>/**
+ * React
  */
-import { useState } from 'react';
+import React from 'react';
 
 /**
- * Custom hooks
+ * Estils
  */
-import { authContext } from './authContext';
+import './Politiques.css';
 
 /**
- * Proveeix el context per a la gestió de l'autenticació de l'usuari.
- * @param {Object} props - Propietats del component.
- * @param {JSX.Element} props.children - Els components fills.
- * @returns {JSX.Element} El component de proveïdor de context d'autenticació.
+ * Components pròpis
  */
-export function AuthContextProvider({ children }) {
-    /**
-     * States
-     */
-    const [user, setUser] = useState(null);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [token, setToken] = useState(null);
+import { Header } from '../../shared/components/Header/Header';
+import { Footer } from '../../shared/components/Footer/Footer';
 
-    /**
-     * Functions
-     */
-    const updateUser = (usuario) => {
-        localStorage.setItem('user', JSON.stringify(usuario));
-        setUser(usuario);
-    };
+/**
+ * Imatges
+ */
+import LarryCoffee from '../../../app/assets/images/larry_coffee.svg';
 
-    const updateIsAuthenticated = (estado) => setIsAuthenticated(estado);
+/**
+ * Component que mostra les Polítiques de Privacitat.
+ * @returns {JSX.Element} El component de Privacitat.
+ */
+export function Privacitat() {
 
-    const updateToken = (token) => {
-        localStorage.setItem('access_token', token);
-        setToken(token);
-    };
 
-    const resetUser = () => {
-        localStorage.removeItem('user');
-        setUser(null);
-    };
-
-    const resetToken = () => {
-        localStorage.removeItem('access_token');
-        setToken(null);
-    };
-
-    /**
-     * Retorna el proveïdor de context d'autenticació amb les seves funcions associades.
-     * @returns {JSX.Element} El proveïdor de context d'autenticació.
-     */
     return (
-        &lt;authContext.Provider
-            value={{
-                // context,
-                user,
-                isAuthenticated,
-                token,
-                updateUser,
-                resetUser,
-                updateIsAuthenticated,
-                updateToken,
-                resetToken,
-            }}
-        >
-            {children}
-        &lt;/authContext.Provider>
+        &lt;>
+            {/* Contingut del Header */}
+            &lt;Header />
+
+            {/* Contingut del component Avís Legal */}
+            &lt;div className="politics__container">
+                &lt;div className="page__title--position">
+                    &lt;h1 className="title">POLÍTIQUES DE PRIVACITAT&lt;/h1>
+                &lt;/div>
+
+                {/* Contingut principal del component */}
+                &lt;img src={LarryCoffee} alt="Larry drinks a coffee" />
+                &lt;div className="section__text">
+                    &lt;p>La nostra Política de Privacitat garanteix la protecció de les dades personals dels nostres usuaris. Tant a empreses com a particulars.&lt;/p>
+                    &lt;p>A &lt;strong className="politics__accent-text">ReservaNOW&lt;/strong>, ens comprometem a tractar les vostres dades de forma confidencial i segura.&lt;/p>
+                    &lt;p>Utilitzem la informació recollida únicament per proporcionar els serveis sol·licitats i millorar la vostra experiència d'usuari.&lt;/p>
+                    &lt;p>No es compartiràn les vostres dades amb tercers sense el vostre consentiment explícit.&lt;/p>
+                &lt;/div>
+            &lt;/div>
+            {/* Contingut del Footer */}
+            &lt;Footer />
+        &lt;/>
     );
-}
-</code></pre>
+};</code></pre>
         </article>
     </section>
 

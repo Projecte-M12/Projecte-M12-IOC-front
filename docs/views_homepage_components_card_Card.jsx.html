@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: context/AuthContextProvider.jsx</title>
+    <title>JSDoc: Source: views/homepage/components/card/Card.jsx</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: context/AuthContextProvider.jsx</h1>
+    <h1 class="page-title">Source: views/homepage/components/card/Card.jsx</h1>
 
     
 
@@ -26,77 +26,32 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/** 
- *  React
+            <pre class="prettyprint source linenums"><code>/**
+ * Estils
  */
-import { useState } from 'react';
+import './Card.scss';
 
 /**
- * Custom hooks
+ * Component que representa una targeta per mostrar la informació d'una empresa.
+ * @param {object} props Les propietats del component.
+ * @param {object} props.company La informació de l'empresa a mostrar.
+ * @param {Function} props.openModal Funció per obrir el modal amb els detalls de l'empresa.
+ * @returns {JSX.Element} El component de la targeta d'empresa.
  */
-import { authContext } from './authContext';
-
-/**
- * Proveeix el context per a la gestió de l'autenticació de l'usuari.
- * @param {Object} props - Propietats del component.
- * @param {JSX.Element} props.children - Els components fills.
- * @returns {JSX.Element} El component de proveïdor de context d'autenticació.
- */
-export function AuthContextProvider({ children }) {
-    /**
-     * States
-     */
-    const [user, setUser] = useState(null);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [token, setToken] = useState(null);
-
-    /**
-     * Functions
-     */
-    const updateUser = (usuario) => {
-        localStorage.setItem('user', JSON.stringify(usuario));
-        setUser(usuario);
+export const Card = ({ company, openModal }) => {
+    const handleClick = () => {
+        openModal(company);
     };
-
-    const updateIsAuthenticated = (estado) => setIsAuthenticated(estado);
-
-    const updateToken = (token) => {
-        localStorage.setItem('access_token', token);
-        setToken(token);
-    };
-
-    const resetUser = () => {
-        localStorage.removeItem('user');
-        setUser(null);
-    };
-
-    const resetToken = () => {
-        localStorage.removeItem('access_token');
-        setToken(null);
-    };
-
-    /**
-     * Retorna el proveïdor de context d'autenticació amb les seves funcions associades.
-     * @returns {JSX.Element} El proveïdor de context d'autenticació.
-     */
     return (
-        &lt;authContext.Provider
-            value={{
-                // context,
-                user,
-                isAuthenticated,
-                token,
-                updateUser,
-                resetUser,
-                updateIsAuthenticated,
-                updateToken,
-                resetToken,
-            }}
-        >
-            {children}
-        &lt;/authContext.Provider>
+        &lt;>
+            &lt;p>Company: {company.company_name}&lt;/p>
+            &lt;div className="card__image" onClick={handleClick}>
+                &lt;img src={company.image_url} alt="" />
+            &lt;/div>
+            &lt;p>Category: {company.service_provided}&lt;/p>
+        &lt;/>
     );
-}
+};
 </code></pre>
         </article>
     </section>

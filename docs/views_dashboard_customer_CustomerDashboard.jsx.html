@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: views/dashboard/customer/CustomerDashboard.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: views/dashboard/customer/CustomerDashboard.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ *  React
+ */
+import { Link, Navigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+
+/**
+ *  Calendar
+ */
+import { Calendar, momentLocalizer } from 'react-big-calendar';
+import moment from 'moment';
+import 'moment/locale/es'; // Importa el locale español
+import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
+
+/**
+ *  Custom hooks
+ */
+import { useAuthContext } from '../../../hooks/useAuthContext';
+import { useCheckUser } from '../../../hooks/useCheckUser';
+import { useAppointmentsContext } from '../../../hooks/useAppointmentsContext';
+
+/**
+ * Components propis
+ */
+import { Header } from '../../../shared/components/Header/Header';
+
+/**
+ * Estils
+ */
+import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+import './CustomerDashboard.scss';
+
+// moment.locale("es")
+
+moment.locale('es', {
+    week: {
+        dow: 1, // Dilluns com a primer dia de la setmana
+    },
+});
+
+const localizer = momentLocalizer(moment);
+
+/**
+ * Component de dashboard per a clients.
+ * Mostra el calendari amb les seves reserves.
+ * @returns {JSX.Element} El component del dashboard del client.
+ */
+export function CustomerDashboard() {
+    /**
+     * Estats
+     */
+    const { user, isAuthenticated } = useAuthContext();
+    const [myEventsList, setMyEventsList] = useState([]);
+    const { checkToken } = useCheckUser();
+    const { allAppointments, updateAllApointments, deleteAppointment } =
+        useAppointmentsContext();
+
+    useEffect(() => {
+        checkToken();
+    }, []);
+
+    useEffect(() => {
+        const filteredEvents = allAppointments.filter(
+            (appointment) => appointment.userId === user?.id,
+        );
+        setMyEventsList(filteredEvents);
+    }, [allAppointments]);
+
+    if (!isAuthenticated) {
+        return &lt;Navigate to="/" replace />;
+    }
+
+    /**
+     * Handler per seleccionar un event del calendari.
+     * @param {object} eventInfo La informació de l'event seleccionat.
+     */
+    const handleSelectEvent = (eventInfo) => {
+        deleteAppointment(eventInfo);
+        // Elimina l'event passat per paràmetre
+        const updatedEvents = allAppointments.filter(
+            (ev) => ev.id !== eventInfo.id,
+        );
+        updateAllApointments(updatedEvents);
+    };
+
+    const minTime = new Date();
+    minTime.setHours(8, 0, 0);
+
+    const maxTime = new Date();
+    maxTime.setHours(18, 0, 0);
+
+    return (
+        &lt;>
+            &lt;Header />
+            &lt;div className="dashboard__container">
+                &lt;h1>Customer Dashboard&lt;/h1>
+                &lt;div className="dashboard__mainSection">
+                    &lt;div className="dashboard__benvinguda">
+                        &lt;div>Benvingut {user?.name}&lt;/div>
+                    &lt;/div>
+                    {myEventsList.length > 0 &amp;&amp; (
+                        &lt;>
+                            &lt;div className="dashboard__calendarEvents">
+                                Actualment tens{' '}
+                                &lt;strong>{myEventsList.length}&lt;/strong> event(s)
+                                al calendari
+                            &lt;/div>
+                            &lt;div className="dashboard__description">
+                                Fes click sobre una reserva per eliminar-la
+                            &lt;/div>
+                        &lt;/>
+                    )}
+                    {myEventsList.length === 0 &amp;&amp; (
+                        &lt;div className="dashboard__calendarEvents">
+                            No tens cap event al calendari
+                        &lt;/div>
+                    )}
+
+                    &lt;div className="dashboard__calendar">
+                        &lt;Calendar
+                            localizer={localizer}
+                            events={myEventsList}
+                            defaultDate={new Date()}
+                            defaultView="week"
+                            // defaultView="month"
+                            startAccessor="start"
+                            endAccessor="end"
+                            style={{ height: 500 }}
+                            selectable={true}
+                            // onSelectSlot={handleSelectSlot}
+                            onSelectEvent={handleSelectEvent}
+                            slotDuration={60}
+                            step={60}
+                            timeslots={1}
+                            min={minTime}
+                            max={maxTime}
+                            culture="es"
+                            toolbar={true}
+                            formats={{
+                                timeGutterFormat: 'HH:mm',
+                                dayFormat: (date, culture, localizer) =>
+                                    // Format dels dies a la vista de setmana
+                                    localizer.format(date, 'dddd', culture), 
+                                agendaTodayLabel: {
+                                    long: 'Hoy', // Etiqueta per l'opció "Hoy" a la vista d'agenda
+                                    short: 'Hoy', // Etiqueta curta per a l'opció "Hoy" a la vista d'agenda
+                                },
+                            }}
+                        />
+                    &lt;/div>
+                &lt;/div>
+            &lt;/div>
+        &lt;/>
+    );
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#API_BASE_URL">API_BASE_URL</a></li><li><a href="global.html#AppointmentsContextProvider">AppointmentsContextProvider</a></li><li><a href="global.html#AuthContextProvider">AuthContextProvider</a></li><li><a href="global.html#AvisLegal">AvisLegal</a></li><li><a href="global.html#Button">Button</a></li><li><a href="global.html#Card">Card</a></li><li><a href="global.html#CheckAnimation">CheckAnimation</a></li><li><a href="global.html#CompanyDashboard">CompanyDashboard</a></li><li><a href="global.html#Cookies">Cookies</a></li><li><a href="global.html#CustomModal">CustomModal</a></li><li><a href="global.html#CustomerDashboard">CustomerDashboard</a></li><li><a href="global.html#EDPOINT">EDPOINT</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#Header">Header</a></li><li><a href="global.html#Homepage">Homepage</a></li><li><a href="global.html#Input">Input</a></li><li><a href="global.html#InvertedButton">InvertedButton</a></li><li><a href="global.html#Loading">Loading</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#Privacitat">Privacitat</a></li><li><a href="global.html#ProtectedRoutes">ProtectedRoutes</a></li><li><a href="global.html#Router">Router</a></li><li><a href="global.html#SearchInput">SearchInput</a></li><li><a href="global.html#Signup">Signup</a></li><li><a href="global.html#Welcomepage">Welcomepage</a></li><li><a href="global.html#appointmentsContext">appointmentsContext</a></li><li><a href="global.html#authContext">authContext</a></li><li><a href="global.html#dateAppointmentToDbDate">dateAppointmentToDbDate</a></li><li><a href="global.html#dateCuteTransform">dateCuteTransform</a></li><li><a href="global.html#getAllAppointments">getAllAppointments</a></li><li><a href="global.html#getCompanies">getCompanies</a></li><li><a href="global.html#getServices">getServices</a></li><li><a href="global.html#hourAppointmentToDbTime">hourAppointmentToDbTime</a></li><li><a href="global.html#isValidEmail">isValidEmail</a></li><li><a href="global.html#isValidPassword">isValidPassword</a></li><li><a href="global.html#useAppointmentsContext">useAppointmentsContext</a></li><li><a href="global.html#useAuthContext">useAuthContext</a></li><li><a href="global.html#useCheckUser">useCheckUser</a></li><li><a href="global.html#useLogin">useLogin</a></li><li><a href="global.html#useSignup">useSignup</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Sat May 04 2024 09:08:05 GMT+0200 (Hora d’estiu del Centre d’Europa)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -26,17 +26,28 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { useEffect } from 'react';
-import { appointmentsContext } from './appointmentsContext';
+            <pre class="prettyprint source linenums"><code>/** 
+ *  React
+ */
+import { useEffect } from 'react';
 import { useState } from 'react';
+
+/** 
+ *  Context
+ */
+import { appointmentsContext } from './appointmentsContext';
 import { getAllAppointments } from '../services/getAppointments';
-import {
-    dateAppointmentToDbDate,
-    hourAppointmentToDbTime,
-} from '../utils/formatDates';
+import { dateAppointmentToDbDate, hourAppointmentToDbTime, } from '../utils/formatDates';
 import { API_BASE_URL, EDPOINT } from '../utils/constants';
 
+/**
+ * Proveeix el context per a la gestió de cites.
+ * @param {Object} props - Propietats del component.
+ * @param {JSX.Element} props.children - Els components fills.
+ * @returns {JSX.Element} El component de proveïdor de context de cites.
+ */
 export function AppointmentsContextProvider({ children }) {
+
     /**
      * States
      */
@@ -62,11 +73,21 @@ export function AppointmentsContextProvider({ children }) {
     /**
      * Functions
      */
+     /** 
+     * Actualitza totes les cites.
+     * @param {Object[]} appointments - Llista de cites actualitzades.
+     */
     const updateAllApointments = (appointments) => {
         setAllAppointments(appointments);
         // TODO: Llamada a la API para actualizar las reservas
     };
 
+    /**
+     * Crea una nova cita.
+     * @param {Object} company - Informació de l'empresa.
+     * @param {Object} user - Informació de l'usuari.
+     * @param {Object} slotInfo - Informació de l'interval de temps de la cita.
+     */
     const createAppointment = async (company, user, slotInfo) => {
         const newApp = {
             user_id: user.id,
@@ -75,7 +96,7 @@ export function AppointmentsContextProvider({ children }) {
             appointment_date: dateAppointmentToDbDate(slotInfo.start),
             start_time: hourAppointmentToDbTime(slotInfo.start),
             end_time: hourAppointmentToDbTime(slotInfo.end),
-            modification_type: 'some type',
+            modification_type: user?.name,
         };
 
         const optionsFetchNewAppointment = {
@@ -99,6 +120,10 @@ export function AppointmentsContextProvider({ children }) {
         }
     };
 
+    /**
+     * Elimina una cita existent.
+     * @param {Object} eventInfo - Informació de la cita a eliminar.
+     */
     const deleteAppointment = async (eventInfo) => {
         const optionsFetchNewAppointment = {
             method: 'DELETE',
@@ -122,7 +147,8 @@ export function AppointmentsContextProvider({ children }) {
     };
 
     /**
-     * RETURN
+     * Retorna el proveïdor de context de cites amb les seves funcions associades.
+     * @returns {JSX.Element} El proveïdor de context de cites.
      */
     return (
         &lt;appointmentsContext.Provider
@@ -149,13 +175,13 @@ export function AppointmentsContextProvider({ children }) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#API_BASE_URL">API_BASE_URL</a></li><li><a href="global.html#EDPOINT">EDPOINT</a></li><li><a href="global.html#dateAppointmentToDbDate">dateAppointmentToDbDate</a></li><li><a href="global.html#dateCuteTransform">dateCuteTransform</a></li><li><a href="global.html#hourAppointmentToDbTime">hourAppointmentToDbTime</a></li><li><a href="global.html#isValidEmail">isValidEmail</a></li><li><a href="global.html#isValidPassword">isValidPassword</a></li><li><a href="global.html#useAppointmentsContext">useAppointmentsContext</a></li><li><a href="global.html#useAuthContext">useAuthContext</a></li><li><a href="global.html#useCheckUser">useCheckUser</a></li><li><a href="global.html#useLogin">useLogin</a></li><li><a href="global.html#useSignup">useSignup</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#API_BASE_URL">API_BASE_URL</a></li><li><a href="global.html#AppointmentsContextProvider">AppointmentsContextProvider</a></li><li><a href="global.html#AuthContextProvider">AuthContextProvider</a></li><li><a href="global.html#AvisLegal">AvisLegal</a></li><li><a href="global.html#Button">Button</a></li><li><a href="global.html#Card">Card</a></li><li><a href="global.html#CheckAnimation">CheckAnimation</a></li><li><a href="global.html#CompanyDashboard">CompanyDashboard</a></li><li><a href="global.html#Cookies">Cookies</a></li><li><a href="global.html#CustomModal">CustomModal</a></li><li><a href="global.html#CustomerDashboard">CustomerDashboard</a></li><li><a href="global.html#EDPOINT">EDPOINT</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#Header">Header</a></li><li><a href="global.html#Homepage">Homepage</a></li><li><a href="global.html#Input">Input</a></li><li><a href="global.html#InvertedButton">InvertedButton</a></li><li><a href="global.html#Loading">Loading</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#Privacitat">Privacitat</a></li><li><a href="global.html#ProtectedRoutes">ProtectedRoutes</a></li><li><a href="global.html#Router">Router</a></li><li><a href="global.html#SearchInput">SearchInput</a></li><li><a href="global.html#Signup">Signup</a></li><li><a href="global.html#Welcomepage">Welcomepage</a></li><li><a href="global.html#appointmentsContext">appointmentsContext</a></li><li><a href="global.html#authContext">authContext</a></li><li><a href="global.html#dateAppointmentToDbDate">dateAppointmentToDbDate</a></li><li><a href="global.html#dateCuteTransform">dateCuteTransform</a></li><li><a href="global.html#getAllAppointments">getAllAppointments</a></li><li><a href="global.html#getCompanies">getCompanies</a></li><li><a href="global.html#getServices">getServices</a></li><li><a href="global.html#hourAppointmentToDbTime">hourAppointmentToDbTime</a></li><li><a href="global.html#isValidEmail">isValidEmail</a></li><li><a href="global.html#isValidPassword">isValidPassword</a></li><li><a href="global.html#useAppointmentsContext">useAppointmentsContext</a></li><li><a href="global.html#useAuthContext">useAuthContext</a></li><li><a href="global.html#useCheckUser">useCheckUser</a></li><li><a href="global.html#useLogin">useLogin</a></li><li><a href="global.html#useSignup">useSignup</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Fri May 03 2024 00:56:20 GMT+0200 (hora de verano de Europa central)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Sat May 04 2024 09:08:05 GMT+0200 (Hora d’estiu del Centre d’Europa)
 </footer>
 
 <script> prettyPrint(); </script>

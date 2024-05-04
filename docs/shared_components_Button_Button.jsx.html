@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: context/AuthContextProvider.jsx</title>
+    <title>JSDoc: Source: shared/components/Button/Button.jsx</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: context/AuthContextProvider.jsx</h1>
+    <h1 class="page-title">Source: shared/components/Button/Button.jsx</h1>
 
     
 
@@ -26,76 +26,50 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/** 
- *  React
+            <pre class="prettyprint source linenums"><code>/**
+ * React
  */
-import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 /**
- * Custom hooks
+ * Estils
  */
-import { authContext } from './authContext';
+import './Button.css';
 
 /**
- * Proveeix el context per a la gestió de l'autenticació de l'usuari.
- * @param {Object} props - Propietats del component.
- * @param {JSX.Element} props.children - Els components fills.
- * @returns {JSX.Element} El component de proveïdor de context d'autenticació.
+ * Component del botó primari. Pots passar per peràmetre una url, una acció o un text.
+ * @param {object} props - Propietats del component.
+ * @param {string} props.text - Text del botó.
+ * @param {string} props.url - URL del botó si és un enllaç.
+ * @param {function} props.action - Acció del botó si és un botó d'acció.
+ * @param {boolean} props.isLink - Indica si el botó és un enllaç.
+ * @param {string} [props.className='primary-button'] - Classe CSS del botó.
+ * @param {boolean} [props.disabled=false] - Indica si el botó està deshabilitat.
+ * @returns {JSX.Element} Component del botó.
  */
-export function AuthContextProvider({ children }) {
-    /**
-     * States
-     */
-    const [user, setUser] = useState(null);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [token, setToken] = useState(null);
+export function Button({
+    text,
+    url,
+    action,
+    isLink,
+    className = 'primary-button',
+    disabled = false,
+}) {
+    const ButtonComponent = isLink ? Link : 'button';
 
-    /**
-     * Functions
-     */
-    const updateUser = (usuario) => {
-        localStorage.setItem('user', JSON.stringify(usuario));
-        setUser(usuario);
-    };
-
-    const updateIsAuthenticated = (estado) => setIsAuthenticated(estado);
-
-    const updateToken = (token) => {
-        localStorage.setItem('access_token', token);
-        setToken(token);
-    };
-
-    const resetUser = () => {
-        localStorage.removeItem('user');
-        setUser(null);
-    };
-
-    const resetToken = () => {
-        localStorage.removeItem('access_token');
-        setToken(null);
-    };
-
-    /**
-     * Retorna el proveïdor de context d'autenticació amb les seves funcions associades.
-     * @returns {JSX.Element} El proveïdor de context d'autenticació.
-     */
-    return (
-        &lt;authContext.Provider
-            value={{
-                // context,
-                user,
-                isAuthenticated,
-                token,
-                updateUser,
-                resetUser,
-                updateIsAuthenticated,
-                updateToken,
-                resetToken,
-            }}
-        >
-            {children}
-        &lt;/authContext.Provider>
-    );
+    if (isLink) {
+        return (
+            &lt;Link to={url} className={className}>
+                &lt;p className="text">{text}&lt;/p>
+            &lt;/Link>
+        );
+    } else {
+        return (
+            &lt;button className={className} onClick={action} disabled={disabled}>
+                &lt;p className="text">{text}&lt;/p>
+            &lt;/button>
+        );
+    }
 }
 </code></pre>
         </article>

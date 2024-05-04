@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: context/AuthContextProvider.jsx</title>
+    <title>JSDoc: Source: views/Welcomepage/Welcomepage.jsx</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: context/AuthContextProvider.jsx</h1>
+    <h1 class="page-title">Source: views/Welcomepage/Welcomepage.jsx</h1>
 
     
 
@@ -26,77 +26,77 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/** 
- *  React
+            <pre class="prettyprint source linenums"><code>/**
+ * React
  */
-import { useState } from 'react';
+import React from 'react';
+
+/** 
+* Components propis
+*/
+import { Header } from '../../shared/components/Header/Header';
+import { Footer } from '../../shared/components/Footer/Footer';
+import { Button } from '../../shared/components/Button/Button';
+import { InvertedButton } from '../../shared/components/InvertedButton/InvertedButton.jsx';
 
 /**
- * Custom hooks
+ * Estils
  */
-import { authContext } from './authContext';
+import '../Welcomepage/Welcomepage.css';
+
+/** 
+ * Imatges
+*/
+import LarryDoor from '../../../app/assets/images/larry_door.svg';
 
 /**
- * Proveeix el context per a la gestió de l'autenticació de l'usuari.
- * @param {Object} props - Propietats del component.
- * @param {JSX.Element} props.children - Els components fills.
- * @returns {JSX.Element} El component de proveïdor de context d'autenticació.
+ * Pàgina de benvinguda.
+ * @returns {JSX.Element} El component de la pàgina de benvinguda.
  */
-export function AuthContextProvider({ children }) {
-    /**
-     * States
-     */
-    const [user, setUser] = useState(null);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [token, setToken] = useState(null);
-
-    /**
-     * Functions
-     */
-    const updateUser = (usuario) => {
-        localStorage.setItem('user', JSON.stringify(usuario));
-        setUser(usuario);
-    };
-
-    const updateIsAuthenticated = (estado) => setIsAuthenticated(estado);
-
-    const updateToken = (token) => {
-        localStorage.setItem('access_token', token);
-        setToken(token);
-    };
-
-    const resetUser = () => {
-        localStorage.removeItem('user');
-        setUser(null);
-    };
-
-    const resetToken = () => {
-        localStorage.removeItem('access_token');
-        setToken(null);
-    };
-
-    /**
-     * Retorna el proveïdor de context d'autenticació amb les seves funcions associades.
-     * @returns {JSX.Element} El proveïdor de context d'autenticació.
-     */
+export const Welcomepage = () => {
     return (
-        &lt;authContext.Provider
-            value={{
-                // context,
-                user,
-                isAuthenticated,
-                token,
-                updateUser,
-                resetUser,
-                updateIsAuthenticated,
-                updateToken,
-                resetToken,
-            }}
-        >
-            {children}
-        &lt;/authContext.Provider>
+        &lt;>
+            {/* Contingut del Header */}
+            &lt;Header />
+
+            {/* Contingut principal del component */}
+            &lt;div className="welcomepage__container">
+                &lt;img src={LarryDoor} alt="Larry open a door" />
+                &lt;div className="welcomepage__slogan">
+                    &lt;span className="welcomepage__slogan-accent">Reserva &lt;/span>
+                    &lt;span className="welcomepage__slogan-text">
+                        les teves cites{' '}
+                    &lt;/span>
+                    &lt;span className="welcomepage__slogan-accent">
+                        ràpidament{' '}
+                    &lt;/span>
+                    &lt;span className="welcomepage__slogan-text">
+                        amb ReservaNOW
+                    &lt;/span>
+                &lt;/div>
+
+                {/* Botó el qual reenviará al formulari d'inici de sessió */}
+                &lt;Button
+                    text="Log In"
+                    url={'/login'}
+                    isLink={true}
+                    className="primary-button"
+                />
+
+                {/* Botó el qual reenviará al formulari de registre d'un nou usuari (empresa o client) */}
+                &lt;InvertedButton
+                    text="Sign Up"
+                    url={'/signup'}
+                    isLink={true}
+                    className="inverted__primary-button"
+                />
+            &lt;/div>
+
+            {/* Contingut del Footer */}
+            &lt;Footer />
+        &lt;/>
     );
-}
+};
 </code></pre>
         </article>
     </section>

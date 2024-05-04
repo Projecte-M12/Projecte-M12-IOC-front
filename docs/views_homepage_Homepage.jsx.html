@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: views/homepage/Homepage.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: views/homepage/Homepage.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * React
+ */
+import { useState, useEffect } from 'react';
+import { Navigate } from 'react-big-calendar';
+
+/**
+ * Custom Hooks
+ */
+import { useAuthContext } from '../../hooks/useAuthContext';
+import { useCheckUser } from '../../hooks/useCheckUser';
+import CustomModal from './components/modal/Modal';
+
+/**
+ * Serveis
+ */
+import { getCompanies } from '../../services/getCompanies';
+import { getServices } from '../../services/getServices';
+
+/**
+ * Components pròpis
+ */
+import { Header } from '../../shared/components/Header/Header';
+import { Footer } from '../../shared/components/Footer/Footer';
+import { Card } from './components/card/Card';
+
+/**
+ * Estils
+ */
+import './Homepage.css';
+
+/**
+ * Component que representa la pàgina d'inici.
+ * Mostra els serveis disponibles per a reserva i permet filtrar-los per categoria.
+ * @returns {JSX.Element} El component de la pàgina d'inici.
+ */
+export const Homepage = () => {
+    const [selectedCompany, setSelectedCompany] = useState(null);
+    const [selectedCategories, setSelectedCategories] = useState([]);
+    const [servicesList, setServicesList] = useState([]);
+    const [companiesList, setCompaniesList] = useState([]);
+    const companies = getCompanies();
+
+    const { user, isAuthenticated } = useAuthContext();
+    const { checkToken } = useCheckUser();
+
+    useEffect(() => {
+        checkToken();
+    }, []);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            // setProviders(await getCompanies());
+            setServicesList(await getServices());
+            const comp = await getCompanies();
+            setCompaniesList(comp);
+        };
+        fetchData();
+    }, []);
+
+    if (!isAuthenticated) {
+        return &lt;Navigate to="/" replace />;
+    }
+
+    /**
+    * Handler per obrir el modal amb els detalls d'una empresa.
+    * @param {object} company La informació de l'empresa seleccionada.
+    */
+    const openModal = (company) => {
+        setSelectedCompany(company);
+    };
+
+    /**
+     * Handler per tancar el modal.
+     */
+    const closeModal = () => {
+        setSelectedCompany(null);
+    };
+
+    /**
+     * Handler per gestionar la selecció d'una categoria per filtrar.
+     * @param {string} category La categoria seleccionada.
+     */
+    const toggleCategory = (category) => {
+        if (selectedCategories.includes(category)) {
+            setSelectedCategories(
+                selectedCategories.filter((c) => c !== category),
+            );
+        } else {
+            setSelectedCategories([...selectedCategories, category]);
+        }
+    };
+
+    /**
+     * Filtra les empreses per les categories seleccionades.
+     */
+    const filteredCompanies =
+        selectedCategories.length > 0
+            ? companiesList.filter((company) =>
+                selectedCategories.includes(company.service_provided),
+            )
+            : companiesList;
+
+    return (
+        &lt;>
+            &lt;Header />
+            &lt;p className="homepage__title">
+                Aquests son els serveis que pots reservar
+            &lt;/p>
+
+            &lt;div className="homepage__filter">
+                &lt;div className="homepage__filterTitle">
+                    Filtrar per categoria
+                &lt;/div>
+                &lt;div className="homepage__filterCategories">
+                    {servicesList.map((category) => (
+                        &lt;label
+                            key={category}
+                            className="homepage__filterCategoriesLabel"
+                        >
+                            &lt;input
+                                type="checkbox"
+                                value={category}
+                                checked={selectedCategories.includes(category)}
+                                onChange={() => toggleCategory(category)}
+                                className="homepage__filterCategoriesInput"
+                            />
+                            {category}
+                        &lt;/label>
+                    ))}
+                &lt;/div>
+            &lt;/div>
+
+            &lt;div className="homepage__container">
+                &lt;ul>
+                    {filteredCompanies.map((company) => {
+                        return (
+                            &lt;li key={company.id} className="card">
+                                &lt;Card company={company} openModal={openModal} />
+                            &lt;/li>
+                        );
+                    })}
+                &lt;/ul>
+            &lt;/div>
+            &lt;Footer />
+            &lt;CustomModal company={selectedCompany} closeModal={closeModal} />
+        &lt;/>
+    );
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#API_BASE_URL">API_BASE_URL</a></li><li><a href="global.html#AppointmentsContextProvider">AppointmentsContextProvider</a></li><li><a href="global.html#AuthContextProvider">AuthContextProvider</a></li><li><a href="global.html#AvisLegal">AvisLegal</a></li><li><a href="global.html#Button">Button</a></li><li><a href="global.html#Card">Card</a></li><li><a href="global.html#CheckAnimation">CheckAnimation</a></li><li><a href="global.html#CompanyDashboard">CompanyDashboard</a></li><li><a href="global.html#Cookies">Cookies</a></li><li><a href="global.html#CustomModal">CustomModal</a></li><li><a href="global.html#CustomerDashboard">CustomerDashboard</a></li><li><a href="global.html#EDPOINT">EDPOINT</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#Header">Header</a></li><li><a href="global.html#Homepage">Homepage</a></li><li><a href="global.html#Input">Input</a></li><li><a href="global.html#InvertedButton">InvertedButton</a></li><li><a href="global.html#Loading">Loading</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#Privacitat">Privacitat</a></li><li><a href="global.html#ProtectedRoutes">ProtectedRoutes</a></li><li><a href="global.html#Router">Router</a></li><li><a href="global.html#SearchInput">SearchInput</a></li><li><a href="global.html#Signup">Signup</a></li><li><a href="global.html#Welcomepage">Welcomepage</a></li><li><a href="global.html#appointmentsContext">appointmentsContext</a></li><li><a href="global.html#authContext">authContext</a></li><li><a href="global.html#dateAppointmentToDbDate">dateAppointmentToDbDate</a></li><li><a href="global.html#dateCuteTransform">dateCuteTransform</a></li><li><a href="global.html#getAllAppointments">getAllAppointments</a></li><li><a href="global.html#getCompanies">getCompanies</a></li><li><a href="global.html#getServices">getServices</a></li><li><a href="global.html#hourAppointmentToDbTime">hourAppointmentToDbTime</a></li><li><a href="global.html#isValidEmail">isValidEmail</a></li><li><a href="global.html#isValidPassword">isValidPassword</a></li><li><a href="global.html#useAppointmentsContext">useAppointmentsContext</a></li><li><a href="global.html#useAuthContext">useAuthContext</a></li><li><a href="global.html#useCheckUser">useCheckUser</a></li><li><a href="global.html#useLogin">useLogin</a></li><li><a href="global.html#useSignup">useSignup</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Sat May 04 2024 09:08:05 GMT+0200 (Hora d’estiu del Centre d’Europa)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

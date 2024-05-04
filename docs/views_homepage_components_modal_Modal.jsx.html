@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: views/homepage/components/modal/Modal.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: views/homepage/components/modal/Modal.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * React
+ */
+import { useState, useEffect } from 'react';
+import Modal from 'react-modal';
+import './Modal.scss';
+
+/**
+ * Modal
+ */
+Modal.setAppElement('#root');
+
+/**
+ * Calendari
+ */
+import { Calendar, momentLocalizer, Navigate } from 'react-big-calendar';
+import moment from 'moment';
+import 'moment/locale/es'; // Importa el locale español
+import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
+
+/**
+ * Custom Hooks
+ */
+import { useAuthContext } from '../../../../hooks/useAuthContext';
+import { useAppointmentsContext } from '../../../../hooks/useAppointmentsContext';
+import { useCheckUser } from '../../../../hooks/useCheckUser';
+
+
+const localizer = momentLocalizer(moment);
+
+/**
+ * Component que representa el modal para mostrar detalles de una empresa y gestionar citas.
+ * @param {object} props Las propiedades del componente.
+ * @param {object} props.company La información de la empresa seleccionada.
+ * @param {Function} props.closeModal Función para cerrar el modal.
+ * @returns {JSX.Element} El componente del modal personalizado.
+ */
+export const CustomModal = ({ company, closeModal }) => {
+    // const [myEvent, setMyEvent] = useState([]);
+    const [newAppointments, setNewAppointments] = useState([]);
+    const [customerAppointments, setCustomerAppointments] = useState([]);
+    const [providerAppointments, setProviderAppointments] = useState([]);
+    const [visualAppointments, setVisualAppointments] = useState([]);
+    const [error, setError] = useState(null);
+
+    const { user, isAuthenticated } = useAuthContext();
+    const {
+        lastId,
+        setLastId,
+        allAppointments,
+        updateAllApointments,
+        createAppointment,
+        deleteAppointment,
+    } = useAppointmentsContext();
+    const { checkToken } = useCheckUser();
+
+    useEffect(() => {
+        moment.locale('es', {
+            week: {
+                dow: 1, // Lunes es el primer día de la semana
+            },
+        });
+    }, []);
+
+    useEffect(() => {
+        checkToken();
+    }, []);
+
+    useEffect(() => {
+        setCustomerAppointments(
+            allAppointments.filter(
+                (appointment) => appointment.userId === user?.id,
+            ),
+        );
+    }, [allAppointments, user?.id]);
+
+    useEffect(() => {
+        setProviderAppointments(
+            allAppointments.filter(
+                (appointment) => appointment.companyId === company?.companyId,
+            ),
+        );
+    }, [allAppointments, company?.companyId]);
+
+    useEffect(() => {
+        const mergedAppointments = [
+            ...customerAppointments,
+            ...providerAppointments,
+        ];
+        const filteredAppointments = Array.from(
+            new Set(mergedAppointments.map((item) => item.id)),
+        ).map((id) => {
+            return mergedAppointments.find((item) => item.id === id);
+        });
+        setVisualAppointments(filteredAppointments);
+    }, [customerAppointments, providerAppointments]);
+
+    if (!isAuthenticated) {
+        return &lt;Navigate to="/" replace />;
+    }
+
+    const handleSelectSlot = (slotInfo) => {
+        createAppointment(company, user, slotInfo);
+        const newAppointment = {
+            id: lastId + 1,
+            companyId: company.companyId,
+            userId: user?.id,
+            start: slotInfo.start,
+            end: slotInfo.end,
+            title: `Reserva en ${company.company_name}`,
+            empresa: company.company_name,
+            email: user?.email,
+            color: '#66ff99',
+            modification_type: user?.name,
+        };
+
+        setLastId(newAppointment.id);
+        console.log(newAppointment);
+        console.log(allAppointments)
+        updateAllApointments([...allAppointments, newAppointment]);
+    };
+
+    const handleSelectEvent = (eventInfo) => {
+        // Elimina l'event passat per paràmetre
+        deleteAppointment(eventInfo)
+        if (eventInfo.userId === user?.id) {
+            updateAllApointments(
+                allAppointments.filter(
+                    (appointment) => appointment.id !== eventInfo.id,
+                ),
+            );
+        }
+        setError(null);
+    };
+
+    const minTime = new Date();
+    minTime.setHours(8, 0, 0);
+
+    const maxTime = new Date();
+    maxTime.setHours(18, 0, 0);
+
+    return (
+        &lt;Modal
+            isOpen={company !== null}
+            onRequestClose={closeModal}
+            className="modal__global"
+        >
+            {company &amp;&amp; (
+                &lt;div className="modal__content">
+                    &lt;div className="modal__top">
+                        &lt;div className="modal__title">
+                            &lt;h2>Detalls de l'empresa&lt;/h2>
+                        &lt;/div>
+                        &lt;div className="modal__close">
+                            &lt;button onClick={closeModal}>Close&lt;/button>
+                        &lt;/div>
+                    &lt;/div>
+                    &lt;p>Nom: {company.company_name}&lt;/p>
+                    &lt;p>Categoria: {company.service_provided}&lt;/p>
+
+                    &lt;div className="dashboard__calendar">
+                        &lt;Calendar
+                            localizer={localizer}
+                            events={visualAppointments}
+                            defaultView={['day']}
+                            defaultDate={new Date()}
+                            // defaultView="month"
+                            startAccessor="start"
+                            endAccessor="end"
+                            style={{ height: 400 }}
+                            onSelectSlot={handleSelectSlot}
+                            onSelectEvent={handleSelectEvent}
+                            slotDuration={60}
+                            step={60}
+                            timeslots={1}
+                            min={minTime}
+                            max={maxTime}
+                            culture="es"
+                            toolbar={true}
+                            formats={{
+                                timeGutterFormat: 'HH:mm',
+                                dayFormat: (date, culture, localizer) =>
+                                    localizer.format(date, 'dddd', culture), // Format dels dies a la vista de setmana
+                                agendaTodayLabel: {
+                                    long: 'Hoy', // Etiqueta per l'opción "Hoy" a la vista d'agenda
+                                    short: 'Hoy', // Etiqueta curta per l'opción "Hoy" a la vista d'agenda
+                                },
+                            }}
+                            eventPropGetter={(
+                                event,
+                                start,
+                                end,
+                                isSelected,
+                            ) => {
+                                if (
+                                    !customerAppointments.find(
+                                        (appointment) =>
+                                            appointment.id === event.id,
+                                    )
+                                ) {
+                                    // Reserves del cleint
+                                    return {
+                                        style: {
+                                            backgroundColor: 'grey',
+                                            cursor: 'default',
+                                        },
+                                    };
+                                } else {
+                                    // Noves reserves
+                                    return {
+                                        style: {
+                                            backgroundColor: 'green',
+                                            cursor: 'pointer',
+                                        },
+                                    };
+                                }
+                            }}
+                            //Permet l'edición de noves reserves
+                            editable={(event) =>
+                                customerAppointments.find(
+                                    (appointment) =>
+                                        appointment.id === event.id,
+                                )
+                            }
+                            //Evita la edición de reservas existentes
+                            selectable={(event) =>
+                                customerAppointments.find(
+                                    (appointment) =>
+                                        appointment.id === event.id,
+                                )
+                            }
+                        />
+                    &lt;/div>
+                    {/* {newAppointments.length > 0 &amp;&amp; (
+                        &lt;>
+                            &lt;div className="modal__appointmentDatail">
+                                &lt;div className="modal__appointmentDatail__header">
+                                    &lt;p>Dades de la reserva&lt;/p>
+                                &lt;/div>
+                                &lt;p>
+                                    Data i hora:{' '}
+                                    &lt;strong>
+                                        {newAppointments.map((e) =>
+                                            new Date(e.start).toLocaleString(),
+                                        )}
+                                    &lt;/strong>
+                                &lt;/p>
+                                &lt;p>
+                                    Temps:{' '}
+                                    &lt;strong>
+                                        {newAppointments.map((e) => {
+                                            const time = moment
+                                                .duration(e.end - e.start)
+                                                .asMinutes();
+                                            if (time > 0) {
+                                                return time + ' minuts';
+                                            }
+                                        })}
+                                    &lt;/strong>{' '}
+                                &lt;/p>
+                            &lt;/div>
+                            &lt;div className="modal__info">
+                                Info: Fes click sobre una reserva per
+                                eliminar-la
+                            &lt;/div>
+                            &lt;div
+                                className="modal__error"
+                                title="Per modificar la reserva, elimina l'anterior"
+                            >
+                                {error &amp;&amp; &lt;p>{error}&lt;/p>}
+                            &lt;/div>
+                        &lt;/>
+                    )} */}
+                &lt;/div>
+            )}
+        &lt;/Modal>
+    );
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#API_BASE_URL">API_BASE_URL</a></li><li><a href="global.html#AppointmentsContextProvider">AppointmentsContextProvider</a></li><li><a href="global.html#AuthContextProvider">AuthContextProvider</a></li><li><a href="global.html#AvisLegal">AvisLegal</a></li><li><a href="global.html#Button">Button</a></li><li><a href="global.html#Card">Card</a></li><li><a href="global.html#CheckAnimation">CheckAnimation</a></li><li><a href="global.html#CompanyDashboard">CompanyDashboard</a></li><li><a href="global.html#Cookies">Cookies</a></li><li><a href="global.html#CustomModal">CustomModal</a></li><li><a href="global.html#CustomerDashboard">CustomerDashboard</a></li><li><a href="global.html#EDPOINT">EDPOINT</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#Header">Header</a></li><li><a href="global.html#Homepage">Homepage</a></li><li><a href="global.html#Input">Input</a></li><li><a href="global.html#InvertedButton">InvertedButton</a></li><li><a href="global.html#Loading">Loading</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#Privacitat">Privacitat</a></li><li><a href="global.html#ProtectedRoutes">ProtectedRoutes</a></li><li><a href="global.html#Router">Router</a></li><li><a href="global.html#SearchInput">SearchInput</a></li><li><a href="global.html#Signup">Signup</a></li><li><a href="global.html#Welcomepage">Welcomepage</a></li><li><a href="global.html#appointmentsContext">appointmentsContext</a></li><li><a href="global.html#authContext">authContext</a></li><li><a href="global.html#dateAppointmentToDbDate">dateAppointmentToDbDate</a></li><li><a href="global.html#dateCuteTransform">dateCuteTransform</a></li><li><a href="global.html#getAllAppointments">getAllAppointments</a></li><li><a href="global.html#getCompanies">getCompanies</a></li><li><a href="global.html#getServices">getServices</a></li><li><a href="global.html#hourAppointmentToDbTime">hourAppointmentToDbTime</a></li><li><a href="global.html#isValidEmail">isValidEmail</a></li><li><a href="global.html#isValidPassword">isValidPassword</a></li><li><a href="global.html#useAppointmentsContext">useAppointmentsContext</a></li><li><a href="global.html#useAuthContext">useAuthContext</a></li><li><a href="global.html#useCheckUser">useCheckUser</a></li><li><a href="global.html#useLogin">useLogin</a></li><li><a href="global.html#useSignup">useSignup</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Sat May 04 2024 09:08:05 GMT+0200 (Hora d’estiu del Centre d’Europa)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

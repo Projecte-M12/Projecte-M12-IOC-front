@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: context/AuthContextProvider.jsx</title>
+    <title>JSDoc: Source: shared/components/Header/Header.jsx</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: context/AuthContextProvider.jsx</h1>
+    <h1 class="page-title">Source: shared/components/Header/Header.jsx</h1>
 
     
 
@@ -26,77 +26,103 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/** 
- *  React
+            <pre class="prettyprint source linenums"><code>/**
+ * React
  */
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
-/**
- * Custom hooks
- */
-import { authContext } from './authContext';
+/** Custom Hooks */
+import { useLogin } from '../../../hooks/useLogin';
+import { useAuthContext } from '../../../hooks/useAuthContext';
 
 /**
- * Proveeix el context per a la gestió de l'autenticació de l'usuari.
- * @param {Object} props - Propietats del component.
- * @param {JSX.Element} props.children - Els components fills.
- * @returns {JSX.Element} El component de proveïdor de context d'autenticació.
+ * Estils
  */
-export function AuthContextProvider({ children }) {
-    /**
-     * States
-     */
-    const [user, setUser] = useState(null);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [token, setToken] = useState(null);
+import './Header.scss';
+
+
+/**
+ * Component del header, el qual mostra la barra de navegació superior.
+ * @returns {JSX.Element} Component del header.
+ */
+export const Header = () => {
+    const { isAuthenticated, user } = useAuthContext();
+    const { handleLogout } = useLogin();
+
+    const [menuOpen, setMenuOpen] = useState(false);
 
     /**
-     * Functions
+     * Funció que alterna l'estat del menú desplegable.
      */
-    const updateUser = (usuario) => {
-        localStorage.setItem('user', JSON.stringify(usuario));
-        setUser(usuario);
+    const toggleMenu = () => {
+        setMenuOpen(!menuOpen);
     };
 
-    const updateIsAuthenticated = (estado) => setIsAuthenticated(estado);
-
-    const updateToken = (token) => {
-        localStorage.setItem('access_token', token);
-        setToken(token);
-    };
-
-    const resetUser = () => {
-        localStorage.removeItem('user');
-        setUser(null);
-    };
-
-    const resetToken = () => {
-        localStorage.removeItem('access_token');
-        setToken(null);
-    };
-
-    /**
-     * Retorna el proveïdor de context d'autenticació amb les seves funcions associades.
-     * @returns {JSX.Element} El proveïdor de context d'autenticació.
-     */
     return (
-        &lt;authContext.Provider
-            value={{
-                // context,
-                user,
-                isAuthenticated,
-                token,
-                updateUser,
-                resetUser,
-                updateIsAuthenticated,
-                updateToken,
-                resetToken,
-            }}
-        >
-            {children}
-        &lt;/authContext.Provider>
+        &lt;header className="header">
+            &lt;div>
+                &lt;p>&lt;/p>
+            &lt;/div>
+            &lt;div className="header__links">
+                &lt;button className="menu-icon" onClick={toggleMenu}>
+                    ☰
+                &lt;/button>
+                &lt;nav className={`menu ${menuOpen ? 'open' : ''}`}>
+                    {!isAuthenticated &amp;&amp; (
+                        &lt;Link to={'/'} style={{ color: 'black' }}>
+                            Inici
+                        &lt;/Link>
+                    )}
+                    {isAuthenticated &amp;&amp; user?.company_name &amp;&amp; (
+                        &lt;>
+                            {/* &lt;Link to={'/perfil'} style={{ color: 'black' }}>
+                                Perfil
+                            &lt;/Link> */}
+                            &lt;Link
+                                to={'/company-dashboard'}
+                                style={{ color: 'black' }}
+                            >
+                                Dashboard
+                            &lt;/Link>
+                        &lt;/>
+                    )}
+                    {isAuthenticated &amp;&amp; !user?.company_name &amp;&amp; (
+                        &lt;>
+                            &lt;Link to={'/homepage'} style={{ color: 'black' }}>
+                                Serveis
+                            &lt;/Link>
+                            &lt;Link
+                                to={'/customer-dashboard'}
+                                style={{ color: 'black' }}
+                            >
+                                Dashboard
+                            &lt;/Link>
+                        &lt;/>
+                    )}
+                    {isAuthenticated ? (
+                        &lt;Link
+                            to={'/'}
+                            onClick={handleLogout}
+                            style={{ color: 'black' }}
+                        >
+                            Logout
+                        &lt;/Link>
+                    ) : (
+                        &lt;>
+                            &lt;Link to={'/login'} style={{ color: 'black' }}>
+                                Login
+                            &lt;/Link>
+                            &lt;Link to={'/signup'} style={{ color: 'black' }}>
+                                Signup
+                            &lt;/Link>
+                        &lt;/>
+                    )}
+                &lt;/nav>
+            &lt;/div>
+        &lt;/header>
     );
-}
+};
 </code></pre>
         </article>
     </section>

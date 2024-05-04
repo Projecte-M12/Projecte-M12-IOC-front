@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: context/AuthContextProvider.jsx</title>
+    <title>JSDoc: Source: shared/components/Search/SearchInput.jsx</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: context/AuthContextProvider.jsx</h1>
+    <h1 class="page-title">Source: shared/components/Search/SearchInput.jsx</h1>
 
     
 
@@ -26,78 +26,75 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/** 
- *  React
+            <pre class="prettyprint source linenums"><code>/**
+ * React
  */
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 /**
- * Custom hooks
+ * Estils
  */
-import { authContext } from './authContext';
+import './SearchInput.css';
 
 /**
- * Proveeix el context per a la gestió de l'autenticació de l'usuari.
- * @param {Object} props - Propietats del component.
- * @param {JSX.Element} props.children - Els components fills.
- * @returns {JSX.Element} El component de proveïdor de context d'autenticació.
+ * Icones
  */
-export function AuthContextProvider({ children }) {
-    /**
-     * States
-     */
-    const [user, setUser] = useState(null);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [token, setToken] = useState(null);
+import SearchIcon from '../../../assets/icons/search_icon.svg'
 
-    /**
-     * Functions
-     */
-    const updateUser = (usuario) => {
-        localStorage.setItem('user', JSON.stringify(usuario));
-        setUser(usuario);
-    };
+/**
+ * Component de cerca que permet als usuaris introduir un terme de cerca i enviar-lo per obtenir resultats.
+ * @returns {JSX.Element} Component de cerca.
+ */
+export const SearchInput = () => {
+  // estat que guarda l'input
+  const [query, setQuery] = useState('');
+  // estat que guarda el resultat de la cerca
+  const [results, setResults] = useState([]);
 
-    const updateIsAuthenticated = (estado) => setIsAuthenticated(estado);
+  // fa una crida a la API amb "query" i actualitza "results"
+  // TODO fer la funció correctament
+  const handleSearch = async () => {
+    try {
+      const response = await fetch(`API_URL?q=${query}`);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      setResults(data);
+    } catch (error) {
+      console.error('There was a problem with the fetch operation:', error);
+    }
+  };
 
-    const updateToken = (token) => {
-        localStorage.setItem('access_token', token);
-        setToken(token);
-    };
+  // actualitza "query" 
+  const handleChange = (event) => {
+    setQuery(event.target.value);
+  };
 
-    const resetUser = () => {
-        localStorage.removeItem('user');
-        setUser(null);
-    };
+  // executa quan s'envia la consulta
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    handleSearch();
+  };
 
-    const resetToken = () => {
-        localStorage.removeItem('access_token');
-        setToken(null);
-    };
-
-    /**
-     * Retorna el proveïdor de context d'autenticació amb les seves funcions associades.
-     * @returns {JSX.Element} El proveïdor de context d'autenticació.
-     */
-    return (
-        &lt;authContext.Provider
-            value={{
-                // context,
-                user,
-                isAuthenticated,
-                token,
-                updateUser,
-                resetUser,
-                updateIsAuthenticated,
-                updateToken,
-                resetToken,
-            }}
-        >
-            {children}
-        &lt;/authContext.Provider>
-    );
-}
-</code></pre>
+  return (
+    &lt;form onSubmit={handleSubmit} className="group">
+      &lt;div className="group">
+        &lt;SearchIcon className="icon" />
+        &lt;input
+          placeholder="Search"
+          type="search"
+          className="input"
+          value={query}
+          onChange={handleChange}
+        />
+      &lt;/div>
+      &lt;button type="submit" className="search-button">
+        Busca
+      &lt;/button>
+    &lt;/form>
+  );
+};</code></pre>
         </article>
     </section>
 

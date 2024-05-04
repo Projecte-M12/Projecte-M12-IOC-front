@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: views/auth/signup/Signup.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: views/auth/signup/Signup.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/** 
+ *  React
+ */
+import { Link, Navigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+
+/** 
+ *  Utils
+ */
+import { isValidEmail, isValidPassword } from '../../../utils/validations';
+
+/** 
+ *  Components propis
+ */
+import { Header } from '../../../shared/components/Header/Header.jsx';
+import { Input } from '../../../shared/components/Input/Input.jsx';
+import { Button } from '../../../shared/components/Button/Button.jsx';
+import { Footer } from '../../../shared/components/Footer/Footer.jsx';
+import { CheckAnimation } from '../../../shared/components/CheckAnimation/CheckAnimation.jsx';
+
+/**
+ * Custom hooks
+ */
+import { useAuthContext } from '../../../hooks/useAuthContext';
+import { useCheckUser } from '../../../hooks/useCheckUser';
+import { useSignup } from '../../../hooks/useSignUp';
+
+/**
+ * Serveis
+ */
+import { getServices } from '../../../services/getServices';
+import { getCompanies } from '../../../services/getCompanies.js';
+
+/** 
+ *  Styles
+ */
+import './Signup.css';
+import {
+    iconStyleDefault,
+    iconStyleGreen,
+    iconStyleRed,
+} from '../../../styles/iconStyles';
+
+/** 
+* Icons &amp; Images
+*/
+import logo from '../../../assets/logo/reservanow_logo.svg';
+import eyeOpen from '../../../assets/icons/eyeopen.svg';
+import eyeCrossed from '../../../assets/icons/eyecrossed.svg';
+import mailLetter from '../../../assets/icons/mail.svg';
+import shopIcon from '../../../assets/icons/shop.svg';
+import profile from '../../../assets/icons/profile.svg';
+import passwordKey from '../../../assets/icons/keyAccount.svg';
+import passwordKeyOK from '../../../assets/icons/keyAccountOK.svg';
+import passwordKeyBad from '../../../assets/icons/keyAccountBad.svg';
+import profilePicture from '../../../assets/icons/picture-jpg.svg';
+import profileIcon from '../../../assets/icons/user.svg';
+
+/** 
+ * Component Signup
+ * @returns {JSX.Element} Component de registre
+ */
+export const Signup = () => {
+    /** 
+     * States
+     */
+    const { isAuthenticated, user } = useAuthContext();
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmation, setShowConfirmation] = useState(false);
+    const [servicesList, setServicesList] = useState([]);
+    const [navigateToLogin, setNavigateToLogin] = useState(false);
+    const {
+        email,
+        password,
+        name,
+        passwordConfirmation,
+        isCompany,
+        services,
+        companyName,
+        image_url,
+        remember,
+        signedUp,
+        loading,
+        message,
+        error,
+        handleEmailChange,
+        handlePasswordChange,
+        handlePasswordConfirmationChange,
+        handleNameChange,
+        handleIsCompanyChange,
+        handleServicesChange,
+        handleCompanyNameChange,
+        handleImageUrlChange,
+        handleSubmit,
+    } = useSignup();
+
+    /** 
+     * Custom Hooks
+     */
+    const { checkToken } = useCheckUser();
+    useEffect(() => {
+        checkToken();
+    }, []);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            // setProviders(await getCompanies());
+            setServicesList(await getServices());
+        };
+        fetchData();
+    }, []);
+    
+    useEffect(() => {
+        let timeoutId;
+        if (signedUp) {
+            timeoutId = setTimeout(() => {
+                setNavigateToLogin(true);
+            }, 3000);
+        }
+
+        return () => clearTimeout(timeoutId);
+    }, [signedUp]);
+
+    /** 
+     * Comprobació usuari loguejat i redirecció
+     */
+    if (isAuthenticated) {
+        if (user &amp;&amp; user.company_name) {
+            return &lt;Navigate to="/company-dashboard" replace />;
+        } else {
+            return &lt;Navigate to="/customer-dashboard" replace />;
+        }
+    }
+
+    /**
+    * Renderitza el formulari de registr i la confirmació de registr exitós.
+    * @returns {JSX.Element} El formulari de registre en cas de nou usuari i la confirmació de registre satisfactori.
+    */
+    return (
+        &lt;>
+            &lt;Header />
+            &lt;main className="signup__container">
+                &lt;div className="signup__logo-container">
+                    &lt;img
+                        src={logo}
+                        className="signup__logo"
+                        alt="Logo ReservaNOW"
+                    />
+                &lt;/div>
+                &lt;h1 className="singup__form-tittle">Welcome!&lt;/h1>
+
+                {/**
+                * Condicional del formulari.
+                * Mostra el formulari de registra i sino està registrat "signedUp=false" llavors
+                * mostra l'animació de registre correctament
+                */}
+                {signedUp ? (
+                    &lt;>
+                        &lt;CheckAnimation />
+                        &lt;div className="signup__formSuccess">
+                            REGISTRAT CORRECTAMENT
+                        &lt;/div>
+                        {navigateToLogin &amp;&amp; &lt;Navigate to="/login" replace />}
+                    &lt;/>
+                ) : (
+                    &lt;form className="signup__form-container">
+                        &lt;h2>Registra't&lt;/h2>
+                        &lt;div className="signup__form--input-box">
+                            &lt;div className="signup__form-icon">
+                                &lt;img src={profileIcon} alt="profile" />
+                            &lt;/div>
+                            &lt;Input
+                                type="text"
+                                placeholder="Nom d'usuari"
+                                onChange={handleNameChange}
+                                value={name}
+                                required
+                            />
+                        &lt;/div>
+                        &lt;div className="signup__form--input-box">
+                            &lt;div className="signup__form-icon">
+                                &lt;img src={mailLetter} alt="email" />
+                            &lt;/div>
+                            &lt;Input
+                                type="email"
+                                placeholder="Correu"
+                                onChange={handleEmailChange}
+                                value={email}
+                                required
+                            />
+                        &lt;/div>
+                        {!isValidEmail &amp;&amp; email ? (
+                            &lt;div className="signup__form-error">
+                                {"L'email no és correcte"}
+                            &lt;/div>
+                        ) : null}
+                        &lt;div className="signup__form--input-box">
+                            &lt;div className="signup__form-icon">
+                                &lt;img src={passwordKey} alt="password" />
+                            &lt;/div>
+                            &lt;Input
+                                type={showPassword ? 'text' : 'password'}
+                                placeholder="Contrassenya"
+                                onChange={handlePasswordChange}
+                                required
+                                value={password}
+                            />
+                            {/* Per defecte s'oculta la contrasenya */}
+                            &lt;button
+                                type="button"
+                                className="signup__password-toggle"
+                                onClick={() => setShowPassword(!showPassword)}
+                            >
+                                {showPassword ? (
+                                    &lt;img src={eyeOpen} alt="Oculta contrasenya" />
+                                ) : (
+                                    &lt;img
+                                        src={eyeCrossed}
+                                        alt="Mostra contrasenya"
+                                    />
+                                )}
+                            &lt;/button>
+                        &lt;/div>
+                        {!isValidPassword(password) &amp;&amp; password ? (
+                            &lt;div className="signup__form-error">
+                                La contrasenya ha de tenir com a mínim 8 caràcters,
+                                1 número, 1 majúscula i 1 minúscula
+                            &lt;/div>
+                        ) : null}
+                        &lt;div className="signup__form--input-box">
+                            &lt;div className="signup__form-icon">
+                                &lt;img src={password &amp;&amp; password === passwordConfirmation ? passwordKeyOK : password ? passwordKeyBad : passwordKey} alt="password" />
+                            &lt;/div>
+                            &lt;Input
+                                type={showConfirmation ? 'text' : 'password'}
+                                placeholder="Confirmar contrassenya"
+                                onChange={handlePasswordConfirmationChange}
+                                required
+                                value={passwordConfirmation}
+                            />
+                            {/* Per defecte s'oculta la contrasenya */}
+                            &lt;button
+                                type="button"
+                                className="signup__confirm--password-toggle"
+                                onClick={() =>
+                                    setShowConfirmation(!showConfirmation)
+                                }
+                            >
+                                {showConfirmation ? (
+                                    &lt;img src={eyeOpen} alt="Oculta contrasenya" />
+                                ) : (
+                                    &lt;img
+                                        src={eyeCrossed}
+                                        alt="Mostra contrasenya"
+                                    />
+                                )}
+                            &lt;/button>
+                        &lt;/div>
+                        &lt;div className="signup__form--input-box">
+                            &lt;input
+                                type="checkbox"
+                                id="is_company"
+                                value={isCompany}
+                                onChange={handleIsCompanyChange}
+                                className="signup__empresaCheckbox"
+                            />
+                            &lt;label htmlFor="is_company">Soc una empresa&lt;/label>
+                        &lt;/div>
+                        {isCompany &amp;&amp; (
+                            &lt;>
+                                &lt;div className="signup__form--input-box">
+                                    &lt;select
+                                        name="servicio"
+                                        className="signup__select"
+                                        defaultValue={''}
+                                        onChange={handleServicesChange}
+                                    >
+                                        &lt;option value="" disabled>
+                                            Selecciona una categoria...
+                                        &lt;/option>
+                                        {servicesList &amp;&amp;
+                                            servicesList.map((service, index) => {
+                                                return (
+                                                    &lt;option
+                                                        key={index}
+                                                        value={service}
+                                                    >
+                                                        {service}
+                                                    &lt;/option>
+                                                );
+                                            })}
+                                    &lt;/select>
+                                &lt;/div>
+                                &lt;div className="signup__form--input-box">
+                                    &lt;div className="signup__form-icon">
+                                        &lt;img src={shopIcon} alt="shop icon" style={iconStyleDefault} />
+                                    &lt;/div>
+                                    &lt;Input
+                                        type="text"
+                                        placeholder="Nom Empresa"
+                                        onChange={handleCompanyNameChange}
+                                        value={companyName}
+                                        required
+                                    />
+                                &lt;/div>
+                                &lt;div className="signup__form--input-box">
+                                    &lt;div className="signup__form-icon">
+                                        &lt;img src={profilePicture} alt="profile picture" style={iconStyleDefault} />
+                                    &lt;/div>
+                                    &lt;Input
+                                        type="text"
+                                        placeholder="ImageUrl"
+                                        onChange={handleImageUrlChange}
+                                        value={image_url}
+                                        required
+                                    />
+                                &lt;/div>
+                            &lt;/>
+                        )}
+
+                        &lt;Button
+                            // type="submit"
+                            text="Sign Up"
+                            action={handleSubmit}
+                            disabled={
+                                !isValidEmail(email) ||
+                                !isValidPassword(password) ||
+                                !passwordConfirmation ||
+                                password !== passwordConfirmation
+                            }
+                        />
+                        &lt;div className="redirect_login">
+                            Ja tens un compte? &lt;Link to="/login">Login&lt;/Link>
+                        &lt;/div>
+                    &lt;/form>
+                )}
+                {/* TODO: Donar estil al missatge d'error */}
+                {message &amp;&amp; &lt;div className="">{message}&lt;/div>}
+            &lt;/main >
+
+            {/* Contingut del Footer */}
+            &lt;Footer />
+        &lt;/>
+    );
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#API_BASE_URL">API_BASE_URL</a></li><li><a href="global.html#AppointmentsContextProvider">AppointmentsContextProvider</a></li><li><a href="global.html#AuthContextProvider">AuthContextProvider</a></li><li><a href="global.html#AvisLegal">AvisLegal</a></li><li><a href="global.html#Button">Button</a></li><li><a href="global.html#Card">Card</a></li><li><a href="global.html#CheckAnimation">CheckAnimation</a></li><li><a href="global.html#CompanyDashboard">CompanyDashboard</a></li><li><a href="global.html#Cookies">Cookies</a></li><li><a href="global.html#CustomModal">CustomModal</a></li><li><a href="global.html#CustomerDashboard">CustomerDashboard</a></li><li><a href="global.html#EDPOINT">EDPOINT</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#Header">Header</a></li><li><a href="global.html#Homepage">Homepage</a></li><li><a href="global.html#Input">Input</a></li><li><a href="global.html#InvertedButton">InvertedButton</a></li><li><a href="global.html#Loading">Loading</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#Privacitat">Privacitat</a></li><li><a href="global.html#ProtectedRoutes">ProtectedRoutes</a></li><li><a href="global.html#Router">Router</a></li><li><a href="global.html#SearchInput">SearchInput</a></li><li><a href="global.html#Signup">Signup</a></li><li><a href="global.html#Welcomepage">Welcomepage</a></li><li><a href="global.html#appointmentsContext">appointmentsContext</a></li><li><a href="global.html#authContext">authContext</a></li><li><a href="global.html#dateAppointmentToDbDate">dateAppointmentToDbDate</a></li><li><a href="global.html#dateCuteTransform">dateCuteTransform</a></li><li><a href="global.html#getAllAppointments">getAllAppointments</a></li><li><a href="global.html#getCompanies">getCompanies</a></li><li><a href="global.html#getServices">getServices</a></li><li><a href="global.html#hourAppointmentToDbTime">hourAppointmentToDbTime</a></li><li><a href="global.html#isValidEmail">isValidEmail</a></li><li><a href="global.html#isValidPassword">isValidPassword</a></li><li><a href="global.html#useAppointmentsContext">useAppointmentsContext</a></li><li><a href="global.html#useAuthContext">useAuthContext</a></li><li><a href="global.html#useCheckUser">useCheckUser</a></li><li><a href="global.html#useLogin">useLogin</a></li><li><a href="global.html#useSignup">useSignup</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Sat May 04 2024 09:08:05 GMT+0200 (Hora d’estiu del Centre d’Europa)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

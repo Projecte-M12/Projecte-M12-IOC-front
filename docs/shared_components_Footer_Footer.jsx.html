@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: context/AuthContextProvider.jsx</title>
+    <title>JSDoc: Source: shared/components/Footer/Footer.jsx</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: context/AuthContextProvider.jsx</h1>
+    <h1 class="page-title">Source: shared/components/Footer/Footer.jsx</h1>
 
     
 
@@ -26,77 +26,73 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/** 
- *  React
+            <pre class="prettyprint source linenums"><code>/**
+ * React
  */
-import { useState } from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 /**
- * Custom hooks
+ * Estils
  */
-import { authContext } from './authContext';
+import './Footer.css';
 
 /**
- * Proveeix el context per a la gestió de l'autenticació de l'usuari.
- * @param {Object} props - Propietats del component.
- * @param {JSX.Element} props.children - Els components fills.
- * @returns {JSX.Element} El component de proveïdor de context d'autenticació.
+ * Funció principal del footer el qual mostra la informació de peu de pàgina.
+ * @returns {JSX.Element} Component del footer.
  */
-export function AuthContextProvider({ children }) {
-    /**
-     * States
-     */
-    const [user, setUser] = useState(null);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [token, setToken] = useState(null);
-
-    /**
-     * Functions
-     */
-    const updateUser = (usuario) => {
-        localStorage.setItem('user', JSON.stringify(usuario));
-        setUser(usuario);
-    };
-
-    const updateIsAuthenticated = (estado) => setIsAuthenticated(estado);
-
-    const updateToken = (token) => {
-        localStorage.setItem('access_token', token);
-        setToken(token);
-    };
-
-    const resetUser = () => {
-        localStorage.removeItem('user');
-        setUser(null);
-    };
-
-    const resetToken = () => {
-        localStorage.removeItem('access_token');
-        setToken(null);
-    };
-
-    /**
-     * Retorna el proveïdor de context d'autenticació amb les seves funcions associades.
-     * @returns {JSX.Element} El proveïdor de context d'autenticació.
-     */
+export const Footer = () => {
     return (
-        &lt;authContext.Provider
-            value={{
-                // context,
-                user,
-                isAuthenticated,
-                token,
-                updateUser,
-                resetUser,
-                updateIsAuthenticated,
-                updateToken,
-                resetToken,
-            }}
-        >
-            {children}
-        &lt;/authContext.Provider>
+        &lt;div className="footer">
+            &lt;div className="paragraphs">
+                &lt;p>
+                    RESERVANOW &amp;copy; 2024 &lt;em>Tots els drets reservats&lt;/em>
+                &lt;/p>
+                &lt;p>
+                    &lt;span className="paragraphs__link">
+                        &lt;Link to="/politiques/avis-legal">Avís Legal&lt;/Link>
+                    &lt;/span>{' '}
+                    |{' '}
+                    &lt;span className="paragraphs__link">
+                        &lt;Link to="/politiques/privacitat">
+                            Política de privacitat{' '}
+                        &lt;/Link>
+                    &lt;/span>{' '}
+                    |{' '}
+                    &lt;span className="paragraphs__link">
+                        &lt;Link to="/politiques/cookies">
+                            Política de cookies{' '}
+                        &lt;/Link>
+                    &lt;/span>
+                &lt;/p>
+            &lt;/div>
+
+            &lt;div className="socials">
+                &lt;div className="social">
+                    &lt;img
+                        src="https://img.icons8.com/?size=256&amp;id=32323"
+                        alt="Instagram"
+                    />
+                    &lt;p>Instagram&lt;/p>
+                &lt;/div>
+                &lt;div className="social">
+                    &lt;img
+                        src="https://img.icons8.com/?size=256&amp;id=118497"
+                        alt="Facebook"
+                    />
+                    &lt;p>Facebook&lt;/p>
+                &lt;/div>
+                &lt;div className="social">
+                    &lt;img
+                        src="https://img.icons8.com/?size=256&amp;id=13930"
+                        alt="LinkedIn"
+                    />
+                    &lt;p>LinkedIn&lt;/p>
+                &lt;/div>
+            &lt;/div>
+        &lt;/div>
     );
-}
+};
 </code></pre>
         </article>
     </section>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: context/AuthContextProvider.jsx</title>
+    <title>JSDoc: Source: shared/components/Input/Input.jsx</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: context/AuthContextProvider.jsx</h1>
+    <h1 class="page-title">Source: shared/components/Input/Input.jsx</h1>
 
     
 
@@ -26,75 +26,38 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/** 
- *  React
+            <pre class="prettyprint source linenums"><code>/**
+ * React
  */
-import { useState } from 'react';
+import React from 'react';
 
 /**
- * Custom hooks
+ * Estils
  */
-import { authContext } from './authContext';
+import './Input.css';
 
 /**
- * Proveeix el context per a la gestió de l'autenticació de l'usuari.
- * @param {Object} props - Propietats del component.
- * @param {JSX.Element} props.children - Els components fills.
- * @returns {JSX.Element} El component de proveïdor de context d'autenticació.
+ * Component input personalitzat
+ * @param {object} props - Propietats del component.
+ * @param {string} props.label - Etiqueta de l'entrada.
+ * @param {string} props.type - Tipus de l'entrada.
+ * @param {string} props.placeholder - Text del marc de posició de l'entrada.
+ * @param {function} props.onChange - Funció que es crida quan hi ha un canvi a l'entrada.
+ * @param {string} props.value - Valor actual de l'entrada.
+ * @returns {JSX.Element} Component d'entrada d'informació.
  */
-export function AuthContextProvider({ children }) {
-    /**
-     * States
-     */
-    const [user, setUser] = useState(null);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [token, setToken] = useState(null);
-
-    /**
-     * Functions
-     */
-    const updateUser = (usuario) => {
-        localStorage.setItem('user', JSON.stringify(usuario));
-        setUser(usuario);
-    };
-
-    const updateIsAuthenticated = (estado) => setIsAuthenticated(estado);
-
-    const updateToken = (token) => {
-        localStorage.setItem('access_token', token);
-        setToken(token);
-    };
-
-    const resetUser = () => {
-        localStorage.removeItem('user');
-        setUser(null);
-    };
-
-    const resetToken = () => {
-        localStorage.removeItem('access_token');
-        setToken(null);
-    };
-
-    /**
-     * Retorna el proveïdor de context d'autenticació amb les seves funcions associades.
-     * @returns {JSX.Element} El proveïdor de context d'autenticació.
-     */
+export function Input({ label, type, placeholder, onChange, value }) {
     return (
-        &lt;authContext.Provider
-            value={{
-                // context,
-                user,
-                isAuthenticated,
-                token,
-                updateUser,
-                resetUser,
-                updateIsAuthenticated,
-                updateToken,
-                resetToken,
-            }}
-        >
-            {children}
-        &lt;/authContext.Provider>
+        &lt;div className="input-group">
+            {label &amp;&amp; &lt;label className="label">{label}&lt;/label>}
+            &lt;input
+                className="input"
+                placeholder={placeholder}
+                onChange={onChange}
+                type={type}
+                value={value}
+            />
+        &lt;/div>
     );
 }
 </code></pre>
