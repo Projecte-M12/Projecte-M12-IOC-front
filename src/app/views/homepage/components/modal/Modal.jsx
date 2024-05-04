@@ -77,21 +77,23 @@ export const CustomModal = ({ company, closeModal }) => {
     useEffect(() => {
         setProviderAppointments(
             allAppointments.filter(
-                (appointment) => appointment.companyId === company?.companyId,
+                (appointment) => appointment.companyId === company?.id,
             ),
         );
-    }, [allAppointments, company?.companyId]);
+    }, [allAppointments, company?.id]);
 
     useEffect(() => {
         const mergedAppointments = [
             ...customerAppointments,
             ...providerAppointments,
         ];
+
         const filteredAppointments = Array.from(
             new Set(mergedAppointments.map((item) => item.id)),
         ).map((id) => {
             return mergedAppointments.find((item) => item.id === id);
         });
+
         setVisualAppointments(filteredAppointments);
     }, [customerAppointments, providerAppointments]);
 
@@ -114,9 +116,8 @@ export const CustomModal = ({ company, closeModal }) => {
             modification_type: user?.name,
         };
 
+        console.log(allAppointments);
         setLastId(newAppointment.id);
-        console.log(newAppointment);
-        console.log(allAppointments)
         updateAllApointments([...allAppointments, newAppointment]);
     };
 
@@ -124,6 +125,7 @@ export const CustomModal = ({ company, closeModal }) => {
         // Elimina l'event passat per paràmetre
         deleteAppointment(eventInfo)
         if (eventInfo.userId === user?.id) {
+            deleteAppointment(eventInfo);
             updateAllApointments(
                 allAppointments.filter(
                     (appointment) => appointment.id !== eventInfo.id,

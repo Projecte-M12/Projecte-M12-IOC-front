@@ -110,7 +110,6 @@ export function AppointmentsContextProvider({ children }) {
                 optionsFetchNewAppointment,
             );
             deleteOldAppointment.json().then((data) => {
-                console.log(data);
                 setNewAppointment(null);
             });
         } catch (error) {
