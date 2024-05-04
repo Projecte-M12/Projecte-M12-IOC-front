@@ -1,6 +1,15 @@
-// import { getCompanies } from '../../../../services/getCompanies';
+/**
+ * Estils
+ */
 import './Card.scss';
 
+/**
+ * Component que representa una targeta per mostrar la informació d'una empresa.
+ * @param {object} props Les propietats del component.
+ * @param {object} props.company La informació de l'empresa a mostrar.
+ * @param {Function} props.openModal Funció per obrir el modal amb els detalls de l'empresa.
+ * @returns {JSX.Element} El component de la targeta d'empresa.
+ */
 export const Card = ({ company, openModal }) => {
     const handleClick = () => {
         openModal(company);

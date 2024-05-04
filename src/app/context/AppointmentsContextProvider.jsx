@@ -1,14 +1,25 @@
+/** 
+ *  React
+ */
 import { useEffect } from 'react';
-import { appointmentsContext } from './appointmentsContext';
 import { useState } from 'react';
+
+/** 
+ *  Context
+ */
+import { appointmentsContext } from './appointmentsContext';
 import { getAllAppointments } from '../services/getAppointments';
-import {
-    dateAppointmentToDbDate,
-    hourAppointmentToDbTime,
-} from '../utils/formatDates';
+import { dateAppointmentToDbDate, hourAppointmentToDbTime, } from '../utils/formatDates';
 import { API_BASE_URL, EDPOINT } from '../utils/constants';
 
+/**
+ * Proveeix el context per a la gestió de cites.
+ * @param {Object} props - Propietats del component.
+ * @param {JSX.Element} props.children - Els components fills.
+ * @returns {JSX.Element} El component de proveïdor de context de cites.
+ */
 export function AppointmentsContextProvider({ children }) {
+
     /**
      * States
      */
@@ -34,11 +45,21 @@ export function AppointmentsContextProvider({ children }) {
     /**
      * Functions
      */
+     /** 
+     * Actualitza totes les cites.
+     * @param {Object[]} appointments - Llista de cites actualitzades.
+     */
     const updateAllApointments = (appointments) => {
         setAllAppointments(appointments);
         // TODO: Llamada a la API para actualizar las reservas
     };
 
+    /**
+     * Crea una nova cita.
+     * @param {Object} company - Informació de l'empresa.
+     * @param {Object} user - Informació de l'usuari.
+     * @param {Object} slotInfo - Informació de l'interval de temps de la cita.
+     */
     const createAppointment = async (company, user, slotInfo) => {
         const newApp = {
             user_id: user.id,
@@ -71,6 +92,10 @@ export function AppointmentsContextProvider({ children }) {
         }
     };
 
+    /**
+     * Elimina una cita existent.
+     * @param {Object} eventInfo - Informació de la cita a eliminar.
+     */
     const deleteAppointment = async (eventInfo) => {
         const optionsFetchNewAppointment = {
             method: 'DELETE',
@@ -94,7 +119,8 @@ export function AppointmentsContextProvider({ children }) {
     };
 
     /**
-     * RETURN
+     * Retorna el proveïdor de context de cites amb les seves funcions associades.
+     * @returns {JSX.Element} El proveïdor de context de cites.
      */
     return (
         <appointmentsContext.Provider

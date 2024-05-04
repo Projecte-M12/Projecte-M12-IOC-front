@@ -1,11 +1,17 @@
-// Llibreries
+/**
+ * React
+ */
 import React from 'react';
 
-// Estils CSS
+/**
+ * Estils
+ */
 import './CheckAnimation.css';
 
-
-// Función principal del componente Company (página de empresa)
+/**
+ * Funció principal del component CheckAnimation que mostra una animació de verificació.
+ * @returns {JSX.Element} Component de l'animació de verificació.
+ */
 export const CheckAnimation = () => {
 
   return (

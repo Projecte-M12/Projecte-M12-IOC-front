@@ -1,10 +1,16 @@
-// Librerías
+/**
+ * React
+ */
 import React from "react";
 
-// Import CSS
+/**
+ * Estils
+ */
 import './Loading.css';
 
-// Import Imágenes
+/**
+ * Imatges
+ */
 //TODO: import loading_icon from '';
 
 
@@ -44,8 +50,10 @@ EXEMPLE DE COM POT FUNCIONAR + ESTRUCTURA DEL CODI (COMPONENTS I PÀGINES):
 
 */
 
-
-// Funció la qual genera la icona que simula la càrregar de la pàgina (actual)
+/**
+ * Componente que muestra un icono de carga mientras se está cargando la página.
+ * @returns {JSX.Element} Componente de carga.
+ */
 export function Loading() {
     return (
         <div class='container'>

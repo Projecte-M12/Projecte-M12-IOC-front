@@ -1,35 +1,54 @@
+/**
+ *  React
+ */
 import { Link, Navigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-import { useAuthContext } from '../../../hooks/useAuthContext';
-
+/**
+ *  Calendar
+ */
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'moment/locale/es'; // Importa el locale español
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 
+/**
+ *  Custom hooks
+ */
+import { useAuthContext } from '../../../hooks/useAuthContext';
+import { useCheckUser } from '../../../hooks/useCheckUser';
+import { useAppointmentsContext } from '../../../hooks/useAppointmentsContext';
+
+/**
+ * Components propis
+ */
 import { Header } from '../../../shared/components/Header/Header';
 
+/**
+ * Estils
+ */
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import './CustomerDashboard.scss';
-import { useEffect } from 'react';
-import { useCheckUser } from '../../../hooks/useCheckUser';
-import { useAppointmentsContext } from '../../../hooks/useAppointmentsContext';
 
 // moment.locale("es")
 
 moment.locale('es', {
     week: {
-        dow: 1, // Lunes es el primer día de la semana
+        dow: 1, // Dilluns com a primer dia de la setmana
     },
 });
 
 const localizer = momentLocalizer(moment);
 
+/**
+ * Component de dashboard per a clients.
+ * Mostra el calendari amb les seves reserves.
+ * @returns {JSX.Element} El component del dashboard del client.
+ */
 export function CustomerDashboard() {
     /**
-     * States
+     * Estats
      */
     const { user, isAuthenticated } = useAuthContext();
     const [myEventsList, setMyEventsList] = useState([]);
@@ -52,9 +71,13 @@ export function CustomerDashboard() {
         return <Navigate to="/" replace />;
     }
 
+    /**
+     * Handler per seleccionar un event del calendari.
+     * @param {object} eventInfo La informació de l'event seleccionat.
+     */
     const handleSelectEvent = (eventInfo) => {
         deleteAppointment(eventInfo);
-        //Elimina el evento pasado por parámetro
+        // Elimina l'event passat per paràmetre
         const updatedEvents = allAppointments.filter(
             (ev) => ev.id !== eventInfo.id,
         );
@@ -117,10 +140,11 @@ export function CustomerDashboard() {
                             formats={{
                                 timeGutterFormat: 'HH:mm',
                                 dayFormat: (date, culture, localizer) =>
-                                    localizer.format(date, 'dddd', culture), // Formato de los días en la vista de semana
+                                    // Format dels dies a la vista de setmana
+                                    localizer.format(date, 'dddd', culture), 
                                 agendaTodayLabel: {
-                                    long: 'Hoy', // Etiqueta para la opción "Hoy" en la vista de agenda
-                                    short: 'Hoy', // Etiqueta corta para la opción "Hoy" en la vista de agenda
+                                    long: 'Hoy', // Etiqueta per l'opció "Hoy" a la vista d'agenda
+                                    short: 'Hoy', // Etiqueta curta per a l'opció "Hoy" a la vista d'agenda
                                 },
                             }}
                         />

@@ -1,6 +1,19 @@
-import { authContext } from './authContext';
+/** 
+ *  React
+ */
 import { useState } from 'react';
 
+/**
+ * Custom hooks
+ */
+import { authContext } from './authContext';
+
+/**
+ * Proveeix el context per a la gestió de l'autenticació de l'usuari.
+ * @param {Object} props - Propietats del component.
+ * @param {JSX.Element} props.children - Els components fills.
+ * @returns {JSX.Element} El component de proveïdor de context d'autenticació.
+ */
 export function AuthContextProvider({ children }) {
     /**
      * States
@@ -35,7 +48,8 @@ export function AuthContextProvider({ children }) {
     };
 
     /**
-     * RETURN
+     * Retorna el proveïdor de context d'autenticació amb les seves funcions associades.
+     * @returns {JSX.Element} El proveïdor de context d'autenticació.
      */
     return (
         <authContext.Provider

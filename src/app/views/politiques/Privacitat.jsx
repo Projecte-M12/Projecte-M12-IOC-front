@@ -1,16 +1,28 @@
-// Llibreries
+/**
+ * React
+ */
 import React from 'react';
 
-// Estils CSS
+/**
+ * Estils
+ */
 import './Politiques.css';
 
-// Components propis
+/**
+ * Components pròpis
+ */
 import { Header } from '../../shared/components/Header/Header';
 import { Footer } from '../../shared/components/Footer/Footer';
 
-// Imatges i icons
+/**
+ * Imatges
+ */
 import LarryCoffee from '../../../app/assets/images/larry_coffee.svg';
 
+/**
+ * Component que mostra les Polítiques de Privacitat.
+ * @returns {JSX.Element} El component de Privacitat.
+ */
 export function Privacitat() {
 
 

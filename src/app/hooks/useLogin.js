@@ -1,13 +1,20 @@
+/**
+ * React 
+ */
 import { useState } from 'react';
+/**
+* Context
+*/
 import { API_BASE_URL, EDPOINT } from '../utils/constants';
 import { useAuthContext } from './useAuthContext';
 
 /**
- * Custom hook para manejar el inicio de sesión
+ * Hook personalitzat per gestionar l'inici de sessió de l'usuari.
+ * @returns {Object} L'objecte amb les funcions i estats per gestionar l'inici de sessió.
  */
 export const useLogin = () => {
     /**
-     * States
+     * Estats
      */
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -15,7 +22,7 @@ export const useLogin = () => {
     const [error, setError] = useState('');
 
     /**
-     * Custom hooks
+     * Funcions i estats del context d'autenticació.
      */
     const {
         updateUser,
@@ -83,7 +90,7 @@ export const useLogin = () => {
     };
 
     /**
-     * Return
+     * Retorna l'objecte amb les funcions i estats per gestionar l'inici de sessió.
      */
     return {
         email,

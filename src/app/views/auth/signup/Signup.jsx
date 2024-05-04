@@ -1,16 +1,16 @@
-/*
- * ----- React
+/** 
+ *  React
  */
 import { Link, Navigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
-/*
- * ----- Utils
+/** 
+ *  Utils
  */
 import { isValidEmail, isValidPassword } from '../../../utils/validations';
 
-/*
- * ----- Components propis
+/** 
+ *  Components propis
  */
 import { Header } from '../../../shared/components/Header/Header.jsx';
 import { Input } from '../../../shared/components/Input/Input.jsx';
@@ -18,21 +18,21 @@ import { Button } from '../../../shared/components/Button/Button.jsx';
 import { Footer } from '../../../shared/components/Footer/Footer.jsx';
 import { CheckAnimation } from '../../../shared/components/CheckAnimation/CheckAnimation.jsx';
 
-/*
- * ----- Custom hooks
+/**
+ * Custom hooks
  */
 import { useAuthContext } from '../../../hooks/useAuthContext';
 import { useCheckUser } from '../../../hooks/useCheckUser';
 import { useSignup } from '../../../hooks/useSignUp';
 
-/*
+/**
  * Serveis
  */
 import { getServices } from '../../../services/getServices';
 import { getCompanies } from '../../../services/getCompanies.js';
 
-/*
- * ----- Styles
+/** 
+ *  Styles
  */
 import './Signup.css';
 import {
@@ -41,8 +41,8 @@ import {
     iconStyleRed,
 } from '../../../styles/iconStyles';
 
-/*
-* ----- Icons & Images
+/** 
+* Icons & Images
 */
 import logo from '../../../assets/logo/reservanow_logo.svg';
 import eyeOpen from '../../../assets/icons/eyeopen.svg';
@@ -56,13 +56,13 @@ import passwordKeyBad from '../../../assets/icons/keyAccountBad.svg';
 import profilePicture from '../../../assets/icons/picture-jpg.svg';
 import profileIcon from '../../../assets/icons/user.svg';
 
-/*
- * ----- Component Signup
+/** 
+ * Component Signup
+ * @returns {JSX.Element} Component de registre
  */
-
 export const Signup = () => {
-    /*
-     * ----- States
+    /** 
+     * States
      */
     const { isAuthenticated, user } = useAuthContext();
     const [showPassword, setShowPassword] = useState(false);
@@ -94,8 +94,8 @@ export const Signup = () => {
         handleSubmit,
     } = useSignup();
 
-    /*
-     * ----- Custom Hooks
+    /** 
+     * Custom Hooks
      */
     const { checkToken } = useCheckUser();
     useEffect(() => {
@@ -109,7 +109,7 @@ export const Signup = () => {
         };
         fetchData();
     }, []);
-
+    
     useEffect(() => {
         let timeoutId;
         if (signedUp) {
@@ -121,8 +121,8 @@ export const Signup = () => {
         return () => clearTimeout(timeoutId);
     }, [signedUp]);
 
-    /*
-     * ----- Comprobación usuario logueado y redirección
+    /** 
+     * Comprobació usuari loguejat i redirecció
      */
     if (isAuthenticated) {
         if (user && user.company_name) {
@@ -132,9 +132,10 @@ export const Signup = () => {
         }
     }
 
-    /*
-     * ----- Return
-     */
+    /**
+    * Renderitza el formulari de registr i la confirmació de registr exitós.
+    * @returns {JSX.Element} El formulari de registre en cas de nou usuari i la confirmació de registre satisfactori.
+    */
     return (
         <>
             <Header />
@@ -148,7 +149,8 @@ export const Signup = () => {
                 </div>
                 <h1 className="singup__form-tittle">Welcome!</h1>
 
-                {/* Condicional del formulari.
+                {/**
+                * Condicional del formulari.
                 * Mostra el formulari de registra i sino està registrat "signedUp=false" llavors
                 * mostra l'animació de registre correctament
                 */}
@@ -193,11 +195,6 @@ export const Signup = () => {
                             </div>
                         ) : null}
                         <div className="signup__form--input-box">
-                            {/* <div className="signup__form-icon">
-                            <img src={passwordKey} alt="password" style={iconStyleDefault} />
-                            <FaLock style={iconStyleDefault} />
-                        </div> */}
-
                             <div className="signup__form-icon">
                                 <img src={passwordKey} alt="password" />
                             </div>

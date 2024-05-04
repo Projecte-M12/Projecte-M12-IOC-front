@@ -1,14 +1,23 @@
+/**
+ * React
+ */
 import { useState } from 'react';
-import { API_BASE_URL, EDPOINT } from '../utils/constants';
-import { useAuthContext } from './useAuthContext';
 import { Navigate } from 'react-router-dom';
 
 /**
- * Custom hook para manejar el inicio de sesión
+ * Custom Hooks
+ */
+import { API_BASE_URL, EDPOINT } from '../utils/constants';
+import { useAuthContext } from './useAuthContext';
+
+
+/**
+ * Hook personalitzat per gestionar el registre d'usuari.
+ * @returns {Object} L'objecte amb les funcions i estats per gestionar el registre.
  */
 export const useSignup = () => {
     /**
-     * States
+     * Estats
      */
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -25,7 +34,7 @@ export const useSignup = () => {
     const [error, setError] = useState(null);
 
     /**
-     * Custom hooks
+     * Estats del contaxt
      */
     const { updateUser, updateIsAuthenticated, updateToken } = useAuthContext();
 
@@ -117,7 +126,6 @@ export const useSignup = () => {
 
             const data = await response.json();
 
-            // Mensaje todo correcto y redirección
             setSignedUp(true);
             setMessage('Usuari registrat correctament');
 
@@ -132,8 +140,8 @@ export const useSignup = () => {
         }
     };
 
-    /**
-     * Return
+     /**
+     * Retorna l'objecte amb les funcions i estats per gestionar el registre.
      */
     return {
         email,

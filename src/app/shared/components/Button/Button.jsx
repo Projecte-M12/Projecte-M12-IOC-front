@@ -1,10 +1,24 @@
-// Llibreris
+/**
+ * React
+ */
 import { Link } from 'react-router-dom';
 
-// Estils CSS
+/**
+ * Estils
+ */
 import './Button.css';
 
-// Component del botó primari; pots passar; una url una acció o un text
+/**
+ * Component del botó primari. Pots passar per peràmetre una url, una acció o un text.
+ * @param {object} props - Propietats del component.
+ * @param {string} props.text - Text del botó.
+ * @param {string} props.url - URL del botó si és un enllaç.
+ * @param {function} props.action - Acció del botó si és un botó d'acció.
+ * @param {boolean} props.isLink - Indica si el botó és un enllaç.
+ * @param {string} [props.className='primary-button'] - Classe CSS del botó.
+ * @param {boolean} [props.disabled=false] - Indica si el botó està deshabilitat.
+ * @returns {JSX.Element} Component del botó.
+ */
 export function Button({
     text,
     url,

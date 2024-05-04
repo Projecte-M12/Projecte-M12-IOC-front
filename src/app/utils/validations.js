@@ -1,6 +1,6 @@
 /**
  * Comprova si el format de l'email és correcte
- * @param { string } email
+ * @param { string } email Correu a comprovar
  * @returns  { boolean } Retorna true en cas de ser vàlid i false en cas contrari
  */
 export const isValidEmail = (email) => {
@@ -10,16 +10,16 @@ export const isValidEmail = (email) => {
 
 /**
  * Comprova  si el format de la contrasenya és correcte
- * @param { string } password
+ * @param { string } password Contrassenya a comprovar
  * @returns { boolean } Retorna true en cas de ser vàlid i false en cas contrari
  */
 export const isValidPassword = (password) => {
-    // SOLO TEST
+    // Només per TEST
     const passwordRegex = /^.{4,}$/;
 
-    // PARA PRODUCCIÓN
-    // 1 dígito, 1 majúscula, 1 minúscula, 1 especial, 8 o más caracteres
+    // Funcionament
+    // 1 dígit, 1 majúscula, 1 minúscula, 1 especial, 8 o més caràcteres
     // const passwordRegex =
-    //     /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+    // /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
     return passwordRegex.test(password);
 };

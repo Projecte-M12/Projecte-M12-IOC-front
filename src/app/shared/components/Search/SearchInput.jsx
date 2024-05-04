@@ -1,13 +1,22 @@
-// Llibreris
+/**
+ * React
+ */
 import React, { useState } from 'react';
 
-// Estils 
+/**
+ * Estils
+ */
 import './SearchInput.css';
 
-// Icons
+/**
+ * Icones
+ */
 import SearchIcon from '../../../assets/icons/search_icon.svg'
 
-// Funció 
+/**
+ * Component de cerca que permet als usuaris introduir un terme de cerca i enviar-lo per obtenir resultats.
+ * @returns {JSX.Element} Component de cerca.
+ */
 export const SearchInput = () => {
   // estat que guarda l'input
   const [query, setQuery] = useState('');

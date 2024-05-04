@@ -1,13 +1,18 @@
-// Llibreries
+/**
+ * React
+ */
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-// Estils CSS
+/**
+ * Estils
+ */
 import './Footer.css';
 
-// Import imatges
-
-// FUnció principal del footer
+/**
+ * Funció principal del footer el qual mostra la informació de peu de pàgina.
+ * @returns {JSX.Element} Component del footer.
+ */
 export const Footer = () => {
     return (
         <div className="footer">
