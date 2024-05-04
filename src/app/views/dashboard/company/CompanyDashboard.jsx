@@ -92,7 +92,6 @@ export function CompanyDashboard() {
      * @param {object} eventInfo La informació de l'event seleccionat.
      */
     const handleSelectEvent = (eventInfo) => {
-        console.log(eventInfo)
         setSelectedEvent(eventInfo);
         setModalIsOpen(true);
     };
