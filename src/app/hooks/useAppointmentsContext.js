@@ -1,8 +1,16 @@
+/** 
+ *  React
+ */
 import { useContext } from 'react';
+
+/** 
+ *  Context
+ */
 import { appointmentsContext } from '../context/appointmentsContext';
 
 /**
- * Custom hook para manejar el contexto
+ * Hook personalitzat per gestionar el context de les cites.
+ * @returns {Object} L'objecte de context de les cites
  */
 export const useAppointmentsContext = () => {
     return useContext(appointmentsContext);

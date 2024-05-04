@@ -1,67 +1,63 @@
-/*
- * ----- React
+/**
+ *  React
  */
 import { Link, Navigate } from 'react-router-dom';
 import { useState } from 'react';
+import Modal from 'react-modal';
 
-/*
- * ----- Calendar
+/**
+ *  Calendar
  */
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'moment/locale/es'; // Importa el locale español
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 
-/*
- * ----- Components propis
+/**
+ *  Components propis
  */
 import { Header } from '../../../shared/components/Header/Header';
 
-/*
- * ----- Custom hooks
+/**
+ *  Custom hooks
  */
 import { useAuthContext } from '../../../hooks/useAuthContext';
 import { useEffect } from 'react';
 import { useCheckUser } from '../../../hooks/useCheckUser';
 import { useAppointmentsContext } from '../../../hooks/useAppointmentsContext';
 
-/*
- * ----- Utils
+/**
+ *  Utils
  */
 import {
     dateCuteTransform,
     hourAppointmentToDbTime,
 } from '../../../utils/formatDates';
 
-/*
- * ----- Styles
+/**
+ *  Estils
  */
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import './CompanyDashboard.scss';
 
-/*
- * ----- Modal
- */
-import Modal from 'react-modal';
-
-// moment.locale("es")
 
 moment.locale('es', {
     week: {
-        dow: 1, // Lunes es el primer día de la semana
+        dow: 1, // Dilluns com a primer dia per a una setmana
     },
 });
 
 const localizer = momentLocalizer(moment);
 
 /**
- *
- * @returns
- */
+* Component de dashboard per a les empreses.
+* Mostra el calendari amb les reserves de la companyia.
+* @returns {JSX.Element} El component del dashboard de l'empresa.
+*/
 export function CompanyDashboard() {
     /**
-     * States
+     * Estats
      */
     const { user, isAuthenticated } = useAuthContext();
     const [myEventsList, setMyEventsList] = useState([]);
@@ -69,11 +65,15 @@ export function CompanyDashboard() {
     const { allAppointments, updateAllApointments, deleteAppointment } =
         useAppointmentsContext();
 
-    const [selectedEvent, setSelectedEvent] = useState(null); // Estado para el evento seleccionado
-    const [modalIsOpen, setModalIsOpen] = useState(false); // Estado para controlar la visibilidad del modal
+    // Estat per l'event sel·leccionat 
+    const [selectedEvent, setSelectedEvent] = useState(null);
+    // Estat per controlar la visibilitat del modal
+    const [modalIsOpen, setModalIsOpen] = useState(false);
 
     useEffect(() => {
-        checkToken(); //El endpoint user retorna error quan es fa el login d'una empresa. No deixa entrar al dashboard perquè el token és incorrecte.
+        // L'endpoint user retorna error quan es fa el login d'una empresa. 
+        // No deixa entrar al dashboard perquè el token és incorrecte.
+        checkToken(); 
     }, []);
 
     useEffect(() => {
@@ -87,16 +87,26 @@ export function CompanyDashboard() {
         return <Navigate to="/" replace />;
     }
 
+    /**
+     * Handler per seleccionar un event del calendari.
+     * @param {object} eventInfo La informació de l'event seleccionat.
+     */
     const handleSelectEvent = (eventInfo) => {
         setSelectedEvent(eventInfo);
         setModalIsOpen(true);
     };
 
+    /**
+     * Handler per tancar el modal.
+     */
     const closeModal = () => {
         setSelectedEvent(null);
         setModalIsOpen(false);
     };
 
+    /**
+     * Handler per eliminar un event.
+     */
     const handleDeleteEvent = () => {
         deleteAppointment(selectedEvent);
         //Elimina el evento pasado por parámetro
@@ -104,8 +114,9 @@ export function CompanyDashboard() {
             (ev) => ev.id !== selectedEvent.id,
         );
         updateAllApointments(updatedEvents);
-        console.log('Evento eliminado:', selectedEvent);
-        // Luego cierra el modal
+        // Xivato
+        console.log('Event eliminat:', selectedEvent);
+        // Tanca el modal
         closeModal();
     };
 
@@ -177,7 +188,7 @@ export function CompanyDashboard() {
                 <Modal
                     isOpen={modalIsOpen}
                     onRequestClose={closeModal}
-                    // Configura las propiedades del modal según tus necesidades
+                // Configura las propiedades del modal según tus necesidades
                 >
                     {/* Contenido del modal con los detalles del evento */}
                     {selectedEvent && (

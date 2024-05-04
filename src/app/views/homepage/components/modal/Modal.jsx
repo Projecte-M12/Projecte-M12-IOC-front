@@ -1,27 +1,41 @@
+/**
+ * React
+ */
+import { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import './Modal.scss';
+
+/**
+ * Modal
+ */
 Modal.setAppElement('#root');
 
+/**
+ * Calendari
+ */
 import { Calendar, momentLocalizer, Navigate } from 'react-big-calendar';
 import moment from 'moment';
 import 'moment/locale/es'; // Importa el locale español
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 
-import { useState } from 'react';
+/**
+ * Custom Hooks
+ */
 import { useAuthContext } from '../../../../hooks/useAuthContext';
 import { useAppointmentsContext } from '../../../../hooks/useAppointmentsContext';
 import { useCheckUser } from '../../../../hooks/useCheckUser';
-import { useEffect } from 'react';
 
-// moment().locale('es', {
-//     week: {
-//         dow: 1, // Lunes es el primer día de la semana
-//     },
-// });
 
 const localizer = momentLocalizer(moment);
 
-const CustomModal = ({ company, closeModal }) => {
+/**
+ * Component que representa el modal para mostrar detalles de una empresa y gestionar citas.
+ * @param {object} props Las propiedades del componente.
+ * @param {object} props.company La información de la empresa seleccionada.
+ * @param {Function} props.closeModal Función para cerrar el modal.
+ * @returns {JSX.Element} El componente del modal personalizado.
+ */
+export const CustomModal = ({ company, closeModal }) => {
     // const [myEvent, setMyEvent] = useState([]);
     const [newAppointments, setNewAppointments] = useState([]);
     const [customerAppointments, setCustomerAppointments] = useState([]);
@@ -98,7 +112,7 @@ const CustomModal = ({ company, closeModal }) => {
             title: `Reserva en ${company.company_name}`,
             empresa: company.company_name,
             email: user?.email,
-            color: '#66ff99', // Color para las nuevas reservas
+            color: '#66ff99',
             modification_type: user?.name,
         };
 
@@ -108,7 +122,8 @@ const CustomModal = ({ company, closeModal }) => {
     };
 
     const handleSelectEvent = (eventInfo) => {
-        //Elimina el evento pasado por parámetro
+        // Elimina l'event passat per paràmetre
+        deleteAppointment(eventInfo)
         if (eventInfo.userId === user?.id) {
             deleteAppointment(eventInfo);
             updateAllApointments(
@@ -167,10 +182,10 @@ const CustomModal = ({ company, closeModal }) => {
                             formats={{
                                 timeGutterFormat: 'HH:mm',
                                 dayFormat: (date, culture, localizer) =>
-                                    localizer.format(date, 'dddd', culture), // Formato de los días en la vista de semana
+                                    localizer.format(date, 'dddd', culture), // Format dels dies a la vista de setmana
                                 agendaTodayLabel: {
-                                    long: 'Hoy', // Etiqueta para la opción "Hoy" en la vista de agenda
-                                    short: 'Hoy', // Etiqueta corta para la opción "Hoy" en la vista de agenda
+                                    long: 'Hoy', // Etiqueta per l'opción "Hoy" a la vista d'agenda
+                                    short: 'Hoy', // Etiqueta curta per l'opción "Hoy" a la vista d'agenda
                                 },
                             }}
                             eventPropGetter={(
@@ -185,7 +200,7 @@ const CustomModal = ({ company, closeModal }) => {
                                             appointment.id === event.id,
                                     )
                                 ) {
-                                    // Reservas del cleinte
+                                    // Reserves del cleint
                                     return {
                                         style: {
                                             backgroundColor: 'grey',
@@ -193,7 +208,7 @@ const CustomModal = ({ company, closeModal }) => {
                                         },
                                     };
                                 } else {
-                                    // Reservas nuevas
+                                    // Noves reserves
                                     return {
                                         style: {
                                             backgroundColor: 'green',
@@ -202,7 +217,7 @@ const CustomModal = ({ company, closeModal }) => {
                                     };
                                 }
                             }}
-                            //Permite la edición de nuevas reservas
+                            //Permet l'edición de noves reserves
                             editable={(event) =>
                                 customerAppointments.find(
                                     (appointment) =>
@@ -263,5 +278,3 @@ const CustomModal = ({ company, closeModal }) => {
         </Modal>
     );
 };
-
-export default CustomModal;

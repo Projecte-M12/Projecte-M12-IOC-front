@@ -1,19 +1,39 @@
+/**
+ * React
+ */
+import { useState, useEffect } from 'react';
+import { Navigate } from 'react-big-calendar';
+
+/**
+ * Custom Hooks
+ */
+import { useAuthContext } from '../../hooks/useAuthContext';
+import { useCheckUser } from '../../hooks/useCheckUser';
+import CustomModal from './components/modal/Modal';
+
+/**
+ * Serveis
+ */
+import { getCompanies } from '../../services/getCompanies';
+import { getServices } from '../../services/getServices';
+
+/**
+ * Components pròpis
+ */
 import { Header } from '../../shared/components/Header/Header';
 import { Footer } from '../../shared/components/Footer/Footer';
 import { Card } from './components/card/Card';
-import { getCompanies } from '../../services/getCompanies';
-import { getServices } from '../../services/getServices';
-// import Modal from 'react-modal';
-import './Homepage.scss';
-import { useState } from 'react';
-import CustomModal from './components/modal/Modal';
-import { Navigate } from 'react-big-calendar';
-import { useAuthContext } from '../../hooks/useAuthContext';
-import { useEffect } from 'react';
-import { useCheckUser } from '../../hooks/useCheckUser';
 
-// import {useGetImage} from "../../hooks/customHooks/useGetImage";
+/**
+ * Estils
+ */
+import './Homepage.css';
 
+/**
+ * Component que representa la pàgina d'inici.
+ * Mostra els serveis disponibles per a reserva i permet filtrar-los per categoria.
+ * @returns {JSX.Element} El component de la pàgina d'inici.
+ */
 export const Homepage = () => {
     const [selectedCompany, setSelectedCompany] = useState(null);
     const [selectedCategories, setSelectedCategories] = useState([]);
@@ -42,14 +62,25 @@ export const Homepage = () => {
         return <Navigate to="/" replace />;
     }
 
+    /**
+    * Handler per obrir el modal amb els detalls d'una empresa.
+    * @param {object} company La informació de l'empresa seleccionada.
+    */
     const openModal = (company) => {
         setSelectedCompany(company);
     };
 
+    /**
+     * Handler per tancar el modal.
+     */
     const closeModal = () => {
         setSelectedCompany(null);
     };
 
+    /**
+     * Handler per gestionar la selecció d'una categoria per filtrar.
+     * @param {string} category La categoria seleccionada.
+     */
     const toggleCategory = (category) => {
         if (selectedCategories.includes(category)) {
             setSelectedCategories(
@@ -60,11 +91,14 @@ export const Homepage = () => {
         }
     };
 
+    /**
+     * Filtra les empreses per les categories seleccionades.
+     */
     const filteredCompanies =
         selectedCategories.length > 0
             ? companiesList.filter((company) =>
-                  selectedCategories.includes(company.service_provided),
-              )
+                selectedCategories.includes(company.service_provided),
+            )
             : companiesList;
 
     return (

@@ -1,13 +1,19 @@
+/** React */
 import { useEffect } from 'react';
+
+/** Constants */
 import { API_BASE_URL, EDPOINT } from '../utils/constants';
+
+/** Context */
 import { useAuthContext } from './useAuthContext';
 
 /**
- * Custom hook para comprobar si el usuario está validado o no
+ * Hook personalitzat per comprovar si l'usuari està validat o no.
+ * @returns {Object} L'objecte amb la funció per comprovar el token de l'usuari.
  */
 export const useCheckUser = () => {
     /**
-     * States
+     * Estats i funcions del context d'autenticació.
      */
     const {
         updateUser,
@@ -31,6 +37,9 @@ export const useCheckUser = () => {
         },
     };
 
+    /**
+     * Funció per comprovar el token de l'usuari.
+     */
     const checkToken = async () => {
         try {
             const response = await fetch(

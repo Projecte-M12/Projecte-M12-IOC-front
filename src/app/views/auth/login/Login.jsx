@@ -1,5 +1,5 @@
-/*
- * ----- React
+/**
+ * React
  */
 import React, { useState, useEffect } from 'react';
 import { Link, Navigate } from 'react-router-dom';
@@ -9,50 +9,51 @@ import { Link, Navigate } from 'react-router-dom';
  */
 import { isValidEmail, isValidPassword } from '../../../utils/validations';
 
-/*
- * ----- Hooks
+/**
+ *  Hooks
  */
 import { useAuthContext } from '../../../hooks/useAuthContext';
 import { useLogin } from '../../../hooks/useLogin';
 import { useCheckUser } from '../../../hooks/useCheckUser';
 
-/*
- * ----- Components propis
+/**
+ * Components propis
  */
 import { Input } from '../../../shared/components/Input/Input.jsx';
 import { Button } from '../../../shared/components/Button/Button.jsx';
 import { Header } from '../../../shared/components/Header/Header';
+import { Footer } from '../../../shared/components/Footer/Footer.jsx';
 
-/*
- * ----- Styles + Images
+/**
+ * Styles
  */
 import './Login.css';
-import { iconStyleDefault } from '../../../styles/iconStyles';
-import logo from '../../../assets/logo/reservanow_logo.svg';
 
-/*
- * ----- Icons
+/**
+ * Imatges i Icons
  */
+import logo from '../../../assets/logo/reservanow_logo.svg';
 import mailLetter from '../../../assets/icons/mail.svg';
 import passwordKey from '../../../assets/icons/keyAccount.svg';
 import eyeOpen from '../../../assets/icons/eyeopen.svg';
 import eyeCrossed from '../../../assets/icons/eyecrossed.svg';
-import { Footer } from '../../../shared/components/Footer/Footer.jsx';
 
-/*
- * ----- Component Log In
+/**
+ * Component de log in per autenticar els usuaris.
+ * Redirigeix a la pàgina de dashboard corresponent si l'usuari ja està autenticat.
+ * @returns {JSX.Element} El component de log in.
  */
 export const Login = () => {
-    /*
-     * ----- Custom Hooks
+    /**
+     * Custom Hooks
      */
     const { checkToken } = useCheckUser();
     useEffect(() => {
         checkToken();
     }, []);
 
-    /*
-     * ------ States
+    /**
+     * Estats
      */
     const {
         email,
@@ -77,19 +78,12 @@ export const Login = () => {
         }
     }
 
-    /*
-     * ----- Return
+    /**
+     *  Rentorna el render del component Login
      */
     return (
         <>
             <Header />
-            {/* {isAuthenticated ? (
-                user.is_company ? (
-                    <Navigate to="/company-dashboard" replace />
-                ) : (
-                    <Navigate to="/customer-dashboard" replace />
-                )
-            ) : null} */}
             <main className="login__container">
                 {isAuthenticated && <Navigate to="/" />}
                 <div className="login__logo-container">
@@ -172,7 +166,7 @@ export const Login = () => {
                         <a href="#">Forgot password?</a>
                     </div>
 
-                    {/*Botó personalitzat que envia les dades per validar l'inici de sessió */}
+                    {/* Botó personalitzat que envia les dades per validar l'inici de sessió */}
                     <Button
                         text="Login"
                         action={handleSubmit}

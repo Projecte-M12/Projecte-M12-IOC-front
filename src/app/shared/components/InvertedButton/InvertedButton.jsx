@@ -1,11 +1,24 @@
-// Llibreris
+/**
+ * React
+ */
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-// Estils CSS
+/**
+ * Estils
+ */
 import './InvertedButton.css';
 
-// Component del botó primari; pots passar; una url una acció o un text
+/**
+ * Component del botó invertit. Pot contenir una URL, una acció o un text.
+ * @param {object} props - Propietats del component.
+ * @param {string} props.text - Text del botó.
+ * @param {string} props.url - URL a la qual enllaça el botó (si es tracta d'un enllaç).
+ * @param {function} props.action - Funció que s'executa en fer clic al botó (si es tracta d'un botó d'acció).
+ * @param {boolean} props.isLink - Indica si el botó és un enllaç.
+ * @param {string} props.className - Classes CSS addicionals per al botó.
+ * @returns {JSX.Element} Component del botó invertit.
+ */
 export function InvertedButton({
     text,
     url,
@@ -13,8 +26,6 @@ export function InvertedButton({
     isLink,
     className = 'inverted__primary-button',
 }) {
-    // const ButtonComponent = isLink ? Link : 'button';
-
     if (isLink) {
         return (
             <Link to={url} className={className}>
@@ -28,12 +39,4 @@ export function InvertedButton({
             </button>
         );
     }
-
-    // return (
-    //     <ButtonComponent to={url} onClick={action}>
-    //         <button className={className}>
-    //             <p className="inverted-text">{text}</p>
-    //         </button>
-    //     </ButtonComponent>
-    // );
 }

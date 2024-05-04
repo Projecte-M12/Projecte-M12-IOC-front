@@ -1,4 +1,11 @@
+/**
+ * React 
+ */
 import { createBrowserRouter } from 'react-router-dom';
+
+/**
+ * Components pròpis
+ */
 import { Homepage } from '../views/homepage/Homepage';
 import { Login } from '../views/auth/login/Login';
 import { Signup } from '../views/auth/signup/Signup';
@@ -10,6 +17,10 @@ import { AvisLegal } from '../views/politiques/AvisLegal';
 import { Privacitat } from '../views/politiques/Privacitat';
 import { Cookies } from '../views/politiques/Cookies';
 
+/**
+ * Crea el router de l'aplicació amb les rutes i els components corresponents.
+ * @returns {Object} L'objecte que defineix les rutes de l'aplicació.
+ */
 export const Router = createBrowserRouter([
     {
         path: '/',

@@ -1,25 +1,35 @@
-// Llibreries
+/**
+ * React
+ */
 import React from 'react';
 
-// COmponents propis
+/** 
+* Components propis
+*/
 import { Header } from '../../shared/components/Header/Header';
 import { Footer } from '../../shared/components/Footer/Footer';
 import { Button } from '../../shared/components/Button/Button';
 import { InvertedButton } from '../../shared/components/InvertedButton/InvertedButton.jsx';
 
-// Estils
+/**
+ * Estils
+ */
 import '../Welcomepage/Welcomepage.css';
 
-// Imatges i icons
+/** 
+ * Imatges
+*/
 import LarryDoor from '../../../app/assets/images/larry_door.svg';
 
+/**
+ * Pàgina de benvinguda.
+ * @returns {JSX.Element} El component de la pàgina de benvinguda.
+ */
 export const Welcomepage = () => {
     return (
         <>
             {/* Contingut del Header */}
             <Header />
-            {/* <h1>welcomepage</h1>
-            <p className="welcomepage__title">Welcome to ReservaNOW</p> */}
 
             {/* Contingut principal del component */}
             <div className="welcomepage__container">

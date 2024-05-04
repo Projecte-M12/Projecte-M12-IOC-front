@@ -1,17 +1,32 @@
-import { useAuthContext } from '../../../hooks/useAuthContext';
-
+/**
+ * React
+ */
 import { Link } from 'react-router-dom';
-
-import './Header.scss';
-import { useLogin } from '../../../hooks/useLogin';
 import { useState } from 'react';
 
+/** Custom Hooks */
+import { useLogin } from '../../../hooks/useLogin';
+import { useAuthContext } from '../../../hooks/useAuthContext';
+
+/**
+ * Estils
+ */
+import './Header.scss';
+
+
+/**
+ * Component del header, el qual mostra la barra de navegació superior.
+ * @returns {JSX.Element} Component del header.
+ */
 export const Header = () => {
     const { isAuthenticated, user } = useAuthContext();
     const { handleLogout } = useLogin();
 
     const [menuOpen, setMenuOpen] = useState(false);
 
+    /**
+     * Funció que alterna l'estat del menú desplegable.
+     */
     const toggleMenu = () => {
         setMenuOpen(!menuOpen);
     };

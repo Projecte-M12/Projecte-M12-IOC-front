@@ -1,6 +1,17 @@
+/**
+ * Utils
+ */
 import { API_BASE_URL, EDPOINT } from '../utils/constants';
+
+/**
+ * Serveis
+ */
 import { getCompanies } from './getCompanies';
 
+/**
+ * Funció asíncrona per obtenir totes les cites de l'API.
+ * @returns {Promise<Array>} Una promesa que resol amb un array de cites.
+ */
 export const getAllAppointments = async () => {
     // TODO: Get data from API instead of mock file
     const options = {
